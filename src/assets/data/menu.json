@@ -1,9 +1,9 @@
 [
   { "title": "Home", "url": "/folder/Inbox", "icon": "star" },
   { "title": "Offers", "url": "/offers", "icon": "star" },
-  { "title": "Menu", "url": "/folder/Outbox", "icon": "restaurant" },
-  { "title": "My Info", "url": "/folder/Favorites", "icon": "information-circle" },
-  { "title": "My Addresses", "url": "/folder/Archived", "icon": "pin" },
+  { "title": "Menu", "url": "/menu", "icon": "restaurant" },
+  { "title": "My Info", "url": "/my-info", "icon": "information-circle" },
+  { "title": "My Addresses", "url": "/address", "icon": "pin" },
   { "title": "My Wallet", "url": "/folder/Trash", "icon": "wallet" },
   { "title": "Logout", "url": "/folder/Spam", "icon": "exit" }
 ]

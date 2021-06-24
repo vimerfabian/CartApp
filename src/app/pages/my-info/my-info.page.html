@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>My Info</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="showActions($event)">
+        <ion-icon name="person"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-thumbnail>
+
+      </ion-thumbnail>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label position="floating">FirstName</ion-label>
+          <ion-input placeholder="FirstName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">LastName</ion-label>
+          <ion-input placeholder="LastName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Phone Number</ion-label>
+          <ion-input type="tel" placeholder="Phone Number"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Email</ion-label>
+          <ion-input type="email" placeholder="Email"></ion-input>
+        </ion-item>
+        <ion-button expand="full">
+          Save
+        </ion-button>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

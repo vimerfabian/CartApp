@@ -14,6 +14,22 @@ const routes: Routes = [
   {
     path: 'offers',
     loadChildren: () => import('./pages/offers/offers.module').then( m => m.OffersPageModule)
+  },
+  {
+    path: 'my-info',
+    loadChildren: () => import('./pages/my-info/my-info.module').then( m => m.MyInfoPageModule)
+  },
+  {
+    path: 'address',
+    loadChildren: () => import('./pages/address/address.module').then( m => m.AddressPageModule)
+  },
+  {
+    path: 'auth/reset-password',
+    loadChildren: () => import('./auth/reset-password/reset-password.module').then( m => m.ResetPasswordPageModule)
+  },
+  {
+    path: 'menu',
+    loadChildren: () => import('./pages/menu/menu.module').then( m => m.MenuPageModule)
   }
 ];
 
