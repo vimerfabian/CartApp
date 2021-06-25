@@ -14,8 +14,4 @@ export class OffersService {
   getList() {
     return this.httpClient.get<any[]>(this.url + '/getoffer');
   }
-
-  getTest() {
-    return this.httpClient.get('https://jsonplaceholder.typicode.com/todos/');
-  }
 }

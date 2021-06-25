@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{product?.name || 'test'}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button icon="close-circle" color="danger" defaultHref="menu"></ion-back-button>
+      <!-- <ion-button color="danger">
+        <ion-icon slot="icon-only" color="danger" name="close-circle">
+        </ion-icon>
+      </ion-button> -->
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-title>
+      <h4 style="font-weight: bold;">{{product.name || 'test'}}</h4>
+    </ion-title>
+    <ion-card-content>
+      <ion-label>
+        <strong>Price: </strong> {{product.price || 0}}
+      </ion-label>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-item  style="margin-top: 10px;padding: 0%;">
+    <ion-label>
+      Units
+    </ion-label>
+    <ion-button fill="clear">
+      <ion-icon name="remove"></ion-icon>
+    </ion-button>
+     <ion-label>
+       1
+     </ion-label>
+      <ion-button fill="clear">
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+  </ion-item>
+  <ion-item style="margin-top: 10px;;">
+    <ion-label position="stacked">Comment</ion-label>
+    <ion-input placeholder="Enter any notes here...">
+    </ion-input>
+  </ion-item>
+
+  <strong>
+    Modifiers
+  </strong>
+  <br>
+  <ion-button color="medium">Modifier1</ion-button>
+  <ion-button color="primary">Modifier2</ion-button>
+  <ion-button color="medium">Modifier3</ion-button>
+  <ion-button color="medium">Modifier1</ion-button>
+  <ion-button color="medium">Modifier1</ion-button>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button color="light" expand="full"> ADD TO MY CAR ($10)</ion-button>
+  </ion-toolbar>
+</ion-footer>

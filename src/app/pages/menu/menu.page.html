@@ -10,41 +10,35 @@
 <ion-content>
   <ion-list>
    <div>
-    <ion-item>
-      <h4>Launch & Dinner</h4>
-      <ion-button  color="light" fill="clear"  slot="end">
+     <div *ngFor="let category of list | async;let category_idx = index;">
+      <ion-item >
+        <h4>{{category.category.name}}</h4>
+        <ion-button  color="light" fill="clear"  slot="end">
+          <ion-icon slot="icon-only" name="arrow-down-circle"></ion-icon>
+        </ion-button>
+      </ion-item>
+
+      <div *ngFor="let subCategory of category.subCategories">
+
+
+    <ion-item >
+      {{subCategory.subCategory.name}}
+      <ion-button color="light" fill="clear"  slot="end">
         <ion-icon slot="icon-only" name="arrow-down-circle"></ion-icon>
       </ion-button>
     </ion-item>
-    <ion-item>
-      Appetizers
-      <ion-button (click)="show = !show" color="light" fill="clear"  slot="end">
-        <ion-icon slot="icon-only" name="arrow-down-circle"></ion-icon>
-      </ion-button>
-    </ion-item>
-    <ion-list [hidden]='!show'>
-      <ion-item>
+    <ion-list>
+      <ion-item *ngFor="let product of subCategory.products">
         <ion-icon color='primary' slot="start" name='refresh'></ion-icon>
-        <ion-label>Item 1</ion-label>
-        <ion-button fill="clear">
+        <ion-label>{{product.name}}</ion-label>
+        <ion-button [routerLink]="['/select-product']" fill="clear">
           <ion-icon color="light"  name="add-circle" slot="icon-only"></ion-icon>
-        </ion-button>
-      </ion-item>
-      <ion-item>
-        <ion-icon color='primary' slot="start" name='refresh'></ion-icon>
-        <ion-label>Item 1</ion-label>
-        <ion-button fill="clear">
-          <ion-icon color="light"  name="add-circle" slot="icon-only"></ion-icon>
-        </ion-button>
-      </ion-item>
-      <ion-item>
-        <ion-icon color='primary' slot="start" name='refresh'></ion-icon>
-        <ion-label>Item 1</ion-label>
-        <ion-button fill="clear">
-          <ion-icon color="light" name="add-circle" slot="icon-only"></ion-icon>
         </ion-button>
       </ion-item>
     </ion-list>
+      </div>
+     </div>
    </div>
   </ion-list>
+
 </ion-content>

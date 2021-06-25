@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MenuService } from './services/menu.service';
+import { ComponentsService } from './services/component.service';
 import {IMenu} from './models/menu.interface';
 @Component({
   selector: 'app-root',
@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
   public appPages: Observable<IMenu[]>;
   public labels = ['Opcion Rapida 1'];
 
-  constructor(public menuService: MenuService) {}
+  constructor(public menuService: ComponentsService) {}
 
   ngOnInit() {
     this.appPages = this.menuService.getMenuOptions() ;

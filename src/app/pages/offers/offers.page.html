@@ -10,16 +10,32 @@
 <ion-content>
  <ion-list>
    <ion-card *ngFor="let offer of list | async;let i = index">
+     <ion-img [src]="offer.image || 'assets/logo.jpg'">
+     </ion-img>
      <ion-card-title>
-       {{offer?.name || ''}}
+      <ion-item>
+
+         <h3 style="font-weight: bold;">
+          {{offer?.name || ''}}
+         </h3>
+
+      </ion-item>
      </ion-card-title>
      <ion-card-content>
-       {{offer?.comment}}
+       <ion-label>
+         <strong>Days</strong>: {{getDays(offer)}}
+       </ion-label>
+       <br>
+       <label>
+         <strong>From: </strong>
+         <ion-text>{{offer?.startDate || '' | date}}</ion-text> |
+         <strong>To:</strong>
+         <ion-text>{{offer?.startDate || '' | date}}</ion-text>
+       </label>
+       <br>
        <br>
        <ion-chip>Product1</ion-chip> <ion-chip>Product1</ion-chip> <ion-chip>Product1</ion-chip> <ion-chip>Product1</ion-chip>
      </ion-card-content>
    </ion-card>
  </ion-list>
-
- {{test | async | json}}
 </ion-content>

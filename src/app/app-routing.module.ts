@@ -38,6 +38,10 @@ const routes: Routes = [
   {
     path: 'auth/login',
     loadChildren: () => import('./auth/login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'select-product',
+    loadChildren: () => import('./pages/select-product/select-product.module').then( m => m.SelectProductPageModule)
   }
 ];
 
