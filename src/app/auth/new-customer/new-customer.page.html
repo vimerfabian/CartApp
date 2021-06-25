@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Customer Form</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header class="ion-text-center">
+      <ion-label style="font-size: x-large;" class="text-center">
+        <ion-icon style="font-size: x-large;"  slot="icon-only" size="large" name="person"></ion-icon>
+      </ion-label>
+
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label position="floating">FirstName</ion-label>
+          <ion-input placeholder="FirstName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">LastName</ion-label>
+          <ion-input placeholder="LastName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Phone Number</ion-label>
+          <ion-input type="tel" placeholder="Phone Number"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Email</ion-label>
+          <ion-input type="email" placeholder="Email"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">New Password</ion-label>
+          <ion-input type='password' placeholder="New Password"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Confirm Password</ion-label>
+          <ion-input type='password' placeholder="Confirm Password"></ion-input>
+        </ion-item>
+        <ion-button expand="full">
+          Save
+        </ion-button>
+
+        <ion-card>
+          <ion-card-content>
+            If you have read and agree to the terms and conditions click <strong>I Agree</strong>
+            <br>
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <ion-button size="small" fill="outline">
+                    READ TERMS AND CONDITIONS
+                  </ion-button>
+                </ion-col>
+                <ion-col>
+                <ion-item>
+                  <ion-label>
+                    I Agree
+                  </ion-label>
+                  <ion-checkbox mode="ios" color="success">
+                  </ion-checkbox>
+                </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

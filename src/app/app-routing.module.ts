@@ -30,6 +30,14 @@ const routes: Routes = [
   {
     path: 'menu',
     loadChildren: () => import('./pages/menu/menu.module').then( m => m.MenuPageModule)
+  },
+  {
+    path: 'auth/new-customer',
+    loadChildren: () => import('./auth/new-customer/new-customer.module').then( m => m.NewCustomerPageModule)
+  },
+  {
+    path: 'auth/login',
+    loadChildren: () => import('./auth/login/login.module').then( m => m.LoginPageModule)
   }
 ];
 
