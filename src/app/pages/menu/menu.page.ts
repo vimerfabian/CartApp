@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { MenuService } from 'src/app/services/menu.service';
 
@@ -10,10 +11,14 @@ import { MenuService } from 'src/app/services/menu.service';
 export class MenuPage implements OnInit {
   show: false;
   list: Observable<any>;
-  constructor(private menuService: MenuService) { }
+  constructor(private menuService: MenuService, private navCtrl: NavController) { }
 
   ngOnInit() {
     this.list = this.menuService.getCategoryList();
+  }
+
+  selectProduct(item) {
+    this.navCtrl.navigateForward('/pages/select-product', { state: item });
   }
 
 }

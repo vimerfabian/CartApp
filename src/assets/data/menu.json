@@ -1,11 +1,6 @@
 [
-  { "title": "Home", "url": "/folder/Inbox", "icon": "star" },
-  { "title": "Offers", "url": "/offers", "icon": "star" },
-  { "title": "Menu", "url": "/menu", "icon": "restaurant" },
-  { "title": "My Info", "url": "/my-info", "icon": "information-circle" },
-  { "title": "My Addresses", "url": "/address", "icon": "pin" },
-  { "title": "My Wallet", "url": "/folder/Trash", "icon": "wallet" },
-  { "title": "Logout", "url": "/folder/Spam", "icon": "exit" },
-  { "title": "Test New Customer", "url": "/auth/new-customer", "icon": "exit" },
-  { "title": "Test Login", "url": "/auth/login", "icon": "exit" }
+  { "title": "Offers", "url": "/pages/offers", "icon": "star" },
+  { "title": "Menu", "url": "/pages/menu", "icon": "restaurant" },
+  { "title": "My Info", "url": "/pages/my-info", "icon": "information-circle" },
+  { "title": "My Addresses", "url": "/pages/address", "icon": "pin" }
 ]

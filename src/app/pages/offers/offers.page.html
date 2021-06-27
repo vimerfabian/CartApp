@@ -34,7 +34,7 @@
        </label>
        <br>
        <br>
-       <ion-chip>Product1</ion-chip> <ion-chip>Product1</ion-chip> <ion-chip>Product1</ion-chip> <ion-chip>Product1</ion-chip>
+       <ion-chip *ngFor="let product of offer?.products">{{product.name}}</ion-chip>
      </ion-card-content>
    </ion-card>
  </ion-list>

@@ -8,6 +8,7 @@
 </ion-header>
 
 <ion-content>
+<form #form="ngForm">
   <ion-card>
     <ion-card-header class="ion-text-center">
       <ion-label style="font-size: x-large;" class="text-center">
@@ -20,27 +21,27 @@
       <ion-list>
         <ion-item>
           <ion-label position="floating">FirstName</ion-label>
-          <ion-input placeholder="FirstName"></ion-input>
+          <ion-input maxlength="25" required name="firstname" [(ngModel)]="client.firstName" placeholder="FirstName"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="floating">LastName</ion-label>
-          <ion-input placeholder="LastName"></ion-input>
+          <ion-input maxlength="25" required name="lastname" [(ngModel)]="client.lastName" placeholder="LastName"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="floating">Phone Number</ion-label>
-          <ion-input type="tel" placeholder="Phone Number"></ion-input>
+          <ion-input maxlength="25" required name="phone" [(ngModel)]="client.phone" type="tel" placeholder="Phone Number"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="floating">Email</ion-label>
-          <ion-input type="email" placeholder="Email"></ion-input>
+          <ion-input maxlength="60" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" name="email" [(ngModel)]="client.email" type="email" placeholder="Email"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="floating">New Password</ion-label>
-          <ion-input type='password' placeholder="New Password"></ion-input>
+          <ion-input maxlength="100" required name="password" [(ngModel)]="client.password" type='password' placeholder="New Password"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="floating">Confirm Password</ion-label>
-          <ion-input type='password' placeholder="Confirm Password"></ion-input>
+          <ion-input maxlength="100" required name="confirmPassword" [(ngModel)]="client.confirmPassword" type='password' placeholder="Confirm Password"></ion-input>
         </ion-item>
         <ion-card>
           <ion-card-content>
@@ -58,7 +59,7 @@
                   <ion-label>
                     I Agree
                   </ion-label>
-                  <ion-checkbox mode="ios" color="success">
+                  <ion-checkbox name="read" [(ngModel)]="client.read"  mode="ios" color="success">
                   </ion-checkbox>
                 </ion-item>
                 </ion-col>
@@ -70,7 +71,8 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-button expand="full">
+  <ion-button [disabled]="!form.valid || client.confirmPassword !== client.password || !client.read" (click)="form.valid && save()" expand="full">
     Save
   </ion-button>
+</form>
 </ion-content>

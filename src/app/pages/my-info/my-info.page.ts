@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActionSheetController, NavController } from '@ionic/angular';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-my-info',
@@ -7,10 +8,12 @@ import { ActionSheetController, NavController } from '@ionic/angular';
   styleUrls: ['./my-info.page.scss'],
 })
 export class MyInfoPage implements OnInit {
-
-  constructor(private actionCtrl: ActionSheetController, private navCtrl: NavController) { }
+  user: any;
+  constructor(private actionCtrl: ActionSheetController, private navCtrl: NavController,
+    private authService: AuthService) { }
 
   ngOnInit() {
+    this.user = this.authService.getCurrentSession();
   }
 
   async showActions(event) {
