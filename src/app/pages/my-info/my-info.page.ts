@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController, NavController } from '@ionic/angular';
+import { ActionSheetController, LoadingController, NavController, ToastController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
+import { ClientService } from 'src/app/services/client.service';
 
 @Component({
   selector: 'app-my-info',
@@ -10,10 +11,44 @@ import { AuthService } from 'src/app/services/auth.service';
 export class MyInfoPage implements OnInit {
   user: any;
   constructor(private actionCtrl: ActionSheetController, private navCtrl: NavController,
-    private authService: AuthService) { }
+    private authService: AuthService, private clientService: ClientService, private loadingCtrl: LoadingController,
+    private toastCtrl: ToastController) { }
 
   ngOnInit() {
     this.user = this.authService.getCurrentSession();
+  }
+
+  async save() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading...'
+    });
+    await loading.present();
+    let title = 'Error';
+    let color = 'danger';
+    let message = '';
+    try {
+      const res: any = await this.clientService.save(this.user).toPromise();
+      if(res?.idEstado === 1) {
+        title =  'Success';
+        message = 'My Info Updated';
+        color = 'success';
+      } else {
+        message = res?.descripcion;
+      }
+      console.log('res', res);
+    }catch(err) {
+      message = 'Error';
+      console.log('err', err);
+    }
+    loading.dismiss();
+
+    const toast = await this.toastCtrl.create({
+      header: title,
+      color,
+      duration: 3000,
+      message
+    });
+    toast.present();
   }
 
   async showActions(event) {

@@ -1,54 +1,50 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="address"></ion-back-button>
+      <ion-back-button defaultHref="/pages/address"></ion-back-button>
     </ion-buttons>
     <ion-title>New Address</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item>
-      <ion-label position="floating">Name</ion-label>
-      <ion-input placeholder="Name"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Address 1</ion-label>
-      <ion-input placeholder="Address 1"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Address 2</ion-label>
-      <ion-input placeholder="Address 2"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">City</ion-label>
-      <ion-select>
-        <ion-select-option>
-          City 1
-        </ion-select-option>
-        <ion-select-option>
-          City 2
-        </ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">State</ion-label>
-      <ion-select>
-        <ion-select-option>
-          State 1
-        </ion-select-option>
-        <ion-select-option>
-          State 2
-        </ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Zip Code</ion-label>
-      <ion-input placeholder="FirstName"></ion-input>
-    </ion-item>
-    <ion-button expand="full">
-      Save
-    </ion-button>
-  </ion-list>
+  <form #form="ngForm">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">Name</ion-label>
+        <ion-input required name="name" maxlength="30" type="text" [(ngModel)]="address.name" placeholder="Name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Address 1</ion-label>
+        <ion-input required  name="address1" maxlength="30" type="text" [(ngModel)]="address.address1"placeholder="Address 1"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Address 2</ion-label>
+        <ion-input required name="address2" maxlength="30" type="text" [(ngModel)]="address.address2" placeholder="Address 2"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">City</ion-label>
+        <ion-select name="idCity" [(ngModel)]="address.idCity">
+          <ion-select-option [value]="city?.idCity" *ngFor="let city of cityList">
+            {{city?.name}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">State</ion-label>
+        <ion-select name="idState" [(ngModel)]="address.idState">
+          <ion-select-option [value]="state?.idState" *ngFor="let state of stateList">
+            {{state?.name}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Zip Code</ion-label>
+        <ion-input required name="zipCode" maxlength="30" type="text" [(ngModel)]="address.zipCode" placeholder="ZipCode"></ion-input>
+      </ion-item>
+      <ion-button [disabled]="form.invalid" (click)="form.valid && save()" expand="full">
+        Save
+      </ion-button>
+    </ion-list>
+  </form>
 </ion-content>

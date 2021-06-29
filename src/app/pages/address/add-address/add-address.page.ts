@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { LoadingController, NavController, ToastController } from '@ionic/angular';
+import { AddressService } from 'src/app/services/address.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-add-address',
@@ -6,10 +9,51 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-address.page.scss'],
 })
 export class AddAddressPage implements OnInit {
+  address: any = {};
+  cityList: any = [];
+  stateList: any = [];
+  constructor(private addressService: AddressService, private toastCtrl: ToastController, private loadingCtrl: LoadingController,
+    private authService: AuthService, private navCtrl: NavController) { }
 
-  constructor() { }
+  async ngOnInit() {
+    this.cityList = await this.addressService.getCityList().toPromise();
+    this.stateList = await this.addressService.getStateList().toPromise();
+  }
 
-  ngOnInit() {
+  async save() {
+    const user = this.authService.getCurrentSession();
+    this.address.idClient = user?.idClient;
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading...'
+    });
+    await loading.present();
+    let title = 'Error';
+    let color = 'danger';
+    let message = '';
+    try {
+      const res: any = await this.addressService.save(this.address).toPromise();
+      if(res?.idEstado === 1) {
+        title =  'Success';
+        message = 'Address Updated';
+        color = 'success';
+        this.navCtrl.navigateRoot('/pages/address');
+      } else {
+        message = res?.descripcion;
+      }
+      console.log('res', res);
+    }catch(err) {
+      message = 'Error';
+      console.log('err', err);
+    }
+    loading.dismiss();
+
+    const toast = await this.toastCtrl.create({
+      header: title,
+      color,
+      duration: 3000,
+      message
+    });
+    toast.present();
   }
 
 }

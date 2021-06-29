@@ -40,7 +40,7 @@
           <ion-label position="floating">Email</ion-label>
           <ion-input name="email" [(ngModel)]="user.email" type="email" placeholder="Email"></ion-input>
         </ion-item>
-        <ion-button expand="full">
+        <ion-button [disabled]="form.invalid" (click)="form.valid && save()" expand="full">
           Save
         </ion-button>
       </ion-list>

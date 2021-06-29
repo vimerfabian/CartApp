@@ -15,15 +15,15 @@
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let item of list;let i = index;">
+    <ion-item *ngFor="let item of list | async;let i = index;">
      <ion-label>
-        Address {{item}}
+        Address {{item?.name}}
       <br>
       <ion-note>
-        asdsd, asdasd, 12324
+        {{item?.address1}}
       </ion-note>
      </ion-label>
-      <ion-toggle color="success"></ion-toggle>
+      <ion-toggle [checked]="item?.byDefault" color="success"></ion-toggle>
     </ion-item>
 
   </ion-list>
