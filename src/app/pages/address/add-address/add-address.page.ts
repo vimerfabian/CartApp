@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController, NavController, ToastController } from '@ionic/angular';
+import { HttpStatusEnum } from 'src/app/common/enums/http-status.enum';
 import { AddressService } from 'src/app/services/address.service';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -32,7 +33,7 @@ export class AddAddressPage implements OnInit {
     let message = '';
     try {
       const res: any = await this.addressService.save(this.address).toPromise();
-      if(res?.idEstado === 1) {
+      if(res?.idEstado === HttpStatusEnum.EXITOSO) {
         title =  'Success';
         message = 'Address Updated';
         color = 'success';

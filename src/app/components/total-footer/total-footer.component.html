@@ -1,0 +1,27 @@
+<hr>
+<ion-list>
+  <ion-item>
+    <ion-label>
+      <strong>Subtotal:</strong>
+    </ion-label>
+    <ion-text slot="end">
+      <strong>{{subTotalPrice || 0 |  number}}</strong>
+    </ion-text>
+  </ion-item>
+  <ion-item>
+    <ion-label>
+      <strong>Tax:</strong>
+    </ion-label>
+    <ion-text slot="end">
+      <strong>{{totalTaxes || 0 |  number}}</strong>
+    </ion-text>
+  </ion-item>
+  <ion-item>
+    <ion-label>
+      <strong>Total({{cartCount || 0 | number}}):</strong>
+    </ion-label>
+    <ion-text slot="end">
+      <strong>{{totalPrice || 0 |  number}}</strong>
+    </ion-text>
+  </ion-item>
+</ion-list>

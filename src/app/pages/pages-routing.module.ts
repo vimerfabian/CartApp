@@ -27,6 +27,14 @@ const routes: Routes = [
     path: 'select-product',
     loadChildren: () => import('./select-product/select-product.module').then( m => m.SelectProductPageModule)
   },
+  {
+    path: 'my-order',
+    loadChildren: () => import('./my-order/my-order.module').then( m => m.MyOrderPageModule)
+  },
+  {
+    path: 'checkout',
+    loadChildren: () => import('./checkout/checkout.module').then( m => m.CheckoutPageModule)
+  },
 ];
 
 @NgModule({

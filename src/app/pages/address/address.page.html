@@ -15,7 +15,7 @@
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let item of list | async;let i = index;">
+    <ion-item *ngFor="let item of list;let i = index;">
      <ion-label>
         Address {{item?.name}}
       <br>
@@ -23,7 +23,7 @@
         {{item?.address1}}
       </ion-note>
      </ion-label>
-      <ion-toggle [checked]="item?.byDefault" color="success"></ion-toggle>
+      <ion-toggle (ionChange)="change($event, item.idAddress)" [checked]="item?.byDefault" color="success"></ion-toggle>
     </ion-item>
 
   </ion-list>

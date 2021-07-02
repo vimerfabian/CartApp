@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-select-product',
@@ -8,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class SelectProductPage implements OnInit {
   product: any = {};
-  constructor(public router: Router){
+  constructor(public router: Router, public cartService: CartService, private nav: NavController){
     if (router.getCurrentNavigation().extras.state) {
           const product = this.router.getCurrentNavigation().extras.state;
           console.log('product', product);
@@ -29,6 +31,29 @@ export class SelectProductPage implements OnInit {
       }
       this.product.quantity += n;
       this.calc();
+    }
+
+    async addToCart() {
+      if(this.product?.idProduct > 0) {
+        const product = this.getParsedProduct();
+        await this.cartService.addProduct(product);
+        this.nav.navigateRoot('/pages/menu');
+      }
+    }
+
+    getParsedProduct() {
+      const product = Object.assign({}, this.product);
+      product.toppings = this.product.productTopping.filter(x=> x.selected === true);
+      return product;
+    }
+    selectTopping(modifier: any, idx: number) {
+      console.log('idx', idx);
+      this.product.productTopping[idx].selected = true;
+      for(let i = 0;i<this.product.productTopping.length;i++) {
+        if(this.product.productTopping[i].toppingTypeName === this.product.productTopping[idx].toppingTypeName && i!==idx) {
+          this.product.productTopping[i].selected = false;
+        }
+      }
     }
 
     calc() {

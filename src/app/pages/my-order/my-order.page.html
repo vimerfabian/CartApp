@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/pages/menu">
+        <ion-icon name="cancel"></ion-icon>
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title>My Order</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [scrollEvents]="true">
+ <form #form="ngForm">
+  <ion-card *ngFor="let item of cart | async">
+     <ion-list>
+      <ion-item>
+        <ion-label>{{item.name}}</ion-label>
+        <ion-button (click)="remove(item)" color="danger" slot="end">
+          <ion-icon name="trash"></ion-icon>
+        </ion-button>
+      </ion-item>
+     </ion-list>
+     <ion-card-content>
+      <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-button (click)="add(item, -1)" color="danger" style="padding: 0px;" fill="clear">
+            <ion-icon slot="icon-only" name="remove"></ion-icon>
+          </ion-button>
+          <ion-text style="font-weight: small;">Qty: {{item.quantity}}</ion-text>
+          <ion-button (click)="add(item, 1)" style="padding: 0px !important;" fill="clear">
+            <ion-icon style="padding: 0px !important;" slot="icon-only" name="add"></ion-icon>
+          </ion-button>
+
+        </ion-col>
+        <ion-col>
+          <ion-text>Price: {{item.price}}</ion-text>
+        </ion-col>
+        <ion-col>
+          <ion-text>Tax: {{item.taxes}}</ion-text>
+        </ion-col>
+        <ion-col>
+          <ion-text>Total: {{item.total}}</ion-text>
+        </ion-col>
+      </ion-row>
+      </ion-grid>
+     </ion-card-content>
+  </ion-card>
+ </form>
+</ion-content>
+
+<ion-footer>
+  <app-total-footer></app-total-footer>
+  <ion-button [routerLink]="['/pages/checkout']" color="gray" expand="full">
+    CHECKOUT
+  </ion-button>
+</ion-footer>

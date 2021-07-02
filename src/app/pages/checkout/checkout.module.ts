@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { MenuPageRoutingModule } from './menu-routing.module';
+import { CheckoutPageRoutingModule } from './checkout-routing.module';
 
-import { MenuPage } from './menu.page';
+import { CheckoutPage } from './checkout.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
@@ -14,9 +14,9 @@ import { ComponentsModule } from 'src/app/components/components.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    MenuPageRoutingModule,
+    CheckoutPageRoutingModule,
     ComponentsModule
   ],
-  declarations: [MenuPage]
+  declarations: [CheckoutPage]
 })
-export class MenuPageModule {}
+export class CheckoutPageModule {}

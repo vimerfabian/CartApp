@@ -9,12 +9,33 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./address.page.scss'],
 })
 export class AddressPage implements OnInit {
-  list:  Observable<any>;
+  list: any = [];
   constructor(private addressService: AddressService, private authService: AuthService) { }
 
   ngOnInit() {
+    this.updateList();
+  }
+async updateList() {
     const user = this.authService.getCurrentSession();
-    this.list = this.addressService.getList(user?.idClient);
+    this.list = await this.addressService.getList(user?.idClient).toPromise();;
+  }
+
+
+  change(event, id) {
+    console.log('id', id, 'event', event.detail.checked);
+    if(event.detail.checked) {
+      this.addressService.setByDefault(id);
+      this.list = this.list.map(x => {
+        if(x.idAddress !== id) {
+          x.byDefault = false;
+        } else {
+          x.byDefault = true;
+        }
+        return x;
+      });
+      console.log('list', this.list);
+    }
+
   }
 
 }

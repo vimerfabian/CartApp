@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController, NavController, ToastController } from '@ionic/angular';
+import { HttpStatusEnum } from 'src/app/common/enums/http-status.enum';
 import { ClientService } from 'src/app/services/client.service';
 
 @Component({
@@ -35,7 +36,7 @@ export class NewCustomerPage implements OnInit {
    let message = 'Error';
     this.clientService.save(this.client).subscribe((res: any) => {
       console.log('res', res);
-     if(res?.idEstado === 1) {
+     if(res?.idEstado === HttpStatusEnum.EXITOSO) {
       title = 'Success, confirm your email';
       color = 'success';
       message = res?.nombre;

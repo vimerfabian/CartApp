@@ -2,5 +2,6 @@
   { "title": "Offers", "url": "/pages/offers", "icon": "star" },
   { "title": "Menu", "url": "/pages/menu", "icon": "restaurant" },
   { "title": "My Info", "url": "/pages/my-info", "icon": "information-circle" },
+  { "title": "My Wallet", "url": "/pages/my-info", "icon": "information-circle" },
   { "title": "My Addresses", "url": "/pages/address", "icon": "pin" }
 ]

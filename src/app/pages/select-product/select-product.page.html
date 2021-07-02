@@ -55,12 +55,12 @@
       Modifiers
     </strong>
     <br>
-    <ion-button *ngFor="let modifier of product.productTopping" (click)="modifier.selected = !modifier.selected" [color]="modifier.selected ? 'primary' : 'medium'">{{modifier.toppingName}}</ion-button>
+    <ion-button *ngFor="let modifier of product.productTopping;let idx_topping = index;" (click)="selectTopping(modifier, idx_topping)" [color]="modifier.selected ? 'primary' : 'medium'">{{modifier.toppingName}}</ion-button>
   </form>
 </ion-content>
 
 <ion-footer>
   <ion-toolbar>
-    <ion-button color="light" expand="full"> ADD TO MY CAR (${{product.total}})</ion-button>
+    <ion-button (click)="addToCart()" color="light" expand="full"> ADD TO MY CAR (${{product.total}})</ion-button>
   </ion-toolbar>
 </ion-footer>

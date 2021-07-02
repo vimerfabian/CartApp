@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActionSheetController, LoadingController, NavController, ToastController } from '@ionic/angular';
+import { HttpStatusEnum } from 'src/app/common/enums/http-status.enum';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClientService } from 'src/app/services/client.service';
 
@@ -28,7 +29,7 @@ export class MyInfoPage implements OnInit {
     let message = '';
     try {
       const res: any = await this.clientService.save(this.user).toPromise();
-      if(res?.idEstado === 1) {
+      if(res?.idEstado === HttpStatusEnum.EXITOSO) {
         title =  'Success';
         message = 'My Info Updated';
         color = 'success';

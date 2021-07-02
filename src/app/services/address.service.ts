@@ -29,4 +29,8 @@ export class AddressService {
   getStateList() {
     return this.httpClient.get(environment.apiUrl + '/State/getstate');
   }
+
+  setByDefault(id: number) {
+    return this.httpClient.get(this.url + `?id=${id}`);
+  }
 }

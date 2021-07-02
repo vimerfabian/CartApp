@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { CartService } from 'src/app/services/cart.service';
 import { MenuService } from 'src/app/services/menu.service';
 
 @Component({
@@ -11,9 +12,18 @@ import { MenuService } from 'src/app/services/menu.service';
 export class MenuPage implements OnInit {
   show: false;
   list: Observable<any>;
-  constructor(private menuService: MenuService, private navCtrl: NavController) { }
+  cartCount = 0;
+  totalPrice = 0;
+  constructor(private menuService: MenuService, private navCtrl: NavController, public cartService: CartService) {
+   }
 
   ngOnInit() {
+    this.cartService.cartCount.subscribe(x => {
+      this.cartCount = x;
+    });
+    this.cartService.totalPrice.subscribe(x => {
+      this.totalPrice = x;
+    });
     this.list = this.menuService.getCategoryList();
   }
 

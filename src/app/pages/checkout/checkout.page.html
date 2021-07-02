@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/pages/my-order">
+        <ion-icon name="cancel"></ion-icon>
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title>Checkout</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-list>
+  <ion-item>
+    <ion-label position="floating">State</ion-label>
+    <ion-select name="idAddress" [(ngModel)]="checkout.idAddress">
+      <ion-select-option [value]="address?.idState" *ngFor="let address of addressList">
+        {{address?.name}}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Payment Method</ion-label>
+    <ion-select name="idPaymentMethod" [(ngModel)]="checkout.idPaymentMethod">
+      <ion-select-option [value]="pm?.idState" *ngFor="let pm of paymentMethodList">
+        {{pm?.name}}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Order Type</ion-label>
+    <ion-select name="idOrderType" [(ngModel)]="checkout.idOrderType">
+      <ion-select-option [value]="ot?.idOrderType" *ngFor="let ot of orderTypeList">
+        {{ot?.name}}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+</ion-list>
+<ion-button expand="block" color="primary">
+  <ion-label>
+    PLACE ORDER
+  </ion-label>
+  <ion-icon style="margin-left: 2px;;" name="send"></ion-icon>
+</ion-button>
+</ion-content>
+
+<ion-footer>
+  <app-total-footer></app-total-footer>
+</ion-footer>

@@ -4,14 +4,19 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Offers</ion-title>
+    <ion-buttons slot="end">
+      <app-cart-status></app-cart-status>
+     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
  <ion-list>
    <ion-card *ngFor="let offer of list | async;let i = index">
-     <ion-img [src]="offer.image || 'assets/logo.jpg'">
-     </ion-img>
+     <ion-item>
+      <ion-img  class="text-center" style="max-width: 100%;max-height: 500px;" [src]="offer.image || 'assets/hamburguer.png'">
+      </ion-img>
+     </ion-item>
      <ion-card-title>
       <ion-item>
 
