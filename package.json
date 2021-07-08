@@ -27,6 +27,7 @@
     "card.io.cordova.mobilesdk": "^2.1.0",
     "com.paypal.cordova.mobilesdk": "^3.5.0",
     "cordova-android": "9.1.0",
+    "cordova-browser": "6.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.4"
@@ -85,7 +86,8 @@
       "com.paypal.cordova.mobilesdk": {}
     },
     "platforms": [
-      "android"
+      "android",
+      "browser"
     ]
   }
 }
