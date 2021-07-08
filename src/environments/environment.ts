@@ -7,6 +7,7 @@ export const environment = {
   apiUrl: 'http://api.tierracolombianarestaurant-cartapp.com/api',
   stripeApiKey:
     'pk_test_51ITz8UKtCaSqT32ksXfKyKy19ngw43ZqOUlBKyQw0YRMBJYNe7ROKDLGPaHGsJoh4599e0pVYAJwnpvMQjymWkg1009XQQuv7y',
+  apiPaymentUrl: 'http://192.168.100.2:3000',
 };
 
 /*

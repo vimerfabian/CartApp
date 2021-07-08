@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { Storage } from '@ionic/storage';
 import { ComponentsModule } from './components/components.module';
 import { Stripe } from '@ionic-native/stripe/ngx';
+import { PayPal } from '@ionic-native/paypal/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -35,6 +36,7 @@ import { Stripe } from '@ionic-native/stripe/ngx';
     },
     Storage,
     Stripe,
+    PayPal,
   ],
   bootstrap: [AppComponent],
 })

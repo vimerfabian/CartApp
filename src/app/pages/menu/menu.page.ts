@@ -29,21 +29,21 @@ export class MenuPage implements OnInit {
     this.cartService.totalPrice.subscribe((x) => {
       this.totalPrice = x;
     });
-    this.list = this.menuService.getCategoryList().pipe(
+    this.list = this.menuService.getCategoryList(); /*.pipe(
       map((item: any[] | any) => {
         console.log('cl', item);
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-        // item?.subCategories?.map((sub) => {
-        //   console.log('sub', sub);
-        //   sub.products.map((x) => {
-        //     x.productTopping = ArrayUtil.groupBy(
-        //       x.productTopping,
-        //       x.toppingTypeName
-        //     );
-        //   });
-        // });
+        //eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        item?.subCategories?.map((sub) => {
+          console.log('sub', sub);
+          sub.products.map((x) => {
+            x.productTopping = ArrayUtil.groupBy(
+              x.productTopping,
+              x.toppingTypeName
+            );
+          });
+        });
       })
-    );
+    );*/
   }
 
   selectProduct(item) {
