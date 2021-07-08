@@ -10,18 +10,32 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './auth/interceptor/token-interceptor';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {Storage} from '@ionic/storage';
+import { Storage } from '@ionic/storage';
 import { ComponentsModule } from './components/components.module';
+import { Stripe } from '@ionic-native/stripe/ngx';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule,CommonModule, FormsModule, ComponentsModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, {
-    provide: HTTP_INTERCEPTORS,
-    useClass: TokenInterceptor,
-    multi: true,
-  }, Storage],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    HttpClientModule,
+    CommonModule,
+    FormsModule,
+    ComponentsModule,
+  ],
+  providers: [
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
+    Storage,
+    Stripe,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

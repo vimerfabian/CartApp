@@ -2,14 +2,9 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
-      <ion-back-button></ion-back-button>
+      <!-- <ion-back-button defaultHref="/pages/offers"></ion-back-button> -->
     </ion-buttons>
-    <ion-title>My Addresses</ion-title>
-    <ion-buttons slot="end">
-      <ion-button [routerLink]="['add-address']">
-        <ion-icon name="add"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+    <ion-title>My Wallet</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -21,11 +16,21 @@
         <br />
         <ion-note> {{item?.address1}} </ion-note>
       </ion-label>
-      <ion-toggle
+      <!-- <ion-toggle
         (ionChange)="change($event, item.idAddress)"
         [checked]="item?.byDefault"
         color="success"
-      ></ion-toggle>
+      ></ion-toggle> -->
     </ion-item>
   </ion-list>
 </ion-content>
+
+<ion-footer>
+  <ion-button
+    expand="block"
+    [routerLink]="['/pages/my-wallet/add-payment-method']"
+  >
+    <ion-icon name="cart"></ion-icon>
+    <ion-label style="text-align: center"> Add Payment Method </ion-label>
+  </ion-button>
+</ion-footer>

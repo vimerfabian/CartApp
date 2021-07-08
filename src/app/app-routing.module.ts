@@ -6,31 +6,46 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: 'auth/login',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'auth/reset-password',
-    loadChildren: () => import('./auth/reset-password/reset-password.module').then( m => m.ResetPasswordPageModule)
+    loadChildren: () =>
+      import('./auth/reset-password/reset-password.module').then(
+        (m) => m.ResetPasswordPageModule
+      ),
   },
   {
     path: 'auth/new-customer',
-    loadChildren: () => import('./auth/new-customer/new-customer.module').then( m => m.NewCustomerPageModule)
+    loadChildren: () =>
+      import('./auth/new-customer/new-customer.module').then(
+        (m) => m.NewCustomerPageModule
+      ),
   },
   {
     path: 'auth/login',
-    loadChildren: () => import('./auth/login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () =>
+      import('./auth/login/login.module').then((m) => m.LoginPageModule),
+  },
+  {
+    path: 'auth/forgot-password',
+    loadChildren: () =>
+      import('./auth/forgot-password/forgot-password.module').then(
+        (m) => m.ForgotPasswordPageModule
+      ),
   },
   {
     canActivate: [AuthGuard],
     path: 'pages',
-    loadChildren: () => import('./pages/pages.module').then( m => m.PagesModule)
-  }
+    loadChildren: () =>
+      import('./pages/pages.module').then((m) => m.PagesModule),
+  },
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

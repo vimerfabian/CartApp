@@ -1,47 +1,64 @@
 <ion-content>
-<form #form="ngForm">
-  <!-- <ion-header>
+  <form #form="ngForm">
+    <!-- <ion-header>
   <ion-toolbar>
     <ion-title>login</ion-title>
   </ion-toolbar>
 </ion-header> -->
 
+    <ion-item style="border: 0px; border-radius: 0px; border-width: 0px">
+      <ion-img src="assets/logo.jpg"></ion-img>
+    </ion-item>
 
-
-  <ion-item style="border: 0px;border-radius: 0px;border-width: 0px;">
-   <ion-img src="assets/logo.jpg"></ion-img>
-  </ion-item>
-
- <ion-item style="margin-top: 15px;">
-   <ion-icon slot="start" name="person">
-   </ion-icon>
-   <ion-label position="floating">
-     Email
-   </ion-label>
-   <ion-input name="email" required [(ngModel)]="user.username" placeholder="email" type="email"></ion-input>
- </ion-item>
- <ion-item>
-   <ion-icon slot="start" name="unlock">
-   </ion-icon>
-   <ion-label position="floating">
-     Password
-   </ion-label>
-   <ion-input placeholder="password" name="password" required [(ngModel)]="user.password" type="password"></ion-input>
- </ion-item>
- <ion-button [disabled]="!form.valid" (click)="login()" color="light" expand="block">
-   LOGIN
- </ion-button>
- <ion-row >
-   <ion-col style="padding: 0%;">
-     <ion-button color="dark" expand="block">
-       FORGOT PASSWORD
-     </ion-button>
-   </ion-col>
-   <ion-col style="padding: 0%;">
-     <ion-button [routerLink]="['/auth/new-customer']" color="medium" expand="block">
-       NEW ACCOUNT
-     </ion-button>
-   </ion-col>
- </ion-row>
-</form>
+    <ion-item style="margin-top: 15px">
+      <ion-icon slot="start" name="person"> </ion-icon>
+      <ion-label position="floating"> Email </ion-label>
+      <ion-input
+        name="email"
+        required
+        [(ngModel)]="user.username"
+        placeholder="email"
+        type="email"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon slot="start" name="unlock"> </ion-icon>
+      <ion-label position="floating"> Password </ion-label>
+      <ion-input
+        placeholder="password"
+        name="password"
+        required
+        [(ngModel)]="user.password"
+        type="password"
+      ></ion-input>
+    </ion-item>
+    <ion-button
+      [disabled]="!form.valid"
+      (click)="login()"
+      color="light"
+      expand="block"
+    >
+      LOGIN
+    </ion-button>
+    <ion-row>
+      <ion-col style="padding: 0%">
+        <ion-button
+          [routerLink]="['/auth/forgot-password']"
+          color="dark"
+          expand="block"
+        >
+          FORGOT PASSWORD
+        </ion-button>
+      </ion-col>
+      <ion-col style="padding: 0%">
+        <ion-button
+          [routerLink]="['/auth/new-customer']"
+          color="medium"
+          expand="block"
+        >
+          NEW ACCOUNT
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
 </ion-content>

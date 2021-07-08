@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/pages/my-wallet"> </ion-back-button>
+    </ion-buttons>
+    <ion-title>Add Payment Method</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #form="ngForm">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">Card Number</ion-label>
+        <ion-input
+          required
+          name="cardnumber"
+          maxlength="20"
+          type="text"
+          [(ngModel)]="paymentMethod.cardNumber"
+          placeholder="Name"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Expire Date</ion-label>
+        <ion-datetime
+          name="expdate"
+          [(ngModel)]="paymentMethod.expDate"
+          required
+          displayFormat="MM/YY"
+          max="2200"
+        >
+        </ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">CVC</ion-label>
+        <ion-input
+          required
+          name="cvc"
+          maxlength="4"
+          type="text"
+          [(ngModel)]="paymentMethod.cvc"
+          placeholder="Name"
+        ></ion-input>
+      </ion-item>
+
+      <ion-button
+        [disabled]="form.invalid"
+        (click)="form.valid && save()"
+        expand="full"
+      >
+        Save
+      </ion-button>
+    </ion-list>
+  </form>
+</ion-content>
