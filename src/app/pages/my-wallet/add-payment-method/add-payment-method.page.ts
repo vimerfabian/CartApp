@@ -15,6 +15,7 @@ import { WalletService } from 'src/app/services/wallet.service';
 })
 export class AddPaymentMethodPage implements OnInit {
   paymentMethod: any = {};
+  paymentMethodTypes: any = [];
   cityList: any = [];
   stateList: any = [];
   constructor(
@@ -25,13 +26,43 @@ export class AddPaymentMethodPage implements OnInit {
     private navCtrl: NavController
   ) {}
 
-  async ngOnInit() {}
+  async ngOnInit() {
+    this.paymentMethodTypes = await this.walletService
+      .getPaymentMethodTypes()
+      .toPromise();
+    console.log('payment?MethodsTypes', this.paymentMethodTypes);
+  }
 
   async save() {
+    const isValid = await this.isValid().toPromise();
+    console.log('isValid', isValid);
     console.log('reg', this.paymentMethod);
-    return;
+    if (!isValid) {
+      this.toastCtrl
+        .create({
+          header: 'Validation Error',
+          message: 'Invalid Card Number',
+          color: 'danger',
+          position: 'top',
+        })
+        .then((t) => {
+          t.present();
+        });
+      return;
+    }
+    const cardType = '';
+    try {
+      await this.walletService
+        .getCardType(this.paymentMethod.cardNumber)
+        .toPromise();
+    } catch (err) {
+      console.log(err);
+    }
+    console.log('cardType', cardType);
+
     const user = this.authService.getCurrentSession();
     this.paymentMethod.idClient = user?.idClient;
+    this.paymentMethod.idCardType = 2;
     const loading = await this.loadingCtrl.create({
       message: 'Loading...',
     });
@@ -40,6 +71,7 @@ export class AddPaymentMethodPage implements OnInit {
     let color = 'danger';
     let message = '';
     try {
+      console.log('toBeSaved', this.paymentMethod);
       const res: any = await this.walletService
         .save(this.paymentMethod)
         .toPromise();
@@ -65,5 +97,9 @@ export class AddPaymentMethodPage implements OnInit {
       message,
     });
     toast.present();
+  }
+
+  isValid() {
+    return this.walletService.isCardValid(this.paymentMethod.cardNumber);
   }
 }

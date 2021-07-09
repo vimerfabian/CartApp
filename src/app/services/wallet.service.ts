@@ -21,11 +21,19 @@ export class WalletService {
     return this.httpClient.get(url);
   }
 
-  isCardValid() {
-    return this.httpClient.get(environment.apiUrl + '/isvalid');
+  isCardValid(cardNumber: string) {
+    return this.httpClient.get(
+      this.url + '/isvalid' + `?cardnumber=${cardNumber}`
+    );
   }
 
-  getCardType() {
-    return this.httpClient.get(environment.apiUrl + '/getcardtype');
+  getPaymentMethodTypes() {
+    return this.httpClient.get(this.url + `/getpaymentmethodtype`);
+  }
+
+  getCardType(cardNumber) {
+    return this.httpClient.get(
+      this.url + '/getcardtype' + `?cardnumber=${cardNumber}`
+    );
   }
 }
