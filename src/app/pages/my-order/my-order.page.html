@@ -10,48 +10,81 @@
 </ion-header>
 
 <ion-content [scrollEvents]="true">
- <form #form="ngForm">
-  <ion-card *ngFor="let item of cart | async">
-     <ion-list>
-      <ion-item>
-        <ion-label>{{item.name}}</ion-label>
-        <ion-button (click)="remove(item)" color="danger" slot="end">
-          <ion-icon name="trash"></ion-icon>
-        </ion-button>
-      </ion-item>
-     </ion-list>
-     <ion-card-content>
-      <ion-grid>
-      <ion-row>
-        <ion-col>
-          <ion-button (click)="add(item, -1)" color="danger" style="padding: 0px;" fill="clear">
-            <ion-icon slot="icon-only" name="remove"></ion-icon>
+  <form #form="ngForm">
+    <ion-card *ngFor="let item of cart | async">
+      <ion-list>
+        <ion-item>
+          <ion-label>{{item.name}}</ion-label>
+          <ion-button (click)="remove(item)" color="danger" slot="end">
+            <ion-icon name="trash"></ion-icon>
           </ion-button>
-          <ion-text style="font-weight: small;">Qty: {{item.quantity}}</ion-text>
-          <ion-button (click)="add(item, 1)" style="padding: 0px !important;" fill="clear">
-            <ion-icon style="padding: 0px !important;" slot="icon-only" name="add"></ion-icon>
-          </ion-button>
+        </ion-item>
+      </ion-list>
+      <ion-card-content>
+        <ion-grid>
+          <ion-row style="padding: 0px !important; margin-left: 0px !important">
+            <ion-col
+              offset="0"
+              style="padding: 0px !important; margin-left: 0px !important"
+            >
+              <ion-item
+                style="padding: 0px !important; margin-left: 0px !important"
+              >
+                <ion-label> Qty </ion-label>
+                <ion-button (click)="add(item, -1)" fill="clear">
+                  <ion-icon name="remove"></ion-icon>
+                </ion-button>
+                <!-- <ion-input name="quantity" type="number" min="0" [(ngModel)]="product.quantity"> -->
+                <ion-label style="text-align: center">
+                  {{item.quantity || 0}}
+                </ion-label>
 
-        </ion-col>
-        <ion-col>
-          <ion-text>Price: {{item.price}}</ion-text>
-        </ion-col>
-        <ion-col>
-          <ion-text>Tax: {{item.taxes}}</ion-text>
-        </ion-col>
-        <ion-col>
-          <ion-text>Total: {{item.total}}</ion-text>
-        </ion-col>
-      </ion-row>
-      </ion-grid>
-     </ion-card-content>
-  </ion-card>
- </form>
+                <ion-button (click)="add(item, 1)" fill="clear">
+                  <ion-icon name="add"></ion-icon>
+                </ion-button>
+              </ion-item>
+              <!-- <ion-button
+                (click)="add(item, -1)"
+                color="danger"
+                style="padding: 0px"
+                fill="clear"
+              >
+                <ion-icon slot="icon-only" name="remove"></ion-icon>
+              </ion-button>
+              <ion-text style="font-weight: small"
+                >Qty: {{item.quantity}}</ion-text
+              >
+              <ion-button
+                (click)="add(item, 1)"
+                style="padding: 0px !important"
+                fill="clear"
+              >
+                <ion-icon
+                  style="padding: 0px !important"
+                  slot="icon-only"
+                  name="add"
+                ></ion-icon>
+              </ion-button> -->
+            </ion-col>
+            <ion-col>
+              <ion-text>Price: {{item.price}}</ion-text>
+            </ion-col>
+            <ion-col>
+              <ion-text>Tax: {{item.taxes}}</ion-text>
+            </ion-col>
+            <ion-col>
+              <ion-text>Total: {{item.total}}</ion-text>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+  </form>
 </ion-content>
 
 <ion-footer>
   <app-total-footer></app-total-footer>
-  <ion-button [routerLink]="['/pages/checkout']" color="gray" expand="full">
+  <ion-button [routerLink]="['/pages/checkout']" expand="full">
     CHECKOUT
   </ion-button>
 </ion-footer>

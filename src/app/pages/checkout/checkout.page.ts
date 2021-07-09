@@ -50,16 +50,16 @@ export class CheckoutPage implements OnInit {
   placeOrder() {
     this.payPal
       .init({
-        PayPalEnvironmentProduction:
-          'AfvGvGlHbGSCZkOJp5wd7Am4-PWB0UbxqhxjCGqfIpKRslO7TshECAcUe5HqyHkoCIavSLxc-yAvG2LB',
-        PayPalEnvironmentSandbox: '',
+        PayPalEnvironmentProduction: '',
+        PayPalEnvironmentSandbox:
+          'AeRmttCcJGqi1daNUlBip8KXRa4nSXdVyci4q-ky_WZZcSDkMKvNEMOzfFbIwx-LUC2Mrp-CfBKXtyLw',
       })
       .then(
         () => {
           // Environments: PayPalEnvironmentNoNetwork, PayPalEnvironmentSandbox, PayPalEnvironmentProduction
           this.payPal
             .prepareToRender(
-              'PayPalEnvironmentProduction',
+              'PayPalEnvironmentSandbox',
               new PayPalConfiguration({
                 // Only needed if you get an "Internal Service Error" after PayPal login!
                 //payPalShippingAddressOption: 2 // PayPalShippingAddressOptionPayPal

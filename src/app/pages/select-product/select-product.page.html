@@ -2,7 +2,11 @@
   <ion-toolbar>
     <ion-title>{{product?.name || 'test'}}</ion-title>
     <ion-buttons slot="end">
-      <ion-back-button icon="close-circle" color="danger" defaultHref="/pages/menu"></ion-back-button>
+      <ion-back-button
+        icon="close-circle"
+        color="danger"
+        defaultHref="/pages/menu"
+      ></ion-back-button>
       <!-- <ion-button color="danger">
         <ion-icon slot="icon-only" color="danger" name="close-circle">
         </ion-icon>
@@ -15,52 +19,55 @@
   <form #form="ngForm">
     <ion-card>
       <ion-title>
-        <h4 style="font-weight: bold;">{{product.name || 'test'}}</h4>
+        <h4 style="font-weight: bold">{{product.name || 'test'}}</h4>
       </ion-title>
       <ion-card-content>
-        <ion-label>
-          <strong>Price: </strong> {{product.price || 0}}
-        </ion-label>
+        <ion-label> <strong>Price: </strong> {{product.price || 0}} </ion-label>
       </ion-card-content>
     </ion-card>
 
-     <ion-row style="margin-top: 10px;padding: 0%;">
-       <ion-col>
+    <ion-row style="margin-top: 10px; padding: 0%">
+      <ion-col>
         <ion-item>
-          <ion-label slot="start">
-            Units
-          </ion-label>
+          <ion-label slot="start"> Units </ion-label>
         </ion-item>
-       </ion-col>
-       <ion-col size="6">
+      </ion-col>
+      <ion-col size="6">
         <ion-item>
           <ion-button (click)="add(-1)" fill="clear">
             <ion-icon name="remove"></ion-icon>
           </ion-button>
-           <ion-input name="quantity" type="number" min="0" [(ngModel)]="product.quantity">
-           </ion-input>
-            <ion-button (click)="add(1)" fill="clear">
-              <ion-icon name="add"></ion-icon>
-            </ion-button>
+          <!-- <ion-input name="quantity" type="number" min="0" [(ngModel)]="product.quantity"> -->
+          <ion-label style="text-align: center">
+            {{product.quantity || 0}}
+          </ion-label>
+
+          <ion-button (click)="add(1)" fill="clear">
+            <ion-icon name="add"></ion-icon>
+          </ion-button>
         </ion-item>
-       </ion-col>
-     </ion-row>
-    <ion-item style="margin-top: 10px;;">
+      </ion-col>
+    </ion-row>
+    <ion-item style="margin-top: 10px">
       <ion-label position="stacked">Comment</ion-label>
-      <ion-input placeholder="Enter any notes here...">
-      </ion-input>
+      <ion-input placeholder="Enter any notes here..."> </ion-input>
     </ion-item>
 
-    <strong>
-      Modifiers
-    </strong>
-    <br>
-    <ion-button *ngFor="let modifier of product.productTopping;let idx_topping = index;" (click)="selectTopping(modifier, idx_topping)" [color]="modifier.selected ? 'primary' : 'medium'">{{modifier.toppingName}}</ion-button>
+    <strong> Modifiers </strong>
+    <br />
+    <ion-button
+      *ngFor="let modifier of product.productTopping;let idx_topping = index;"
+      (click)="selectTopping(modifier, idx_topping)"
+      [color]="modifier.selected ? 'primary' : 'medium'"
+      >{{modifier.toppingName}}</ion-button
+    >
   </form>
 </ion-content>
 
 <ion-footer>
   <ion-toolbar>
-    <ion-button (click)="addToCart()" color="light" expand="full"> ADD TO MY CAR (${{product.total}})</ion-button>
+    <ion-button (click)="addToCart()" color="light" expand="full">
+      ADD TO MY CAR (${{product.total}})</ion-button
+    >
   </ion-toolbar>
 </ion-footer>
