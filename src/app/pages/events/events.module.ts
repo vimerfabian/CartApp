@@ -4,21 +4,19 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { CheckoutPageRoutingModule } from './checkout-routing.module';
+import { EventsPageRoutingModule } from './events-routing.module';
 
-import { CheckoutPage } from './checkout.page';
+import { EventsPage } from './events.page';
 import { ComponentsModule } from 'src/app/components/components.module';
-import { NgxPayPalModule } from 'ngx-paypal';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    CheckoutPageRoutingModule,
+    EventsPageRoutingModule,
     ComponentsModule,
-    NgxPayPalModule,
   ],
-  declarations: [CheckoutPage],
+  declarations: [EventsPage],
 })
-export class CheckoutPageModule {}
+export class EventsPageModule {}

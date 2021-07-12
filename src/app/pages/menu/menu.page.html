@@ -33,7 +33,9 @@
           </ion-item>
           <ion-list [hidden]="!subCategory?.show">
             <ion-item *ngFor="let product of subCategory.products">
-              <ion-icon color="primary" slot="start" name="refresh"></ion-icon>
+              <ion-thumbnail (click)="product.seeImage = !product?.seeImage">
+                <img [src]="product?.image || 'assets/food.png'" />
+              </ion-thumbnail>
               <ion-label>{{product.name}}</ion-label>
               <ion-button (click)="selectProduct(product)" fill="clear">
                 <ion-icon
@@ -42,6 +44,13 @@
                   slot="icon-only"
                 ></ion-icon>
               </ion-button>
+              <br />
+              <div
+                (click)="product.seeImage = !product?.seeImage"
+                *ngIf="product?.seeImage === true"
+              >
+                <img [src]="product?.image || 'assets/food.png'" />
+              </div>
             </ion-item>
           </ion-list>
         </div>

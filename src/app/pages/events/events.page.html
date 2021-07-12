@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Offers</ion-title>
+    <ion-title>Events</ion-title>
     <ion-buttons slot="end">
       <app-cart-status></app-cart-status>
     </ion-buttons>
@@ -12,34 +12,47 @@
 
 <ion-content>
   <ion-list>
-    <ion-card *ngFor="let offer of list | async;let i = index">
+    <ion-card *ngFor="let event of list;let i = index">
       <ion-item>
         <ion-img
           class="text-center"
           style="max-width: 100%; max-height: 500px"
-          [src]="offer.image || 'assets/food.png'"
+          [src]="event.image || 'assets/food.png'"
         >
         </ion-img>
       </ion-item>
       <ion-card-title>
         <ion-item>
-          <h3 style="font-weight: bold">{{offer?.name || ''}}</h3>
+          <h3 style="font-weight: bold">{{event?.name || ''}}</h3>
         </ion-item>
       </ion-card-title>
       <ion-card-content>
-        <ion-label> <strong>Days</strong>: {{getDays(offer)}} </ion-label>
+        <ion-label> {{event?.description || ''}} </ion-label>
         <br />
         <label>
           <strong>From: </strong>
-          <ion-text>{{offer?.startDate || '' | date}}</ion-text> |
+          <ion-text>{{event?.startDate || '' | date}}</ion-text> |
           <strong>To:</strong>
-          <ion-text>{{offer?.startDate || '' | date}}</ion-text>
+          <ion-text>{{event?.startDate || '' | date}}</ion-text>
         </label>
         <br />
         <br />
-        <ion-chip *ngFor="let product of offer?.products"
-          >{{product.name}}</ion-chip
+        <ion-chip *ngFor="let event of event?.offers"
+          >{{product?.eventName}}</ion-chip
         >
+        <br />
+        <div>
+          <ion-slides>
+            <ion-slide *ngFor="let image of event?.images">
+              <div class="slide">
+                <img
+                  [src]="'assets/food.png'"
+                  style="max-width: 400px; max-height: 100px"
+                />
+              </div>
+            </ion-slide>
+          </ion-slides>
+        </div>
       </ion-card-content>
     </ion-card>
   </ion-list>

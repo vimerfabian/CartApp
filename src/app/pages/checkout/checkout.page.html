@@ -12,43 +12,33 @@
 <ion-content>
   <ion-list>
     <ion-item>
+      <ion-label position="floating">Order Type</ion-label>
+      <ion-select name="idOrderType" [(ngModel)]="checkout.idOrderType">
+        <ion-select-option
+          [value]="orderType?.idOrderType"
+          *ngFor="let orderType of orderTypeList"
+        >
+          {{orderType?.name}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
       <ion-label position="floating">Address</ion-label>
       <ion-select name="idAddress" [(ngModel)]="checkout.idAddress">
         <ion-select-option
-          [value]="address?.idState"
+          [value]="address?.idAddress"
           *ngFor="let address of addressList"
         >
           {{address?.name}}
         </ion-select-option>
       </ion-select>
     </ion-item>
-    <ion-item>
-      <ion-label position="floating">Payment Method</ion-label>
-      <ion-select name="idPaymentMethod" [(ngModel)]="checkout.idPaymentMethod">
-        <ion-select-option
-          [value]="pm?.idState"
-          *ngFor="let pm of paymentMethodList"
-        >
-          {{pm?.name}}
-        </ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Order Type</ion-label>
-      <ion-select name="idOrderType" [(ngModel)]="checkout.idOrderType">
-        <ion-select-option
-          [value]="ot?.idOrderType"
-          *ngFor="let ot of orderTypeList"
-        >
-          {{ot?.name}}
-        </ion-select-option>
-      </ion-select>
-    </ion-item>
   </ion-list>
-  <ion-button (click)="placeOrder()" expand="block" color="primary">
-    <ion-label> PLACE ORDER </ion-label>
-    <ion-icon style="margin-left: 2px" name="send"></ion-icon>
-  </ion-button>
+  <!-- <ion-button (click)="saveOrderOnServer()">test saving to server</ion-button> -->
+  <div [hidden]="!checkout?.idOrderType || !checkout?.idAddress">
+    <!-- <div #paypalRef></div> -->
+    <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+  </div>
 </ion-content>
 
 <ion-footer>

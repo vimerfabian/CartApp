@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/pages/offers"></ion-back-button>
+    </ion-buttons>
+    <ion-title>New Claim</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #form="ngForm">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">Comment</ion-label>
+        <ion-input
+          required
+          name="comment"
+          maxlength="30"
+          type="text"
+          [(ngModel)]="claim.comment"
+          placeholder="Comment"
+        ></ion-input>
+      </ion-item>
+
+      <ion-button
+        [disabled]="form.invalid"
+        (click)="form.valid && save()"
+        expand="full"
+      >
+        Save
+      </ion-button>
+    </ion-list>
+  </form>
+</ion-content>

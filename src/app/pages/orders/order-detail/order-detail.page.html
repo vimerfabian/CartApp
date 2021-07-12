@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/pages/address"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Order Detail</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-item>Total: {{order?.total || 0 | number}}</ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

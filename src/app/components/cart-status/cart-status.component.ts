@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 import { CartService } from 'src/app/services/cart.service';
 
 @Component({
@@ -9,15 +10,24 @@ import { CartService } from 'src/app/services/cart.service';
 export class CartStatusComponent implements OnInit {
   cartCount = 0;
   totalPrice = 0;
-  constructor(private cartService: CartService) { }
+  constructor(
+    private cartService: CartService,
+    private navCtrl: NavController
+  ) {}
 
   ngOnInit() {
-    this.cartService.cartCount.subscribe(x => {
+    this.cartService.cartCount.subscribe((x) => {
       this.cartCount = x;
     });
-    this.cartService.totalPrice.subscribe(x => {
+    this.cartService.totalPrice.subscribe((x) => {
       this.totalPrice = x;
     });
   }
 
+  goToCart() {
+    if (this.cartCount < 1) {
+      return;
+    }
+    this.navCtrl.navigateForward(['/pages/my-order']);
+  }
 }

@@ -8,6 +8,8 @@ export const environment = {
   stripeApiKey:
     'pk_test_51ITz8UKtCaSqT32ksXfKyKy19ngw43ZqOUlBKyQw0YRMBJYNe7ROKDLGPaHGsJoh4599e0pVYAJwnpvMQjymWkg1009XQQuv7y',
   apiPaymentUrl: 'http://192.168.100.2:3000',
+  paypalClientId:
+    'AfPDnX60nkAXLFwmapFoBgu5K9j1lvQZZ2OB1-pbyaSTz_TZ5GCz0RVEI0KgUuTD9sU39DsEoAG94izF',
 };
 
 /*

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import {Storage} from '@ionic/storage';
+import { Storage } from '@ionic/storage';
 import { BehaviorSubject, from } from 'rxjs';
 const CART_STORAGE = 'CART_STORAGE';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CartService {
   cartCount = new BehaviorSubject(0);
@@ -17,8 +17,8 @@ export class CartService {
 
   async addProduct(product: any) {
     const cart = await this.getCart();
-    const index = cart.findIndex(x => x.idProduct === product.idProduct);
-    if(index >= 0) {
+    const index = cart.findIndex((x) => x.idProduct === product.idProduct);
+    if (index >= 0) {
       cart[index] = product;
     } else {
       cart.push(product);
@@ -26,13 +26,13 @@ export class CartService {
     /*cart = cart.filter(x => x.idProduct !== product.idProduct);
     cart.push(product);*/
     await this.saveCart(cart);
-   this.emitValues(cart);
+    this.emitValues(cart);
     return cart;
   }
 
   async removeProduct(idProduct: number) {
     let cart = await this.getCart();
-    cart = cart.filter(x => x.idProduct !== idProduct);
+    cart = cart.filter((x) => x.idProduct !== idProduct);
     await this.saveCart(cart);
     this.emitValues(cart);
 
@@ -41,8 +41,8 @@ export class CartService {
 
   async getCart(): Promise<any[]> {
     let cart = await from(this.storage.get(CART_STORAGE)).toPromise();
-    if(!cart) {
-      cart =  [];
+    if (!cart) {
+      cart = [];
     }
     this.emitValues(cart);
     return cart;
@@ -52,6 +52,27 @@ export class CartService {
     return await this.saveCart([]);
   }
 
+  async getOrderToBeSavedFormat(idOrderType: number, idAddress: number) {
+    let items = await this.getCart();
+    items = items.map((x) => {
+      // x.toppings = x.productTopping.map((pt) => {
+      //   pt.selected = true;
+      //   return pt;
+      // });
+      delete x.productTopping;
+      return x;
+    });
+    const order: any = {};
+    order.total = this.totalPrice.value;
+    order.taxes = this.totalTaxes.value;
+    order.idPaymentMethod = 1;
+    order.macAddress = 'AA:AA:AA:AA:AA';
+    order.idOrderType = idOrderType;
+    order.idAddress = idAddress;
+    order.items = items;
+    order.offers = [];
+    return order;
+  }
 
   private async saveCart(cart: any[]) {
     await this.storage.set(CART_STORAGE, cart);
@@ -60,25 +81,26 @@ export class CartService {
   }
 
   private getTotalPrice(cart: any[]): number {
-    return cart.reduce((a,b) => {
+    return cart.reduce((a, b) => {
       const total = Number(b.price) * Number(b.quantity);
-      const taxes = total  * (Number(b.taxes || 0) / 100);
-      return Number(a) + (total-taxes);
-    },0);
+      const taxes = total * (Number(b.taxes || 0) / 100);
+      return Number(a) + (total - taxes);
+    }, 0);
   }
 
   private getSubTotalPrice(cart: any[]): number {
-    return cart.reduce((a,b) => {
+    return cart.reduce((a, b) => {
       const total = Number(b.price) * Number(b.quantity);
-      return Number(a) + (total);
-    },0);
+      return Number(a) + total;
+    }, 0);
   }
 
   private getTotalTaxes(cart: any[]): number {
-    return cart.reduce((a,b) => {
-      const total = Number(b.price) * Number(b.quantity) * (Number(b.taxes || 0) / 100);
-      return Number(a) + (total);
-    },0);
+    return cart.reduce((a, b) => {
+      const total =
+        Number(b.price) * Number(b.quantity) * (Number(b.taxes || 0) / 100);
+      return Number(a) + total;
+    }, 0);
   }
 
   private emitValues(cart: any[]) {

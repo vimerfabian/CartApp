@@ -1,10 +1,11 @@
-<ion-item [routerLink]="['/pages/my-order']" detail>
-  <ion-label style="color:green;">
-    USD${{totalPrice || 0 | number}}
+<ion-item (click)="goToCart()" detail>
+  <ion-label style="color: green">
+    USD${{ totalPrice || 0 | number }}
   </ion-label>
-  <ion-button >
-    <ion-badge id="notifications-badge" color="primary">{{cartCount}}</ion-badge>
-    <ion-icon id="notification-button" slot="icon-only" name="cart">
-    </ion-icon>
+  <ion-button>
+    <ion-badge id="notifications-badge" color="primary">{{
+      cartCount
+    }}</ion-badge>
+    <ion-icon id="notification-button" slot="icon-only" name="cart"> </ion-icon>
   </ion-button>
 </ion-item>

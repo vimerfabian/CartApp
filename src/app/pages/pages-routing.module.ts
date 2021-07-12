@@ -38,7 +38,19 @@ const routes: Routes = [
   {
     path: 'my-wallet',
     loadChildren: () => import('./my-wallet/my-wallet.module').then( m => m.MyWalletPageModule)
+  },  {
+    path: 'orders',
+    loadChildren: () => import('./orders/orders.module').then( m => m.OrdersPageModule)
   },
+  {
+    path: 'claims',
+    loadChildren: () => import('./claims/claims.module').then( m => m.ClaimsPageModule)
+  },
+  {
+    path: 'events',
+    loadChildren: () => import('./events/events.module').then( m => m.EventsPageModule)
+  },
+
 ];
 
 @NgModule({

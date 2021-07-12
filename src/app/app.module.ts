@@ -14,6 +14,7 @@ import { Storage } from '@ionic/storage';
 import { ComponentsModule } from './components/components.module';
 import { Stripe } from '@ionic-native/stripe/ngx';
 import { PayPal } from '@ionic-native/paypal/ngx';
+import { NgxPayPalModule } from 'ngx-paypal';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,6 +27,7 @@ import { PayPal } from '@ionic-native/paypal/ngx';
     CommonModule,
     FormsModule,
     ComponentsModule,
+    NgxPayPalModule,
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

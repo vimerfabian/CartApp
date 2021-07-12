@@ -3,7 +3,7 @@
     <name>cartapp</name>
     <description>Restaurant Application.</description>
     <author email="ingluisfelipemunoz@gmail.com" href="https://github.com/ingluisfelipemunoz">Luis Felipe Muñoz Flores</author>
-    <content original-src="index.html" src="http://localhost:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />

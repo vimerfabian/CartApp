@@ -28,6 +28,7 @@
     "com.paypal.cordova.mobilesdk": "^3.5.0",
     "cordova-android": "^8.1.0",
     "cordova-browser": "6.0.0",
+    "ngx-paypal": "^7.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.4"

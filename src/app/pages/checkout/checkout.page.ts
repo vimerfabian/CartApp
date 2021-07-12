@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AddressService } from 'src/app/services/address.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { OrderTypeService } from 'src/app/services/order-type.service';
@@ -12,7 +12,13 @@ import {
   PayPalPayment,
   PayPalConfiguration,
 } from '@ionic-native/paypal/ngx';
-
+import { CartService } from 'src/app/services/cart.service';
+import { NavController, ToastController } from '@ionic/angular';
+import { OrderService } from 'src/app/services/order.service';
+import { HttpStatusEnum } from 'src/app/common/enums/http-status.enum';
+import { ICreateOrderRequest, IPayPalConfig } from 'ngx-paypal';
+// eslint-disable-next-line no-var
+//declare var paypal;
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.page.html',
@@ -23,7 +29,12 @@ export class CheckoutPage implements OnInit {
   addressList: any = [];
   paymentMethodList: any = [];
   orderTypeList: any = [];
-
+  cart: any = [];
+  total = 0;
+  order: any = {};
+  public payPalConfig?: IPayPalConfig;
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  @ViewChild('paypalRef', { static: false }) private paypalRef: ElementRef;
   constructor(
     private addressService: AddressService,
     private paymentMethodService: PaymentMethodService,
@@ -31,10 +42,14 @@ export class CheckoutPage implements OnInit {
     private authService: AuthService,
     private stripe: Stripe,
     private paymentService: PaymentService,
-    private payPal: PayPal
+    private payPal: PayPal,
+    private cartService: CartService,
+    private toast: ToastController,
+    private orderService: OrderService,
+    private navCtrl: NavController
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     const user = this.authService.getCurrentSession();
     this.addressService.getList(user?.idClient).subscribe((res) => {
       this.addressList = res;
@@ -46,99 +61,222 @@ export class CheckoutPage implements OnInit {
     this.orderTypeService.getList().subscribe((res) => {
       this.orderTypeList = res;
     });
+    this.cart = await this.cartService.getCart();
+    this.order = await this.cartService.getOrderToBeSavedFormat(
+      this.checkout.idOrderType,
+      this.checkout.idAddress
+    );
+    this.total = this.cartService.totalPrice.value;
+    console.log('cart', this.cart, 'total', this.total);
+    //console.log('paypal', paypal);
+    console.log('order', this.order);
+    //this.initPaypal();
+    this.initPaypal2();
   }
-  placeOrder() {
-    this.payPal
-      .init({
-        PayPalEnvironmentProduction: '',
-        PayPalEnvironmentSandbox:
-          'AeRmttCcJGqi1daNUlBip8KXRa4nSXdVyci4q-ky_WZZcSDkMKvNEMOzfFbIwx-LUC2Mrp-CfBKXtyLw',
-      })
-      .then(
-        () => {
-          // Environments: PayPalEnvironmentNoNetwork, PayPalEnvironmentSandbox, PayPalEnvironmentProduction
-          this.payPal
-            .prepareToRender(
-              'PayPalEnvironmentSandbox',
-              new PayPalConfiguration({
-                // Only needed if you get an "Internal Service Error" after PayPal login!
-                //payPalShippingAddressOption: 2 // PayPalShippingAddressOptionPayPal
-              })
-            )
-            .then(
-              () => {
-                const payment = new PayPalPayment(
-                  '0.1',
-                  'USD',
-                  'Description',
-                  'sale'
-                );
-                this.payPal.renderSinglePaymentUI(payment).then(
-                  () => {
-                    // Successfully paid
-                    // Example sandbox response
-                    //
-                    // {
-                    //   "client": {
-                    //     "environment": "sandbox",
-                    //     "product_name": "PayPal iOS SDK",
-                    //     "paypal_sdk_version": "2.16.0",
-                    //     "platform": "iOS"
-                    //   },
-                    //   "response_type": "payment",
-                    //   "response": {
-                    //     "id": "PAY-1AB23456CD789012EF34GHIJ",
-                    //     "state": "approved",
-                    //     "create_time": "2016-10-03T13:33:33Z",
-                    //     "intent": "sale"
-                    //   }
-                    // }
+
+  onSuccessOrderSaved() {
+    this.cartService.resetCart();
+    this.navCtrl.navigateRoot('/pages/orders');
+  }
+
+  async initPaypal2() {
+    this.payPalConfig = {
+      currency: 'USD',
+      clientId: environment.paypalClientId,
+      createOrderOnClient: (data) =>
+        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+        <ICreateOrderRequest>{
+          intent: 'CAPTURE',
+          purchase_units: [
+            {
+              amount: {
+                currency_code: 'USD',
+                value: `${this.total}`,
+                breakdown: {
+                  item_total: {
+                    currency_code: 'USD',
+                    value: `${this.total}`,
                   },
-                  () => {
-                    // Error or render dialog closed without being successful
-                  }
-                );
+                },
               },
-              () => {
-                // Error in configuration
-              }
-            );
-        },
-        () => {
-          // Error in initialization, maybe PayPal isn't supported or something else
-        }
-      );
-  }
-  placeOrderStripe() {
-    this.stripe.setPublishableKey(environment.stripeApiKey);
-
-    const card = {
-      // eslint-disable-next-line id-blacklist
-      number: '4242424242424242',
-      expMonth: 12,
-      expYear: 2025,
-      cvc: '220',
-    };
-
-    this.stripe
-      .createCardToken(card)
-      .then((token) => {
-        console.log('id', token);
-        this.paymentService
-          .pay({
-            amount: 1,
-            currency: 'usd',
-            token: token.id,
-          })
-          .subscribe(
-            (res) => {
-              console.log('paymentres', res);
+              items: this.order.items.map((x) => {
+                const item = {
+                  name: x?.name || '',
+                  quantity: '1',
+                  category: 'DIGITAL_GOODS',
+                  unit_amount: {
+                    currency_code: 'USD',
+                    value: `${Number(x?.total || 0)}`,
+                  },
+                };
+                return item;
+              }),
             },
-            (err) => {
-              console.log('payment error', err);
-            }
+          ],
+        },
+      advanced: {
+        commit: 'true',
+      },
+      style: {
+        label: 'paypal',
+        layout: 'vertical',
+      },
+      onApprove: (data, actions) => {
+        console.log(
+          'onApprove - transaction was approved, but not authorized',
+          data,
+          actions
+        );
+        actions.order.get().then((details) => {
+          console.log(
+            'onApprove - you can get full order details inside onApprove: ',
+            details
           );
+        });
+      },
+      onClientAuthorization: (data) => {
+        console.log(
+          'onClientAuthorization - you should probably inform your server about completed transaction at this point',
+          data
+        );
+        this.saveOrderOnServer();
+        //this.showSuccess = true;
+      },
+      onCancel: (data, actions) => {
+        console.log('OnCancel', data, actions);
+        this.toast
+          .create({
+            header: 'Order Canceled',
+            message: 'The Order has Been Canceled',
+            color: 'danger',
+            position: 'bottom',
+            duration: 3000,
+          })
+          .then((t) => {
+            t.present();
+          });
+      },
+      onError: (err) => {
+        console.log('OnError', err);
+        this.toast
+          .create({
+            header: 'Validation Error',
+            message: 'Invalid Information',
+            color: 'danger',
+            position: 'bottom',
+            duration: 2000,
+          })
+          .then((t) => {
+            t.present();
+          });
+      },
+      onClick: (data, actions) => {
+        console.log('onClick', data, actions);
+        //this.resetStatus();
+      },
+    };
+  }
+  // async initPaypal() {
+  //   const self = this;
+  //   paypal
+  //     .Buttons({
+  //       style: {
+  //         layout: 'vertical',
+  //       },
+  //       purchase_units: [
+  //         {
+  //           amount: {
+  //             currency_code: 'USD',
+  //             value: 0.1, //this.total,
+  //           },
+  //         },
+  //       ],
+  //       onApprove: async (data: any, actions) => {
+  //         console.log('approve', data);
+  //         this.saveOrderOnServer();
+  //       },
+  //       onCancel: (data) => {
+  //         // Show a cancel page, or return to cart
+  //         console.log('cancel', data);
+  //         this.toast
+  //           .create({
+  //             header: 'Order Canceled',
+  //             message: 'The Order has Been Canceled',
+  //             color: 'danger',
+  //             position: 'bottom',
+  //             duration: 3000,
+  //           })
+  //           .then((t) => {
+  //             t.present();
+  //           });
+  //       },
+  //       onError: (err) => {
+  //         // Show an error page here, when an error occurs
+  //         console.log('err', err);
+  //         this.toast
+  //           .create({
+  //             header: 'Validation Error',
+  //             message: 'Invalid Information',
+  //             color: 'danger',
+  //             position: 'bottom',
+  //           })
+  //           .then((t) => {
+  //             t.present();
+  //           });
+  //       },
+  //     })
+  //     .render(this.paypalRef.nativeElement);
+  // }
+
+  async saveOrderOnServer() {
+    const order = await this.cartService.getOrderToBeSavedFormat(
+      this.checkout.idOrderType,
+      this.checkout.idAddress
+    );
+    this.orderService.saveOrder(order).subscribe(
+      (res: any) => {
+        console.log('res from server', res);
+        if (!res || res?.idEstado !== HttpStatusEnum.EXITOSO) {
+          this.showInternalErrorMessage();
+          return;
+        }
+        this.toast
+          .create({
+            header: 'Success',
+            message: 'Your order is being processed',
+            color: 'success',
+            position: 'bottom',
+            duration: 3000,
+          })
+          .then((t) => {
+            t.present();
+          });
+        this.onSuccessOrderSaved();
+      },
+      (err) => {
+        console.log('error from paypal', err);
+        this.showInternalErrorMessage();
+      }
+    );
+  }
+
+  showInternalErrorMessage() {
+    this.toast
+      .create({
+        header: 'Error',
+        message: `your order has been processed, 
+        but an error occurred when trying to save in our server, contact the support or restaurant`,
+        color: 'danger',
+        position: 'bottom',
+        duration: 3000,
       })
-      .catch((error) => console.error('err', error));
+      .then((t) => {
+        t.present();
+      });
+  }
+
+  ionViewWillEnter() {
+    console.log('on will enter');
+    //this.initPaypal();
   }
 }
