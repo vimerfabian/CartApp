@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { OffersService } from 'src/app/services/offers.service';
 
@@ -10,7 +11,10 @@ import { OffersService } from 'src/app/services/offers.service';
 export class OffersPage implements OnInit {
   list: Observable<any[]>;
   test: any;
-  constructor(private offerService: OffersService) {}
+  constructor(
+    private offerService: OffersService,
+    private navCtrl: NavController
+  ) {}
 
   ngOnInit() {
     this.list = this.offerService.getList();
@@ -30,5 +34,9 @@ export class OffersPage implements OnInit {
     return days;
   }
 
-  selectOffer() {}
+  selectOffer(item) {
+    this.navCtrl.navigateForward('/pages/offers/add-offer', {
+      state: item,
+    });
+  }
 }
