@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-add-offer',
@@ -9,7 +10,11 @@ import { NavController } from '@ionic/angular';
 })
 export class AddOfferPage implements OnInit {
   offer: any = {};
-  constructor(private router: Router, private navCtrl: NavController) {
+  constructor(
+    private router: Router,
+    private navCtrl: NavController,
+    private cartService: CartService
+  ) {
     if (router.getCurrentNavigation().extras.state) {
       const offer = this.router.getCurrentNavigation().extras.state;
       console.log('offer', offer);
@@ -17,4 +22,15 @@ export class AddOfferPage implements OnInit {
     }
   }
   ngOnInit() {}
+  getParsedOffer() {
+    return this.offer;
+  }
+  async addToCart() {
+    //this.calc();
+    if (this.offer?.idOffer > 0) {
+      const offer = this.getParsedOffer();
+      //await this.cartService.addOffer(offer);
+      this.navCtrl.navigateRoot('/pages/menu');
+    }
+  }
 }
