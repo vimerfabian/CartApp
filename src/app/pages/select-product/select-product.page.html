@@ -55,12 +55,26 @@
 
     <strong> Modifiers </strong>
     <br />
-    <ion-button
+
+    <div *ngFor="let toppingTypeName of toppingsOrdered | keyvalue">
+      <ion-item-divider style="font-weight: bold"
+        >{{toppingTypeName.key}}</ion-item-divider
+      >
+
+      <ion-chip
+        *ngFor="let modifier of toppingTypeName.value;let idx_topping = index;"
+        (click)="selectTopping(modifier)"
+        [color]="modifier.selected ? 'primary' : 'medium'"
+        >{{modifier.toppingName}}</ion-chip
+      >
+    </div>
+
+    <!-- <ion-button
       *ngFor="let modifier of product.productTopping;let idx_topping = index;"
       (click)="selectTopping(modifier, idx_topping)"
       [color]="modifier.selected ? 'primary' : 'medium'"
       >{{modifier.toppingName}}</ion-button
-    >
+    > -->
   </form>
 </ion-content>
 

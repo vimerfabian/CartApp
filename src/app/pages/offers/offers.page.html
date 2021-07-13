@@ -43,6 +43,9 @@
         <ion-chip *ngFor="let product of offer?.products"
           >{{product.name}}</ion-chip
         >
+        <ion-button (click)="selectOffer(offer)" expand="full"
+          >Select Offer</ion-button
+        >
       </ion-card-content>
     </ion-card>
   </ion-list>

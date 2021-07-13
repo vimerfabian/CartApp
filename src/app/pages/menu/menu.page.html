@@ -34,7 +34,9 @@
           <ion-list [hidden]="!subCategory?.show">
             <ion-item *ngFor="let product of subCategory.products">
               <ion-thumbnail (click)="product.seeImage = !product?.seeImage">
-                <img [src]="product?.image || 'assets/food.png'" />
+                <img
+                  [src]="product?.image ? 'data:image/jpeg;base64,' + product.image : 'assets/food.png'"
+                />
               </ion-thumbnail>
               <ion-label>{{product.name}}</ion-label>
               <ion-button (click)="selectProduct(product)" fill="clear">
@@ -49,7 +51,9 @@
                 (click)="product.seeImage = !product?.seeImage"
                 *ngIf="product?.seeImage === true"
               >
-                <img [src]="product?.image || 'assets/food.png'" />
+                <img
+                  [src]="product?.image ? 'data:image/jpeg;base64,' + product.image : 'assets/food.png'"
+                />
               </div>
             </ion-item>
           </ion-list>

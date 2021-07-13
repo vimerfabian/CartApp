@@ -5,4 +5,19 @@ export class ArrayUtil {
       return rv;
     }, {});
   }
+
+  public static reduce(list: any[], groupPropertyName: string) {
+    const groupsList = list.reduce(
+      (groups, item) => ({
+        ...groups,
+        [item[groupPropertyName]]: [
+          ...(groups[item[groupPropertyName]] || []),
+          item,
+        ],
+      }),
+      {}
+    );
+
+    console.log('groups', groupsList);
+  }
 }

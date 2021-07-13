@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { ArrayUtil } from 'src/app/common/utils/array.util';
 import { CartService } from 'src/app/services/cart.service';
 
 @Component({
@@ -10,6 +11,7 @@ import { CartService } from 'src/app/services/cart.service';
 })
 export class SelectProductPage implements OnInit {
   product: any = {};
+  toppingsOrdered: any = [];
   constructor(
     public router: Router,
     public cartService: CartService,
@@ -28,6 +30,12 @@ export class SelectProductPage implements OnInit {
       this.product.quantity = 1;
     }
     this.calc();
+    this.toppingsOrdered = ArrayUtil.groupBy(
+      product.productTopping,
+      'toppingTypeName'
+    );
+    console.log('ordered', this.toppingsOrdered);
+    console.log('product pos', this.product);
   }
 
   add(n: number) {
@@ -55,8 +63,11 @@ export class SelectProductPage implements OnInit {
     );
     return product;
   }
-  selectTopping(modifier: any, idx: number) {
-    console.log('idx', idx);
+  selectTopping(modifier: any) {
+    const idx = this.product.productTopping.findIndex(
+      (x) => x.idProductTopping === modifier.idProductTopping
+    );
+    console.log('idx', idx, 'modifier', modifier);
     this.product.productTopping[idx].selected = true;
     for (let i = 0; i < this.product.productTopping.length; i++) {
       if (

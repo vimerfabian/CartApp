@@ -10,7 +10,7 @@ import { OffersService } from 'src/app/services/offers.service';
 export class OffersPage implements OnInit {
   list: Observable<any[]>;
   test: any;
-  constructor(private offerService: OffersService) { }
+  constructor(private offerService: OffersService) {}
 
   ngOnInit() {
     this.list = this.offerService.getList();
@@ -19,16 +19,16 @@ export class OffersPage implements OnInit {
 
   getDays(item) {
     let days = '';
-    if(item?.monday) days += ',Monday';
-    if(item?.tuesday) days += ',Tuesday';
-    if(item?.wednesday) days += ',Wednesday';
-    if(item?.thursday) days += ',Thursday';
-    if(item?.friday) days += ',Friday';
-    if(item?.saturday) days += ',Saturday';
-    if(item?.sunday) days += ',Sunday';
+    if (item?.monday) days += ',Monday';
+    if (item?.tuesday) days += ',Tuesday';
+    if (item?.wednesday) days += ',Wednesday';
+    if (item?.thursday) days += ',Thursday';
+    if (item?.friday) days += ',Friday';
+    if (item?.saturday) days += ',Saturday';
+    if (item?.sunday) days += ',Sunday';
     //if(days.length > 0) days = '';
     return days;
-
   }
 
+  selectOffer() {}
 }
