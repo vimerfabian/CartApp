@@ -67,13 +67,35 @@ export class SelectProductPage implements OnInit {
     const idx = this.product.productTopping.findIndex(
       (x) => x.idProductTopping === modifier.idProductTopping
     );
-    console.log('idx', idx, 'modifier', modifier);
-    this.product.productTopping[idx].selected = true;
+
+    this.product.productTopping[idx].selected =
+      !this.product.productTopping[idx].selected;
+    const countSelected =
+      this.product.productTopping.filter(
+        (x) => x.selected === true && x.idToppingType === modifier.idToppingType
+      ).length || 0;
+    console.log('productTopping', this.product.productTopping[idx]);
+    console.log(
+      'idx',
+      idx,
+      'modifier',
+      modifier,
+      'countselected',
+      countSelected,
+      'combine',
+      this.product.productTopping[idx].combine
+    );
+    if (countSelected - 1 > this.product.productTopping[idx].combine) {
+      this.product.productTopping[idx].selected = false;
+      return;
+    }
+    return;
     for (let i = 0; i < this.product.productTopping.length; i++) {
       if (
         this.product.productTopping[i].toppingTypeName ===
           this.product.productTopping[idx].toppingTypeName &&
-        i !== idx
+        i !== idx &&
+        this.product.productTopping[i].selected !== true
       ) {
         this.product.productTopping[i].selected = false;
       }
