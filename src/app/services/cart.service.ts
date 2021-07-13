@@ -16,6 +16,9 @@ export class CartService {
   }
 
   async addProduct(product: any) {
+    const total = Number(product.price) * Number(product.quantity);
+    const taxes = total * (Number(product.taxes || 0) / 100);
+    product.total = total + taxes;
     const cart = await this.getCart();
     const index = cart.findIndex((x) => x.idProduct === product.idProduct);
     if (index >= 0) {
@@ -84,7 +87,7 @@ export class CartService {
     return cart.reduce((a, b) => {
       const total = Number(b.price) * Number(b.quantity);
       const taxes = total * (Number(b.taxes || 0) / 100);
-      return Number(a) + (total - taxes);
+      return Number(a) + (total + taxes);
     }, 0);
   }
 

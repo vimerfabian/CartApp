@@ -26,7 +26,7 @@ export class OrdersPage implements OnInit {
     this.list = list;
   }
 
-  selectOrder(item) {
+  seeDetail(item) {
     this.navCtrl.navigateForward('/pages/orders/order-detail', { state: item });
   }
 }

@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController, LoadingController, NavController, ToastController } from '@ionic/angular';
+import {
+  ActionSheetController,
+  LoadingController,
+  NavController,
+  ToastController,
+} from '@ionic/angular';
 import { HttpStatusEnum } from 'src/app/common/enums/http-status.enum';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClientService } from 'src/app/services/client.service';
@@ -11,9 +16,14 @@ import { ClientService } from 'src/app/services/client.service';
 })
 export class MyInfoPage implements OnInit {
   user: any;
-  constructor(private actionCtrl: ActionSheetController, private navCtrl: NavController,
-    private authService: AuthService, private clientService: ClientService, private loadingCtrl: LoadingController,
-    private toastCtrl: ToastController) { }
+  constructor(
+    private actionCtrl: ActionSheetController,
+    private navCtrl: NavController,
+    private authService: AuthService,
+    private clientService: ClientService,
+    private loadingCtrl: LoadingController,
+    private toastCtrl: ToastController
+  ) {}
 
   ngOnInit() {
     this.user = this.authService.getCurrentSession();
@@ -21,7 +31,7 @@ export class MyInfoPage implements OnInit {
 
   async save() {
     const loading = await this.loadingCtrl.create({
-      message: 'Loading...'
+      message: 'Loading...',
     });
     await loading.present();
     let title = 'Error';
@@ -29,15 +39,15 @@ export class MyInfoPage implements OnInit {
     let message = '';
     try {
       const res: any = await this.clientService.save(this.user).toPromise();
-      if(res?.idEstado === HttpStatusEnum.EXITOSO) {
-        title =  'Success';
+      if (res?.idEstado === HttpStatusEnum.EXITOSO) {
+        title = 'Success';
         message = 'My Info Updated';
         color = 'success';
       } else {
         message = res?.descripcion;
       }
       console.log('res', res);
-    }catch(err) {
+    } catch (err) {
       message = 'Error';
       console.log('err', err);
     }
@@ -47,7 +57,7 @@ export class MyInfoPage implements OnInit {
       header: title,
       color,
       duration: 3000,
-      message
+      message,
     });
     toast.present();
   }
@@ -57,7 +67,7 @@ export class MyInfoPage implements OnInit {
       header: 'Acciones',
       buttons: [
         {
-          icon: 'person',
+          icon: 'create',
           text: 'Change Password',
           handler: () => {
             this.navCtrl.navigateForward('/auth/reset-password');
@@ -66,11 +76,10 @@ export class MyInfoPage implements OnInit {
         {
           icon: 'close',
           text: 'Cancel',
-          role: 'cancel'
+          role: 'cancel',
         },
       ],
     });
     action.present();
   }
-
 }

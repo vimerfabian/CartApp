@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-order-detail',
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class OrderDetailPage implements OnInit {
   order: any = {};
-  constructor(private router: Router) {
+  constructor(private router: Router, private navCtrl: NavController) {
     if (router.getCurrentNavigation().extras.state) {
       const order = this.router.getCurrentNavigation().extras.state;
       console.log('order', order);
@@ -21,4 +22,10 @@ export class OrderDetailPage implements OnInit {
   }
 
   ngOnInit() {}
+
+  addClaim(iem) {
+    this.navCtrl.navigateForward('/pages/claims/add-claim', {
+      state: this.order,
+    });
+  }
 }

@@ -14,7 +14,10 @@
 </ion-header>
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let item of list;let i = index;">
+    <ion-item
+      (click)="seeDetail(item)"
+      *ngFor="let item of list;let i = index;"
+    >
       <ion-label> {{item?.date | date}} </ion-label>
       <ion-label style="text-align: right" slot="end">
         Total: <strong>${{item?.total || 0 | number}}</strong>

@@ -80,6 +80,20 @@ export class CheckoutPage implements OnInit {
   }
 
   async initPaypal2() {
+    const items = this.order.items.map((x) => {
+      const item = {
+        name: x?.name || '',
+        quantity: '1',
+        category: 'DIGITAL_GOODS',
+        unit_amount: {
+          currency_code: 'USD',
+          value: `${Number(x?.total || 0)}`,
+        },
+      };
+      return item;
+    });
+    console.log('items', items);
+    console.log('total', this.total);
     this.payPalConfig = {
       currency: 'USD',
       clientId: environment.paypalClientId,
@@ -99,18 +113,8 @@ export class CheckoutPage implements OnInit {
                   },
                 },
               },
-              items: this.order.items.map((x) => {
-                const item = {
-                  name: x?.name || '',
-                  quantity: '1',
-                  category: 'DIGITAL_GOODS',
-                  unit_amount: {
-                    currency_code: 'USD',
-                    value: `${Number(x?.total || 0)}`,
-                  },
-                };
-                return item;
-              }),
+              // eslint-disable-next-line object-shorthand
+              items: items,
             },
           ],
         },

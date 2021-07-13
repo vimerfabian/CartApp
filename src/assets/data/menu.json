@@ -1,18 +1,16 @@
 [
   { "title": "Offers", "url": "/pages/offers", "icon": "star" },
-  { "title": "Events", "url": "/pages/events", "icon": "star" },
+  {
+    "title": "Events",
+    "url": "/pages/events",
+    "icon": "notifications"
+  },
   { "title": "Menu", "url": "/pages/menu", "icon": "restaurant" },
   { "title": "My Info", "url": "/pages/my-info", "icon": "information-circle" },
   {
-    "title": "My Wallet",
-    "url": "/pages/my-wallet",
-    "icon": "information-circle"
-  },
-  {
     "title": "My Orders",
     "url": "/pages/orders",
-    "icon": "information-circle"
+    "icon": "list"
   },
-  { "title": "My Addresses", "url": "/pages/address", "icon": "pin" },
-  { "title": "Add Claim", "url": "/pages/claims", "icon": "pin" }
+  { "title": "My Addresses", "url": "/pages/address", "icon": "pin" }
 ]

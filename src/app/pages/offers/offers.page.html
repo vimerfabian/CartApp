@@ -17,13 +17,16 @@
         <ion-img
           class="text-center"
           style="max-width: 100%; max-height: 500px"
-          [src]="offer.image || 'assets/food.png'"
+          [src]="offer?.image ? 'data:image/jpeg;base64,' + offer.image : 'assets/food.png'"
         >
         </ion-img>
       </ion-item>
       <ion-card-title>
         <ion-item>
           <h3 style="font-weight: bold">{{offer?.name || ''}}</h3>
+          <ion-label style="text-align: right; font-weight: bold"
+            >${{offer.price || 0 | number}}</ion-label
+          >
         </ion-item>
       </ion-card-title>
       <ion-card-content>

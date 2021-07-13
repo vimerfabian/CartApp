@@ -19,6 +19,7 @@ export class EventsPage implements OnInit {
   }
   async updateList() {
     const user = this.authService.getCurrentSession();
-    //this.list = await this.eventService.getList().toPromise();
+    this.list = await this.eventService.getList().toPromise();
+    console.log('events list', this.list);
   }
 }

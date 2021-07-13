@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   ToastController,
   LoadingController,
@@ -15,17 +16,26 @@ import { ClaimService } from 'src/app/services/claim.service';
 })
 export class AddClaimPage implements OnInit {
   claim: any = {};
+  order: any = {};
   constructor(
     private claimService: ClaimService,
     private toastCtrl: ToastController,
     private loadingCtrl: LoadingController,
     private authService: AuthService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private router: Router
   ) {}
 
-  async ngOnInit() {}
+  async ngOnInit() {
+    if (this.router.getCurrentNavigation().extras.state) {
+      const order = this.router.getCurrentNavigation().extras.state;
+      this.order = order;
+      console.log('order add claim', this.order);
+    }
+  }
 
   async save() {
+    this.claim.idOrder = this.order.idOrder;
     this.claim.date = new Date();
     const user = this.authService.getCurrentSession();
     this.claim.idClient = user?.idClient;

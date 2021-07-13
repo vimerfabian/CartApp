@@ -7,44 +7,71 @@
     <ion-title>My Info</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="showActions($event)">
-        <ion-icon name="person"></ion-icon>
+        <ion-icon name="settings"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
- <form #form="ngForm">
-  <ion-card>
-    <ion-card-header class="ion-text-center">
-      <ion-label style="font-size: x-large;" class="text-center">
-        <ion-icon style="font-size: x-large;"  slot="icon-only" size="large" name="person"></ion-icon>
-      </ion-label>
-    </ion-card-header>
+  <form #form="ngForm">
+    <ion-card>
+      <ion-card-header class="ion-text-center">
+        <ion-label style="font-size: x-large" class="text-center">
+          <ion-icon
+            style="font-size: x-large"
+            slot="icon-only"
+            size="large"
+            name="person"
+          ></ion-icon>
+        </ion-label>
+      </ion-card-header>
 
-    <ion-card-content>
-      <ion-list>
-        <ion-item>
-          <ion-label position="floating">FirstName</ion-label>
-          <ion-input name="firstname" [(ngModel)]="user.firstName" placeholder="FirstName"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">LastName</ion-label>
-          <ion-input name="lastname" [(ngModel)]="user.lastName" placeholder="LastName"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Phone Number</ion-label>
-          <ion-input name="phone" [(ngModel)]="user.phone" type="tel" placeholder="Phone Number"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Email</ion-label>
-          <ion-input name="email" [(ngModel)]="user.email" type="email" placeholder="Email"></ion-input>
-        </ion-item>
-        <ion-button [disabled]="form.invalid" (click)="form.valid && save()" expand="full">
-          Save
-        </ion-button>
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
- </form>
+      <ion-card-content>
+        <ion-list>
+          <ion-item>
+            <ion-label position="floating">FirstName</ion-label>
+            <ion-input
+              name="firstname"
+              [(ngModel)]="user.firstName"
+              placeholder="FirstName"
+            ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">LastName</ion-label>
+            <ion-input
+              name="lastname"
+              [(ngModel)]="user.lastName"
+              placeholder="LastName"
+            ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Phone Number</ion-label>
+            <ion-input
+              name="phone"
+              [(ngModel)]="user.phone"
+              type="tel"
+              placeholder="Phone Number"
+            ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Email</ion-label>
+            <ion-input
+              name="email"
+              [(ngModel)]="user.email"
+              type="email"
+              placeholder="Email"
+            ></ion-input>
+          </ion-item>
+          <ion-button
+            [disabled]="form.invalid"
+            (click)="form.valid && save()"
+            expand="full"
+          >
+            Save
+          </ion-button>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </form>
 </ion-content>
