@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { NavController, ToastController } from '@ionic/angular';
 import { ArrayUtil } from 'src/app/common/utils/array.util';
 import { CartService } from 'src/app/services/cart.service';
+import { MenuService } from 'src/app/services/menu.service';
 
 @Component({
   selector: 'app-select-product',
@@ -11,20 +12,24 @@ import { CartService } from 'src/app/services/cart.service';
 })
 export class SelectProductPage implements OnInit {
   product: any = {};
-  toppingsOrdered: any = [];
+  offer: any = { idOffer: 0 };
+  toppingsOrdered: any = {};
   constructor(
     public router: Router,
     public cartService: CartService,
-    private nav: NavController
+    private nav: NavController,
+    private toastCtrl: ToastController
   ) {
     if (router.getCurrentNavigation().extras.state) {
-      const product = this.router.getCurrentNavigation().extras.state;
-      console.log('product', product);
-      this.setProduct(product);
+      const state = this.router.getCurrentNavigation().extras.state;
+      const product = state.product;
+      const offer: number = state?.offer || { idOffer: 0 };
+      console.log('product', product, 'offer', offer);
+      this.setProduct(product, offer);
     }
   }
 
-  setProduct(product: any) {
+  setProduct(product: any, offer: any) {
     this.product = product;
     if (Number(this.product?.quantity || 0) <= 1) {
       this.product.quantity = 1;
@@ -34,6 +39,12 @@ export class SelectProductPage implements OnInit {
       product.productTopping,
       'toppingTypeName'
     );
+    // for(const category of this.toppingsOrdered) {
+    //   for(const modifier of category) {
+    //     if(modifier)
+    //   }
+    // }
+    this.setByDefaultToppings();
     console.log('ordered', this.toppingsOrdered);
     console.log('product pos', this.product);
   }
@@ -48,12 +59,47 @@ export class SelectProductPage implements OnInit {
   }
 
   async addToCart() {
+    const isValid = this.isValid();
+    if (!isValid) {
+      return;
+    }
     this.calc();
     if (this.product?.idProduct > 0) {
       const product = this.getParsedProduct();
       await this.cartService.addProduct(product);
-      this.nav.navigateRoot('/pages/menu');
+      this.nav.pop();
     }
+  }
+  setByDefaultToppings() {
+    this.product.productTopping.map((x) => {
+      if (x.byDefault === true) {
+        this.selectTopping(x);
+      }
+    });
+  }
+
+  isValid(): boolean {
+    const keys = Object.keys(this.toppingsOrdered);
+    for (const key of keys) {
+      const minRequired: number = this.toppingsOrdered[key][0].required;
+      console.log('min required', minRequired);
+      if (
+        this.product.productTopping.filter(
+          (x) => x.selected === true && x.toppingTypeName === key
+        ).length < minRequired
+      ) {
+        this.toastCtrl
+          .create({
+            header: 'Warning',
+            message: `Min modifiers for ${key} is ${minRequired}, please select more`,
+            duration: 3500,
+            color: 'warning',
+          })
+          .then((t) => t.present());
+        return false;
+      }
+    }
+    return true;
   }
 
   getParsedProduct() {
@@ -85,6 +131,7 @@ export class SelectProductPage implements OnInit {
       'combine',
       this.product.productTopping[idx].combine
     );
+    console.log('product', this.product);
     if (countSelected - 1 > this.product.productTopping[idx].combine) {
       this.product.productTopping[idx].selected = false;
       return;

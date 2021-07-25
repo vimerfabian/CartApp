@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Observable } from 'rxjs';
+import { CartService } from 'src/app/services/cart.service';
 import { OffersService } from 'src/app/services/offers.service';
 
 @Component({
@@ -13,10 +14,14 @@ export class OffersPage implements OnInit {
   test: any;
   constructor(
     private offerService: OffersService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private cart: CartService
   ) {}
 
   ngOnInit() {
+    this.cart.getOffers().then((res) => {
+      console.log('offers selected', res);
+    });
     this.list = this.offerService.getList();
     //this.test = this.offerService.getTest();
   }

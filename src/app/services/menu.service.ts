@@ -3,14 +3,16 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MenuService {
   url: string;
   categoryUrl: string;
+  productUrl: string;
   constructor(private httpClient: HttpClient) {
     this.url = environment.apiUrl + '/menu';
     this.categoryUrl = environment.apiUrl + '/category';
+    this.productUrl = environment.apiUrl + '/product';
   }
 
   getList() {
@@ -18,5 +20,11 @@ export class MenuService {
   }
   getCategoryList() {
     return this.httpClient.get<any[]>(this.categoryUrl + '/getcategorylist');
+  }
+
+  getProduct(id: number) {
+    return this.httpClient.get<any[]>(
+      this.productUrl + `/getproductbyid?id=${id}`
+    );
   }
 }

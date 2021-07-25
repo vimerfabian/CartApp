@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-login',
@@ -8,7 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginPage implements OnInit {
   user: any = {};
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private storage: Storage) {}
 
   ngOnInit() {
     this.authService.exitFromLogin();
@@ -17,5 +18,4 @@ export class LoginPage implements OnInit {
   login() {
     this.authService.login(this.user.username, this.user.password);
   }
-
 }

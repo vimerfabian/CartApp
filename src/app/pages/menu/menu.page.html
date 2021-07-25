@@ -26,6 +26,7 @@
             {{subCategory.subCategory.name}}
             <ion-button color="light" fill="clear" slot="end">
               <ion-icon
+                color="dark"
                 slot="icon-only"
                 [name]="!subCategory.show ? 'arrow-down-circle' : 'arrow-up-circle'"
               ></ion-icon>
@@ -38,10 +39,12 @@
                   [src]="product?.image ? 'data:image/jpeg;base64,' + product.image : 'assets/food.png'"
                 />
               </ion-thumbnail>
-              <ion-label>{{product.name}}</ion-label>
+              <ion-label
+                >{{product.name}} - ${{product?.price || 0 | number}}</ion-label
+              >
               <ion-button (click)="selectProduct(product)" fill="clear">
                 <ion-icon
-                  color="light"
+                  color="primary"
                   name="add-circle"
                   slot="icon-only"
                 ></ion-icon>

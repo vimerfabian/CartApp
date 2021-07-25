@@ -11,13 +11,16 @@ import { CartService } from 'src/app/services/cart.service';
 export class MyOrderPage implements OnInit {
   //cart: any = [];
   @ViewChild(IonContent) content: IonContent;
+  offers: any = [];
   constructor(
     private cartService: CartService,
     private navCtrl: NavController
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     //this.cartService.cart.subscribe(x => this.cart = x);
+    this.offers = await this.cartService.getOffers();
+    console.log('offers', this.offers);
   }
   get cart() {
     return this.cartService.cart;
@@ -25,6 +28,10 @@ export class MyOrderPage implements OnInit {
 
   remove(item) {
     this.cartService.removeProduct(item.idProduct);
+  }
+
+  async removeOffer(item) {
+    this.offers = await this.cartService.removeOffer(item.idOffer);
   }
 
   add(product: any, n: number) {

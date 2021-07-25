@@ -47,6 +47,8 @@ export class MenuPage implements OnInit {
   }
 
   selectProduct(item) {
-    this.navCtrl.navigateForward('/pages/select-product', { state: item });
+    this.navCtrl.navigateForward('/pages/select-product', {
+      state: { product: item },
+    });
   }
 }
