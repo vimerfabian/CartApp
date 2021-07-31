@@ -26,8 +26,14 @@ export class MyOrderPage implements OnInit {
     return this.cartService.cart;
   }
 
-  remove(item) {
-    this.cartService.removeProduct(item.idProduct);
+  editOffer(item) {
+    this.navCtrl.navigateForward('/pages/offers/add-offer', {
+      state: item,
+    });
+  }
+
+  remove(item, idx: number) {
+    this.cartService.removeProductByIndex(idx);
   }
 
   async removeOffer(item) {
@@ -50,6 +56,8 @@ export class MyOrderPage implements OnInit {
     this.navCtrl.navigateForward(['/pages/checkout']);
   }
   selectProduct(item) {
-    this.navCtrl.navigateForward('/pages/select-product', { state: item });
+    this.navCtrl.navigateForward('/pages/select-product', {
+      state: { product: item, offer: {} },
+    });
   }
 }

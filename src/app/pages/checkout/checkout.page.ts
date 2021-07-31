@@ -80,19 +80,36 @@ export class CheckoutPage implements OnInit {
   }
 
   async initPaypal2() {
-    const items = this.order.items.map((x) => {
-      const item = {
-        name: x?.name || '',
-        quantity: '1',
-        category: 'DIGITAL_GOODS',
-        unit_amount: {
-          currency_code: 'USD',
-          value: `${Number(x?.total || 0)}`,
-        },
-      };
-      return item;
-    });
-    console.log('items', items);
+    const items = this.order.items
+      .filter((x) => !x.idOffer)
+      .map((x) => {
+        const item = {
+          name: x?.name || '',
+          quantity: '1',
+          category: 'DIGITAL_GOODS',
+          unit_amount: {
+            currency_code: 'USD',
+            value: `${Number(x?.total || 0)}`,
+          },
+        };
+        return item;
+      });
+    console.log('items before', items);
+    Promise.all(
+      this.order.offers.map((x) => {
+        const item = {
+          name: x?.name || '',
+          quantity: 1,
+          category: 'DIGITAL_GOODS',
+          unit_amount: {
+            currency_code: 'USD',
+            value: `${Number(x?.price || 0)}`,
+          },
+        };
+        items.push(item);
+      })
+    );
+    console.log('items after', items);
     console.log('total', this.total);
     this.payPalConfig = {
       currency: 'USD',
@@ -175,6 +192,7 @@ export class CheckoutPage implements OnInit {
           });
       },
       onClick: (data, actions) => {
+        console.log();
         console.log('onClick', data, actions);
         //this.resetStatus();
       },

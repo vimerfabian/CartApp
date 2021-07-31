@@ -65,14 +65,61 @@ export class CartService {
   async removeOffer(idOffer: number) {
     let offers = await this.getOffers();
     offers = offers.filter((x) => x.idOffer !== idOffer);
+    await this.removeProductsFromOffer(idOffer);
     await this.saveOffers(offers);
     this.emitValues(this.cart.value);
+
     return offers;
   }
 
   async removeProduct(idProduct: number) {
     let cart = await this.getCart();
     cart = cart.filter((x) => x.idProduct !== idProduct);
+    await this.saveCart(cart);
+    this.emitValues(cart);
+    return cart;
+  }
+
+  async removeProductByIndex(index: number) {
+    // eslint-disable-next-line prefer-const
+    let cart = await this.getCart();
+    cart.splice(index, 1);
+    await this.saveCart(cart);
+    this.emitValues(cart);
+    return cart;
+  }
+
+  async removeProductByIdInOffer(idProduct: number, idOffer: number) {
+    // eslint-disable-next-line prefer-const
+    let cart = await this.getCart();
+    console.log('cart state before', cart);
+    cart = cart.filter((x) => {
+      const res = x.idProduct === idProduct && x.idOffer === idOffer;
+      console.log(
+        `x.idProduct`,
+        x.idProduct,
+        'idProduct',
+        idProduct,
+        'x.idOffer',
+        x.idOffer,
+        'idPffer',
+        idOffer,
+        'pass',
+        res,
+        `prueba a ${x.idProduct === idProduct} b: ${x.idOffer === idOffer}`
+      );
+      return !res;
+    });
+    console.log('cart state after', cart);
+    await this.saveCart(cart);
+    this.emitValues(cart);
+    return cart;
+  }
+
+  async removeProductsFromOffer(idOffer: number) {
+    // eslint-disable-next-line prefer-const
+    let cart = await this.getCart();
+    cart = cart.filter((x) => x.idOffer !== idOffer);
     await this.saveCart(cart);
     this.emitValues(cart);
     return cart;
@@ -97,6 +144,7 @@ export class CartService {
   }
 
   async resetCart() {
+    await this.saveOffers([]);
     return await this.saveCart([]);
   }
 
@@ -116,9 +164,14 @@ export class CartService {
     order.idPaymentMethod = 1;
     order.macAddress = 'AA:AA:AA:AA:AA';
     order.idOrderType = idOrderType;
-    order.idAddress = idAddress;
+    order.idAddress = idAddress || 0;
     order.items = items;
     order.offers = [];
+    const offers: any[] = await this.getOffers();
+    order.offers = offers.map((x) => {
+      delete x.products;
+      return x;
+    });
     return order;
   }
 
@@ -134,11 +187,13 @@ export class CartService {
   }
 
   private getTotalPrice(cart: any[], offers: any[] = []): number {
-    const cartPrice = cart.reduce((a, b) => {
-      const total = Number(b.price) * Number(b.quantity);
-      const taxes = total * (Number(b.taxes || 0) / 100);
-      return Number(a) + (total + taxes);
-    }, 0);
+    const cartPrice = cart
+      .filter((x) => !x.idOffer)
+      .reduce((a, b) => {
+        const total = Number(b.price) * Number(b.quantity);
+        const taxes = total * (Number(b.taxes || 0) / 100);
+        return Number(a) + (total + taxes);
+      }, 0);
     const offersPrice = offers.reduce((a, b) => {
       const total = Number(b.price);
       const taxes = 0; //total * (Number(b.taxes || 0) / 100);
@@ -148,10 +203,12 @@ export class CartService {
   }
 
   private getSubTotalPrice(cart: any[], offers: any[] = []): number {
-    const cartPrice = cart.reduce((a, b) => {
-      const total = Number(b.price) * Number(b.quantity);
-      return Number(a) + total;
-    }, 0);
+    const cartPrice = cart
+      .filter((x) => !x.idOffer)
+      .reduce((a, b) => {
+        const total = Number(b.price) * Number(b.quantity);
+        return Number(a) + total;
+      }, 0);
     const offerPrice = offers.reduce((a, b) => {
       const total = Number(b.price);
       return Number(a) + total;
@@ -160,16 +217,18 @@ export class CartService {
   }
 
   private getTotalTaxes(cart: any[]): number {
-    return cart.reduce((a, b) => {
-      const total =
-        Number(b.price) * Number(b.quantity) * (Number(b.taxes || 0) / 100);
-      return Number(a) + total;
-    }, 0);
+    return cart
+      .filter((x) => !x.idOffer)
+      .reduce((a, b) => {
+        const total =
+          Number(b.price) * Number(b.quantity) * (Number(b.taxes || 0) / 100);
+        return Number(a) + total;
+      }, 0);
   }
 
   private async emitValues(cart: any[]) {
     const offers: any[] = await this.getOffers();
-    this.cartCount.next(cart.length + offers.length);
+    this.cartCount.next(cart.filter((x) => !x.idOffer).length + offers.length);
     this.totalPrice.next(this.getTotalPrice(cart, offers));
     this.subTotalPrice.next(this.getSubTotalPrice(cart, offers));
     this.totalTaxes.next(this.getTotalTaxes(cart));

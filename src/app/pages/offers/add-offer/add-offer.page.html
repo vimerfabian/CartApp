@@ -1,7 +1,10 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/pages/offers"></ion-back-button>
+      <!-- <ion-back-button defaultHref="/pages/offers"></ion-back-button> -->
+      <ion-button (click)="confirmCancelOffer()" fill="clear">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
     </ion-buttons>
     <ion-title style="text-align: center"
       >Add Offer: {{offer?.name || ""}}</ion-title
@@ -27,15 +30,33 @@
       >Products</ion-list-header
     >
 
-    <ion-item (click)="selectProduct(item)" *ngFor="let item of offer.products">
+    <ion-item *ngFor="let item of offer.products">
       <ion-thumbnail (click)="item.seeImage = !item?.seeImage">
         <img
           [src]="item?.image ? 'data:image/jpeg;base64,' + item.image : 'assets/food.png'"
         />
       </ion-thumbnail>
       <ion-label style="font-size: 1em; font-weight: bold">
-        {{item.name || ''}} - Qty: {{item.quantity || 0}}
+        {{item.name || ''}}
+        <br />
+        <ion-text style="font-size: small">
+          Qty(Required: {{item.quantity || 0}} - Selected:
+          {{item?.quantitySelected || 0}})
+        </ion-text>
       </ion-label>
+      <ion-button
+        *ngIf="item?.quantitySelected < item.quantity"
+        color="primary"
+        (click)="selectProduct(item)"
+        >Select More</ion-button
+      >
+      <ion-button
+        *ngIf="item?.quantitySelected >= item.quantity"
+        color="danger"
+        (click)="removeProducts(item)"
+        >Select Again</ion-button
+      >
+
       <br />
       <div
         (click)="item.seeImage = !item?.seeImage"
@@ -55,7 +76,12 @@
 </ion-content>
 
 <ion-footer>
-  <ion-button color="primary" (click)="addToCart()" expand="full">
+  <ion-button
+    [disabled]="!isValid"
+    color="primary"
+    (click)="addToCart()"
+    expand="full"
+  >
     ADD OFFER
   </ion-button>
 </ion-footer>

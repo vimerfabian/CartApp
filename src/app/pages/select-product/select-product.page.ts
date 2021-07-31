@@ -23,8 +23,9 @@ export class SelectProductPage implements OnInit {
     if (router.getCurrentNavigation().extras.state) {
       const state = this.router.getCurrentNavigation().extras.state;
       const product = state.product;
-      const offer: number = state?.offer || { idOffer: 0 };
-      console.log('product', product, 'offer', offer);
+      const offer: any = state?.offer || { idOffer: 0 };
+      product.idOffer = offer?.idOffer;
+      console.log('product to be a', product, 'offer', offer);
       this.setProduct(product, offer);
     }
   }
@@ -79,6 +80,9 @@ export class SelectProductPage implements OnInit {
   }
 
   isValid(): boolean {
+    if (!this.isValidForOffer()) {
+      return false;
+    }
     const keys = Object.keys(this.toppingsOrdered);
     for (const key of keys) {
       const minRequired: number = this.toppingsOrdered[key][0].required;
@@ -99,6 +103,35 @@ export class SelectProductPage implements OnInit {
         return false;
       }
     }
+    return true;
+  }
+
+  isValidForOffer() {
+    if (this.product.idOffer > 0) {
+      const quantityInCart = this.cartService.cart.value
+        .filter(
+          (cp) =>
+            cp.idProduct === this.product.idProduct &&
+            cp.idOffer === this.product.idOffer.idOffer
+        )
+        // eslint-disable-next-line arrow-body-style
+        .reduce((a, b) => {
+          return Number(a) + Number(b.quantity);
+        }, 0);
+      if (quantityInCart + this.product.quantity > this.product.quantityOffer) {
+        //present invlaid message
+        this.toastCtrl
+          .create({
+            header: 'Warning',
+            message: `Max of this product in offer is ${this.product.quantityOffer} add less to apply to this offer`,
+            duration: 3500,
+            color: 'warning',
+          })
+          .then((t) => t.present());
+        return false;
+      }
+    }
+
     return true;
   }
 
