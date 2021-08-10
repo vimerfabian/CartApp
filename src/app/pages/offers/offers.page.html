@@ -12,7 +12,10 @@
 
 <ion-content>
   <ion-list>
-    <ion-card *ngFor="let offer of list | async;let i = index">
+    <h1 *ngIf="list?.length < 1" style="text-align: center">
+      no offers for today
+    </h1>
+    <ion-card *ngFor="let offer of list;let i = index">
       <ion-item>
         <ion-img
           class="text-center"

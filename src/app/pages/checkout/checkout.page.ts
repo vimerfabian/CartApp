@@ -32,6 +32,7 @@ export class CheckoutPage implements OnInit {
   cart: any = [];
   total = 0;
   order: any = {};
+  defaultAddress: any = {};
   public payPalConfig?: IPayPalConfig;
   // eslint-disable-next-line @typescript-eslint/member-ordering
   @ViewChild('paypalRef', { static: false }) private paypalRef: ElementRef;
@@ -50,6 +51,8 @@ export class CheckoutPage implements OnInit {
   ) {}
 
   async ngOnInit() {
+    this.defaultAddress = await this.addressService.getDefaultAddress();
+    console.log('deffault address', this.defaultAddress);
     const user = this.authService.getCurrentSession();
     this.addressService.getList(user?.idClient).subscribe((res) => {
       this.addressList = res;
@@ -253,7 +256,7 @@ export class CheckoutPage implements OnInit {
   async saveOrderOnServer() {
     const order = await this.cartService.getOrderToBeSavedFormat(
       this.checkout.idOrderType,
-      this.checkout.idAddress
+      this.checkout?.idAddress || this.defaultAddress?.idAddress
     );
     this.orderService.saveOrder(order).subscribe(
       (res: any) => {

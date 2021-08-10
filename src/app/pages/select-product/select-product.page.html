@@ -80,8 +80,9 @@
 
 <ion-footer>
   <ion-toolbar>
-    <ion-button (click)="addToCart()" color="light" expand="full">
-      ADD TO MY CAR (${{product.total}})</ion-button
+    <ion-button (click)="addToCart()" color="primary" expand="full">
+      ADD TO MY CAR
+      <span *ngIf="offer?.idOffer > 0">(${{product.total}})</span></ion-button
     >
   </ion-toolbar>
 </ion-footer>

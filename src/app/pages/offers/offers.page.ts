@@ -10,19 +10,36 @@ import { OffersService } from 'src/app/services/offers.service';
   styleUrls: ['./offers.page.scss'],
 })
 export class OffersPage implements OnInit {
-  list: Observable<any[]>;
+  list: any[];
   test: any;
+  weekday = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ];
   constructor(
     private offerService: OffersService,
     private navCtrl: NavController,
     private cart: CartService
   ) {}
 
-  ngOnInit() {
-    this.cart.getOffers().then((res) => {
-      console.log('offers selected', res);
+  async ngOnInit() {
+    const res = await this.offerService.getList().toPromise();
+    const now = Number(new Date());
+    this.list = res?.filter((x) => {
+      const startDate = Number(new Date(x.startTime));
+      const endDate = Number(new Date(x.endTime));
+      const days = this.getDays(x);
+      const includeToday = days.includes(
+        this.getDayByNumber(new Date().getDay())
+      );
+      return now < endDate && now > startDate && includeToday;
     });
-    this.list = this.offerService.getList();
+
     //this.test = this.offerService.getTest();
   }
 
@@ -37,6 +54,10 @@ export class OffersPage implements OnInit {
     if (item?.sunday) days += ',Sunday';
     //if(days.length > 0) days = '';
     return days;
+  }
+
+  getDayByNumber(day: number) {
+    return this.weekday[day] || 'Monday';
   }
 
   selectOffer(item) {

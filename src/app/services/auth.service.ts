@@ -21,6 +21,7 @@ export class AuthService {
   ) {}
 
   async login(username: string, password: string) {
+    this.cart.resetCart();
     const url = environment.apiUrl + '/Client/login';
     const query = `?user=${username}&password=${password}`;
     const loading = await this.loadingCtrl.create({
@@ -38,7 +39,7 @@ export class AuthService {
           color = 'success';
           this.setCurrentSession(res);
         } else {
-          title = 'Error, invalid credentials!';
+          title = res?.description || 'Error, invalid credentials!';
           color = 'danger';
         }
         const toast = await this.toastCtrl.create({
@@ -86,6 +87,13 @@ export class AuthService {
 
   setCurrentSession(session: any) {
     localStorage.setItem('session', JSON.stringify(session));
+  }
+
+  sendEmailCode(email: string, type: number = 1) {
+    return this.http.post(
+      environment.apiUrl + `/Client/sendvalidation?email=${email}&Type=${type}`,
+      {}
+    );
   }
 
   forgotPassword(email: string, type: number = 1) {

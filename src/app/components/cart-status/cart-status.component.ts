@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, ToastController } from '@ionic/angular';
+import { AddressService } from 'src/app/services/address.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 
 @Component({
@@ -12,7 +14,9 @@ export class CartStatusComponent implements OnInit {
   totalPrice = 0;
   constructor(
     private cartService: CartService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private addressService: AddressService,
+    private toast: ToastController
   ) {}
 
   ngOnInit() {
@@ -24,8 +28,35 @@ export class CartStatusComponent implements OnInit {
     });
   }
 
-  goToCart() {
+  async userHaveAddress() {}
+
+  async goToCart() {
+    const userHaveAddress = await this.addressService.checkUserHaveAddress();
+    if (!userHaveAddress) {
+      this.addressService.goToAddAddressPage();
+      this.toast
+        .create({
+          header: 'Warning',
+          message: 'Create an address before buy',
+          color: 'warning',
+          duration: 3000,
+        })
+        .then((t) => {
+          t.present();
+        });
+      return;
+    }
     if (this.cartCount < 1) {
+      this.toast
+        .create({
+          header: 'Warning',
+          message: 'Select one product',
+          color: 'warning',
+          duration: 3000,
+        })
+        .then((t) => {
+          t.present();
+        });
       return;
     }
     this.navCtrl.navigateForward(['/pages/my-order']);
