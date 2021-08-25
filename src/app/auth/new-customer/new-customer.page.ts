@@ -7,6 +7,7 @@ import {
 import { HttpStatusEnum } from 'src/app/common/enums/http-status.enum';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClientService } from 'src/app/services/client.service';
+import { DeviceService } from 'src/app/services/device.service';
 
 @Component({
   selector: 'app-new-customer',
@@ -20,10 +21,13 @@ export class NewCustomerPage implements OnInit {
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
     private navCtrl: NavController,
-    private auth: AuthService
+    private auth: AuthService,
+    private deviceService: DeviceService
   ) {}
 
-  ngOnInit() {}
+  async ngOnInit() {
+    this.client.mac = await this.deviceService.getMac();
+  }
 
   async save() {
     console.log('client', this.client);

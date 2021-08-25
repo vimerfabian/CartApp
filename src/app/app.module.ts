@@ -15,6 +15,8 @@ import { ComponentsModule } from './components/components.module';
 import { Stripe } from '@ionic-native/stripe/ngx';
 import { PayPal } from '@ionic-native/paypal/ngx';
 import { NgxPayPalModule } from 'ngx-paypal';
+import { Uid } from '@ionic-native/uid/ngx';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -39,6 +41,8 @@ import { NgxPayPalModule } from 'ngx-paypal';
     Storage,
     Stripe,
     PayPal,
+    Uid,
+    AndroidPermissions,
   ],
   bootstrap: [AppComponent],
 })
