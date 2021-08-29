@@ -28,9 +28,12 @@ export class OffersPage implements OnInit {
   ) {}
 
   async ngOnInit() {
+    //debugger;
     const res = await this.offerService.getList().toPromise();
     const now = Number(new Date());
     this.list = res?.filter((x) => {
+      return true;
+      //debugger;
       const startDate = Number(new Date(x.startTime));
       const endDate = Number(new Date(x.endTime));
       const days = this.getDays(x);

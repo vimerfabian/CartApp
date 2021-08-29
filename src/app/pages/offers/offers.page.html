@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Offers</ion-title>
+    <ion-title color="gold">Offers</ion-title>
     <ion-buttons slot="end">
       <app-cart-status></app-cart-status>
     </ion-buttons>
@@ -13,7 +13,7 @@
 <ion-content>
   <ion-list>
     <h1 *ngIf="list?.length < 1" style="text-align: center">
-      no offers for today
+      <ion-text color="gold">no offers for today</ion-text>
     </h1>
     <ion-card *ngFor="let offer of list;let i = index">
       <ion-item>
@@ -26,8 +26,10 @@
       </ion-item>
       <ion-card-title>
         <ion-item>
-          <h3 style="font-weight: bold">{{offer?.name || ''}}</h3>
-          <ion-label style="text-align: right; font-weight: bold"
+          <h3 style="font-weight: bold">
+            <ion-text color="gold"> {{offer?.name || ''}} </ion-text>
+          </h3>
+          <ion-label color="gold" style="text-align: right; font-weight: bold"
             >${{offer.price || 0 | number}}</ion-label
           >
         </ion-item>
@@ -43,15 +45,25 @@
         </label>
         <br />
         <br />
-        <ion-chip *ngFor="let product of offer?.products"
-          >{{product.name}}({{product.quantity || 0}})</ion-chip
-        >
+        <ion-chip *ngFor="let product of offer?.products">
+          <ion-text color="gold">
+            {{product.name}}({{product.quantity || 0}})
+          </ion-text>
+        </ion-chip>
         <ion-button (click)="selectOffer(offer)" expand="full"
           >Select Offer</ion-button
         >
       </ion-card-content>
     </ion-card>
   </ion-list>
+  <!-- <div style="background-color: #3f2021; width: 100px; height: 100px"></div>
+  <br />
+  <div style="background-color: #bd9b60; width: 100px; height: 100px"></div>
+  <br />
+  <div style="background-color: #f5f7f6; width: 100px; height: 100px"></div>
+  <br />
+  <div style="background-color: #101820; width: 100px; height: 100px"></div>
+  <br /> -->
 </ion-content>
 
 <ion-footer>

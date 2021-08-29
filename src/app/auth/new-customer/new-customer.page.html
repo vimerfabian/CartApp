@@ -3,76 +3,129 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <ion-title>Customer Form</ion-title>
+    <ion-title color="gold">Customer Form</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-<form #form="ngForm">
-  <ion-card>
-    <ion-card-header class="ion-text-center">
-      <ion-label style="font-size: x-large;" class="text-center">
-        <ion-icon style="font-size: x-large;"  slot="icon-only" size="large" name="person"></ion-icon>
-      </ion-label>
+  <form #form="ngForm">
+    <ion-card>
+      <ion-card-header class="ion-text-center">
+        <ion-label style="font-size: x-large" class="text-center">
+          <ion-icon
+            style="font-size: x-large"
+            slot="icon-only"
+            size="large"
+            name="person"
+          ></ion-icon>
+        </ion-label>
+      </ion-card-header>
 
-    </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item>
+            <ion-label position="floating">FirstName</ion-label>
+            <ion-input
+              maxlength="25"
+              required
+              name="firstname"
+              [(ngModel)]="client.firstName"
+              placeholder="FirstName"
+            ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">LastName</ion-label>
+            <ion-input
+              maxlength="25"
+              required
+              name="lastname"
+              [(ngModel)]="client.lastName"
+              placeholder="LastName"
+            ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Phone Number</ion-label>
+            <ion-input
+              maxlength="25"
+              required
+              name="phone"
+              [(ngModel)]="client.phone"
+              type="tel"
+              placeholder="Phone Number"
+            ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Email</ion-label>
+            <ion-input
+              maxlength="60"
+              required
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+              name="email"
+              [(ngModel)]="client.email"
+              type="email"
+              placeholder="Email"
+            ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">New Password</ion-label>
+            <ion-input
+              maxlength="100"
+              required
+              name="password"
+              [(ngModel)]="client.password"
+              type="password"
+              placeholder="New Password"
+            ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Confirm Password</ion-label>
+            <ion-input
+              maxlength="100"
+              required
+              name="confirmPassword"
+              [(ngModel)]="client.confirmPassword"
+              type="password"
+              placeholder="Confirm Password"
+            ></ion-input>
+          </ion-item>
+          <ion-card>
+            <ion-card-content>
+              If you have read and agree to the terms and conditions click
+              <strong>I Agree</strong>
+              <br />
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <ion-button size="small" fill="outline">
+                      READ TERMS AND CONDITIONS
+                    </ion-button>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label> I Agree </ion-label>
+                      <ion-checkbox
+                        name="read"
+                        [(ngModel)]="client.read"
+                        mode="ios"
+                        color="success"
+                      >
+                      </ion-checkbox>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-card-content>
+          </ion-card>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
 
-    <ion-card-content>
-      <ion-list>
-        <ion-item>
-          <ion-label position="floating">FirstName</ion-label>
-          <ion-input maxlength="25" required name="firstname" [(ngModel)]="client.firstName" placeholder="FirstName"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">LastName</ion-label>
-          <ion-input maxlength="25" required name="lastname" [(ngModel)]="client.lastName" placeholder="LastName"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Phone Number</ion-label>
-          <ion-input maxlength="25" required name="phone" [(ngModel)]="client.phone" type="tel" placeholder="Phone Number"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Email</ion-label>
-          <ion-input maxlength="60" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" name="email" [(ngModel)]="client.email" type="email" placeholder="Email"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">New Password</ion-label>
-          <ion-input maxlength="100" required name="password" [(ngModel)]="client.password" type='password' placeholder="New Password"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Confirm Password</ion-label>
-          <ion-input maxlength="100" required name="confirmPassword" [(ngModel)]="client.confirmPassword" type='password' placeholder="Confirm Password"></ion-input>
-        </ion-item>
-        <ion-card>
-          <ion-card-content>
-            If you have read and agree to the terms and conditions click <strong>I Agree</strong>
-            <br>
-            <ion-grid>
-              <ion-row>
-                <ion-col>
-                  <ion-button size="small" fill="outline">
-                    READ TERMS AND CONDITIONS
-                  </ion-button>
-                </ion-col>
-                <ion-col>
-                <ion-item>
-                  <ion-label>
-                    I Agree
-                  </ion-label>
-                  <ion-checkbox name="read" [(ngModel)]="client.read"  mode="ios" color="success">
-                  </ion-checkbox>
-                </ion-item>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </ion-card-content>
-        </ion-card>
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-button [disabled]="!form.valid || client.confirmPassword !== client.password || !client.read" (click)="form.valid && save()" expand="full">
-    Save
-  </ion-button>
-</form>
+    <ion-button
+      [disabled]="!form.valid || client.confirmPassword !== client.password || !client.read"
+      (click)="form.valid && save()"
+      expand="full"
+    >
+      Save
+    </ion-button>
+  </form>
 </ion-content>

@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{product?.name || 'test'}}</ion-title>
+    <ion-title color="gold">{{product?.name || 'test'}}</ion-title>
     <ion-buttons slot="end">
       <ion-back-button
         icon="close-circle"
@@ -18,7 +18,7 @@
 <ion-content>
   <form #form="ngForm">
     <ion-card>
-      <ion-title>
+      <ion-title color="gold">
         <h4 style="font-weight: bold">{{product.name || 'test'}}</h4>
       </ion-title>
       <ion-card-content>

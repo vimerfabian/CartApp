@@ -14,6 +14,7 @@ export class SelectProductPage implements OnInit {
   product: any = {};
   offer: any = { idOffer: 0 };
   toppingsOrdered: any = {};
+  edit = false;
   constructor(
     public router: Router,
     public cartService: CartService,
@@ -23,6 +24,7 @@ export class SelectProductPage implements OnInit {
     if (router.getCurrentNavigation().extras.state) {
       const state = this.router.getCurrentNavigation().extras.state;
       const product = state.product;
+      this.edit = state?.edit || false;
       const offer: any = state?.offer || { idOffer: 0 };
       product.idOffer = offer?.idOffer;
       console.log('product to be a', product, 'offer', offer);
@@ -67,7 +69,7 @@ export class SelectProductPage implements OnInit {
     this.calc();
     if (this.product?.idProduct > 0) {
       const product = this.getParsedProduct();
-      await this.cartService.addProduct(product);
+      await this.cartService.addProduct(product, this.edit);
       this.nav.pop();
     }
   }

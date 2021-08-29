@@ -2,7 +2,7 @@
   <form #form="ngForm">
     <!-- <ion-header>
   <ion-toolbar>
-    <ion-title>login</ion-title>
+     <ion-title color="gold">login</ion-title>
   </ion-toolbar>
 </ion-header> -->
 
@@ -11,8 +11,8 @@
     </ion-item>
 
     <ion-item style="margin-top: 15px">
-      <ion-icon slot="start" name="person"> </ion-icon>
-      <ion-label position="floating"> Email </ion-label>
+      <ion-icon color="gold" slot="start" name="person"> </ion-icon>
+      <ion-label color="gold" position="floating"> Email </ion-label>
       <ion-input
         name="email"
         required
@@ -22,8 +22,8 @@
       ></ion-input>
     </ion-item>
     <ion-item>
-      <ion-icon slot="start" name="unlock"> </ion-icon>
-      <ion-label position="floating"> Password </ion-label>
+      <ion-icon color="gold" slot="start" name="unlock"> </ion-icon>
+      <ion-label color="gold" position="floating"> Password </ion-label>
       <ion-input
         placeholder="password"
         name="password"
@@ -35,7 +35,7 @@
     <ion-button
       [disabled]="!form.valid"
       (click)="login()"
-      color="light"
+      color="gold"
       expand="block"
     >
       LOGIN

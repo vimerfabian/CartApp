@@ -24,11 +24,12 @@ export class AuthService {
     this.cart.resetCart();
     const url = environment.apiUrl + '/Client/login';
     const query = `?user=${username}&password=${password}`;
+    const body = { user: username, password };
     const loading = await this.loadingCtrl.create({
       message: 'Loading...',
     });
     await loading.present();
-    this.http.post(url + query, {}).subscribe(
+    this.http.post(url, body).subscribe(
       async (res: any) => {
         console.log('res login', res);
         loading.dismiss();

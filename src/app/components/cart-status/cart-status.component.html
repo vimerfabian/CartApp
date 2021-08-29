@@ -1,7 +1,5 @@
-<ion-item (click)="goToCart()" detail>
-  <ion-label style="color: green">
-    USD${{ totalPrice || 0 | number }}
-  </ion-label>
+<ion-item color="chocolate" (click)="goToCart()" detail>
+  <ion-label color="gold"> USD${{ totalPrice || 0 | number }} </ion-label>
   <ion-button>
     <ion-badge id="notifications-badge" color="primary">{{
       cartCount

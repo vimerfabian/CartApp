@@ -18,11 +18,11 @@ export class CartService {
     this.getCart();
   }
 
-  async addProduct(product: any) {
+  async addProduct(product: any, edit: boolean = false) {
     const total = Number(product.price) * Number(product.quantity);
     const taxes = total * (Number(product.taxes || 0) / 100);
     product.total = total + taxes;
-    const cart = await this.getCart();
+    let cart = await this.getCart();
     // const index = cart.findIndex((x) => x.idProduct === product.idProduct);
     // if (index >= 0) {
     //   if (cart[index]?.idOffer > 0) {
@@ -32,6 +32,9 @@ export class CartService {
     // } else {
     //   cart.push(product);
     // }
+    if (edit) {
+      cart = cart.filter((x) => x.idProduct !== product.idProduct);
+    }
     cart.push(product);
     /*cart = cart.filter(x => x.idProduct !== product.idProduct);
     cart.push(product);*/

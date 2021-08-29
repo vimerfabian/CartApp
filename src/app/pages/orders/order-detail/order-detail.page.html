@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/pages/orders"></ion-back-button>
     </ion-buttons>
-    <ion-title>Order Detail</ion-title>
+    <ion-title color="gold">Order Detail</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -17,6 +17,10 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  <div style="text-align: center">
+    [<app-order-status [status]="order.status"></app-order-status>]
+  </div>
   <ion-list>
     <ion-list-header>Products</ion-list-header>
     <ion-card *ngFor="let item of order?.items">

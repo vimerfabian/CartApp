@@ -1,11 +1,11 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="chocolate">
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-menu-button style="color: white"></ion-menu-button>
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>My Orders</ion-title>
-    <ion-buttons slot="end">
+    <ion-title color="gold">My Orders</ion-title>
+    <ion-buttons style="color: white" slot="end">
       <ion-button [routerLink]="['/pages/menu']">
         <ion-icon name="add"></ion-icon>
       </ion-button>
@@ -18,6 +18,7 @@
       (click)="seeDetail(item)"
       *ngFor="let item of list;let i = index;"
     >
+      [<app-order-status [status]="item.status"></app-order-status>]
       <ion-label> {{item?.date | date}} </ion-label>
       <ion-label style="text-align: right" slot="end">
         Total: <strong>${{item?.total || 0 | number}}</strong>

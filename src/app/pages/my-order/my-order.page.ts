@@ -57,7 +57,7 @@ export class MyOrderPage implements OnInit {
   }
   selectProduct(item) {
     this.navCtrl.navigateForward('/pages/select-product', {
-      state: { product: item, offer: {} },
+      state: { product: item, offer: {}, edit: true },
     });
   }
 }
