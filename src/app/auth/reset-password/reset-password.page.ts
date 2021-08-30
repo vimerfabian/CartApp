@@ -43,16 +43,13 @@ export class ResetPasswordPage implements OnInit {
         )
         .toPromise();
       console.log('res', res);
-      if (res?.idEstado === HttpStatusEnum.EXITOSO) {
-        title = 'Success';
-        message = 'Password Updated';
-        color = 'success';
-        this.auth.logout();
-      } else {
-        message = res?.descripcion;
-      }
+      title = 'Success';
+      message = 'Password Updated';
+      color = 'success';
+      this.auth.logout();
       console.log('res', res);
     } catch (err) {
+      color = 'danger';
       message = 'Error';
       console.log('err', err);
     }

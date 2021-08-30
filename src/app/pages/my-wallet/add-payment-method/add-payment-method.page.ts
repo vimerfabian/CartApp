@@ -75,16 +75,15 @@ export class AddPaymentMethodPage implements OnInit {
       const res: any = await this.walletService
         .save(this.paymentMethod)
         .toPromise();
-      if (res?.idEstado === HttpStatusEnum.EXITOSO) {
-        title = 'Success';
-        message = 'Payment Method Updated';
-        color = 'success';
-        this.navCtrl.navigateRoot('/pages/my-wallet');
-      } else {
-        message = res?.descripcion;
-      }
+
+      title = 'Success';
+      message = 'Payment Method Updated';
+      color = 'success';
+      this.navCtrl.navigateRoot('/pages/my-wallet');
+
       console.log('res', res);
     } catch (err) {
+      color = 'danger';
       message = 'Error';
       console.log('err', err);
     }

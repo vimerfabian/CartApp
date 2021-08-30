@@ -34,16 +34,13 @@ export class ForgotPasswordPage implements OnInit {
     try {
       const date = new Date();
       const res: any = await this.auth.forgotPassword(this.email).toPromise();
-      if (res?.idEstado === HttpStatusEnum.EXITOSO) {
-        title = 'Success';
-        message = 'Password Updated';
-        color = 'success';
-        this.navCtrl.navigateRoot('/auth/login');
-      } else {
-        message = res?.descripcion;
-      }
+      title = 'Success';
+      message = 'Password Updated';
+      color = 'success';
+      this.navCtrl.navigateRoot('/auth/login');
       console.log('res', res);
     } catch (err) {
+      color = 'danger';
       message = 'Error';
       console.log('err', err);
     }

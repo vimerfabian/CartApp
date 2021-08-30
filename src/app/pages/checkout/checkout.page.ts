@@ -261,10 +261,7 @@ export class CheckoutPage implements OnInit {
     this.orderService.saveOrder(order).subscribe(
       (res: any) => {
         console.log('res from server', res);
-        if (!res || res?.idEstado !== HttpStatusEnum.EXITOSO) {
-          this.showInternalErrorMessage();
-          return;
-        }
+
         this.toast
           .create({
             header: 'Success',

@@ -39,15 +39,14 @@ export class MyInfoPage implements OnInit {
     let message = '';
     try {
       const res: any = await this.clientService.save(this.user).toPromise();
-      if (res?.idEstado === HttpStatusEnum.EXITOSO) {
-        title = 'Success';
-        message = 'My Info Updated';
-        color = 'success';
-      } else {
-        message = res?.descripcion;
-      }
+
+      title = 'Success';
+      message = 'My Info Updated';
+      color = 'success';
+
       console.log('res', res);
     } catch (err) {
+      color = 'danger';
       message = 'Error';
       console.log('err', err);
     }

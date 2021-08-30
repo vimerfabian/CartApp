@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingController, NavController, ToastController } from '@ionic/angular';
+import {
+  LoadingController,
+  NavController,
+  ToastController,
+} from '@ionic/angular';
 import { HttpStatusEnum } from 'src/app/common/enums/http-status.enum';
 import { AddressService } from 'src/app/services/address.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -13,8 +17,13 @@ export class AddAddressPage implements OnInit {
   address: any = {};
   cityList: any = [];
   stateList: any = [];
-  constructor(private addressService: AddressService, private toastCtrl: ToastController, private loadingCtrl: LoadingController,
-    private authService: AuthService, private navCtrl: NavController) { }
+  constructor(
+    private addressService: AddressService,
+    private toastCtrl: ToastController,
+    private loadingCtrl: LoadingController,
+    private authService: AuthService,
+    private navCtrl: NavController
+  ) {}
 
   async ngOnInit() {
     this.cityList = await this.addressService.getCityList().toPromise();
@@ -25,7 +34,7 @@ export class AddAddressPage implements OnInit {
     const user = this.authService.getCurrentSession();
     this.address.idClient = user?.idClient;
     const loading = await this.loadingCtrl.create({
-      message: 'Loading...'
+      message: 'Loading...',
     });
     await loading.present();
     let title = 'Error';
@@ -33,16 +42,15 @@ export class AddAddressPage implements OnInit {
     let message = '';
     try {
       const res: any = await this.addressService.save(this.address).toPromise();
-      if(res?.idEstado === HttpStatusEnum.EXITOSO) {
-        title =  'Success';
-        message = 'Address Updated';
-        color = 'success';
-        this.navCtrl.navigateRoot('/pages/address');
-      } else {
-        message = res?.descripcion;
-      }
+
+      title = 'Success';
+      message = 'Address Updated';
+      color = 'success';
+      this.navCtrl.navigateRoot('/pages/address');
+
       console.log('res', res);
-    }catch(err) {
+    } catch (err) {
+      color = 'danger';
       message = 'Error';
       console.log('err', err);
     }
@@ -52,9 +60,8 @@ export class AddAddressPage implements OnInit {
       header: title,
       color,
       duration: 3000,
-      message
+      message,
     });
     toast.present();
   }
-
 }

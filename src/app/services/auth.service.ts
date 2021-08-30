@@ -40,8 +40,16 @@ export class AuthService {
           color = 'success';
           this.setCurrentSession(res);
         } else {
-          title = res?.description || 'Error, invalid credentials!';
-          color = 'danger';
+          if (res?.status === 4) {
+            title = 'Verify your email';
+            color = 'warning';
+            try {
+              this.sendEmailCode(username);
+            } catch (err) {}
+          } else {
+            title = res?.description || 'Error, invalid credentials!';
+            color = 'danger';
+          }
         }
         const toast = await this.toastCtrl.create({
           header: title,

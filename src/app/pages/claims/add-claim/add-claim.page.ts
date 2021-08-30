@@ -49,16 +49,15 @@ export class AddClaimPage implements OnInit {
     try {
       const date = new Date();
       const res: any = await this.claimService.save(this.claim).toPromise();
-      if (res?.idEstado === HttpStatusEnum.EXITOSO) {
-        title = 'Success';
-        message = 'Address Updated';
-        color = 'success';
-        this.navCtrl.navigateRoot('/pages/offers');
-      } else {
-        message = res?.descripcion;
-      }
+
+      title = 'Success';
+      message = 'Address Updated';
+      color = 'success';
+      this.navCtrl.navigateRoot('/pages/offers');
+
       console.log('res', res);
     } catch (err) {
+      color = 'danger';
       message = 'Error';
       console.log('err', err);
     }

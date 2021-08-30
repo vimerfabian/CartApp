@@ -50,16 +50,19 @@ export class NewCustomerPage implements OnInit {
     this.clientService.save(this.client).subscribe(
       (res: any) => {
         console.log('res', res);
-        if (res?.idEstado === HttpStatusEnum.EXITOSO) {
-          this.auth.sendEmailCode(this.client.email);
-          title = 'Success, confirm your email';
-          color = 'success';
-          message = res?.nombre;
-          this.navCtrl.navigateRoot('/auth/login');
-        } else {
-          message = res?.descripcion;
-          console.log('message', message);
-        }
+        this.auth.sendEmailCode(this.client.email).subscribe(
+          (resEmail) => {
+            console.log('res email', resEmail);
+          },
+          (err) => {
+            console.log('err', err);
+          }
+        );
+        title = 'Success, confirm your email';
+        color = 'success';
+        message = res?.nombre;
+        this.navCtrl.navigateRoot('/auth/login');
+
         loading.dismiss();
       },
       (err) => {
