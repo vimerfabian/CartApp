@@ -12,7 +12,7 @@ export class OffersService {
   }
 
   getList() {
-    const path = '/getoffer'; //'/getavailable'
+    const path = '/getavailable'; //'/getoffer'; //'/getavailable'
     return this.httpClient.get<any[]>(this.url + path);
   }
 }

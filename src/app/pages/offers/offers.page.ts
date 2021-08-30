@@ -31,7 +31,7 @@ export class OffersPage implements OnInit {
     //debugger;
     const res = await this.offerService.getList().toPromise();
     const now = Number(new Date());
-    this.list = res?.filter((x) => {
+    this.list = res; /*?.filter((x) => {
       return true;
       //debugger;
       const startDate = Number(new Date(x.startTime));
@@ -41,7 +41,7 @@ export class OffersPage implements OnInit {
         this.getDayByNumber(new Date().getDay())
       );
       return now < endDate && now > startDate && includeToday;
-    });
+    });*/
 
     //this.test = this.offerService.getTest();
   }

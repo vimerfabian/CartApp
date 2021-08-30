@@ -12,7 +12,8 @@ export class EventService {
   }
 
   getList() {
-    const url = this.url + `/getevent`;
+    const path = '/getavailable'; //`/getevent`
+    const url = this.url + path;
     return this.httpClient.get(url);
   }
 }
