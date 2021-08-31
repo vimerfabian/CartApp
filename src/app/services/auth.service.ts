@@ -44,7 +44,15 @@ export class AuthService {
             title = 'Verify your email';
             color = 'warning';
             try {
-              this.sendEmailCode(username);
+              console.log('username', username);
+              this.sendEmailCode(username).subscribe(
+                (resEmail) => {
+                  console.log('res email', resEmail);
+                },
+                (err) => {
+                  console.log('err email', err);
+                }
+              );
             } catch (err) {}
           } else {
             title = res?.description || 'Error, invalid credentials!';
@@ -57,7 +65,7 @@ export class AuthService {
           duration: 3000,
         });
         toast.present();
-        if (res) {
+        if (res && res?.status !== 4) {
           this.navCtrl.navigateRoot('/pages/offers', { replaceUrl: true });
           document.location.reload();
         }
