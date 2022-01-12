@@ -6,6 +6,7 @@ import {
   NavController,
 } from '@ionic/angular';
 import { HttpStatusEnum } from 'src/app/common/enums/http-status.enum';
+import { ErrorUtil } from 'src/app/common/utils/message.util';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClaimService } from 'src/app/services/claim.service';
 
@@ -51,14 +52,14 @@ export class AddClaimPage implements OnInit {
       const res: any = await this.claimService.save(this.claim).toPromise();
 
       title = 'Success';
-      message = 'Address Updated';
+      message = 'Claim Sended';
       color = 'success';
       this.navCtrl.navigateRoot('/pages/offers');
 
       console.log('res', res);
     } catch (err) {
       color = 'danger';
-      message = 'Error';
+      message = ErrorUtil.getParsedError(err);
       console.log('err', err);
     }
     loading.dismiss();

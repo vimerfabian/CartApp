@@ -41,11 +41,10 @@ _OrderStatusMessageLiteral[OrderStatus.ENTREGADO] =
 export const OrderStatusMessageLiteral = _OrderStatusMessageLiteral;
 
 const _OrderStatusColorLiteral = {};
-_OrderStatusColorLiteral[OrderStatus.RECHAZADA] = OrderStatusMessages.RECHAZADA;
-_OrderStatusColorLiteral[OrderStatus.PENDIENTE] = OrderStatusMessages.PENDIENTE;
-_OrderStatusColorLiteral[OrderStatus.ACEPTADA] = OrderStatusMessages.ACEPTADA;
-_OrderStatusColorLiteral[OrderStatus.EN_PROCESO] =
-  OrderStatusMessages.EN_PROCESO;
-_OrderStatusColorLiteral[OrderStatus.ENVIADA] = OrderStatusMessages.ENVIADA;
-_OrderStatusColorLiteral[OrderStatus.ENTREGADO] = OrderStatusMessages.ENTREGADO;
+_OrderStatusColorLiteral[OrderStatus.RECHAZADA] = OrderStatusColor.RECHAZADA;
+_OrderStatusColorLiteral[OrderStatus.PENDIENTE] = OrderStatusColor.PENDIENTE;
+_OrderStatusColorLiteral[OrderStatus.ACEPTADA] = OrderStatusColor.ACEPTADA;
+_OrderStatusColorLiteral[OrderStatus.EN_PROCESO] = OrderStatusColor.EN_PROCESO;
+_OrderStatusColorLiteral[OrderStatus.ENVIADA] = OrderStatusColor.ENVIADA;
+_OrderStatusColorLiteral[OrderStatus.ENTREGADO] = OrderStatusColor.ENTREGADO;
 export const OrderStatusColorLiteral = _OrderStatusColorLiteral;

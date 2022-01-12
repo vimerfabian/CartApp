@@ -5,6 +5,7 @@ import {
   ToastController,
 } from '@ionic/angular';
 import { HttpStatusEnum } from 'src/app/common/enums/http-status.enum';
+import { ErrorUtil } from 'src/app/common/utils/message.util';
 import { AuthService } from 'src/app/services/auth.service';
 import { WalletService } from 'src/app/services/wallet.service';
 
@@ -84,7 +85,7 @@ export class AddPaymentMethodPage implements OnInit {
       console.log('res', res);
     } catch (err) {
       color = 'danger';
-      message = 'Error';
+      message = ErrorUtil.getParsedError(err);
       console.log('err', err);
     }
     loading.dismiss();

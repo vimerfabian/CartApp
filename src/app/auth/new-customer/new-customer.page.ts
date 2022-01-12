@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {
   LoadingController,
+  ModalController,
   NavController,
   ToastController,
 } from '@ionic/angular';
 import { HttpStatusEnum } from 'src/app/common/enums/http-status.enum';
+import { ErrorUtil } from 'src/app/common/utils/message.util';
+import { ReadTermsComponent } from 'src/app/components/read-terms/read-terms.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClientService } from 'src/app/services/client.service';
 import { DeviceService } from 'src/app/services/device.service';
@@ -22,7 +25,8 @@ export class NewCustomerPage implements OnInit {
     private toastCtrl: ToastController,
     private navCtrl: NavController,
     private auth: AuthService,
-    private deviceService: DeviceService
+    private deviceService: DeviceService,
+    private modalCtrl: ModalController
   ) {}
 
   async ngOnInit() {
@@ -50,28 +54,25 @@ export class NewCustomerPage implements OnInit {
     this.clientService.save(this.client).subscribe(
       (res: any) => {
         console.log('res', res);
-        if (res?.idEstado === HttpStatusEnum.EXITOSO) {
-          this.auth.sendEmailCode(this.client.email).subscribe(
-            (resEmail) => {
-              console.log('res email', resEmail);
-            },
-            (err) => {
-              console.log('err email', err);
-            }
-          );
-          title = 'Success, confirm your email';
-          color = 'success';
-          message = res?.nombre;
-          this.navCtrl.navigateRoot('/auth/login');
-        } else {
-          message = res?.descripcion;
-          console.log('message', message);
-        }
+        this.auth.sendEmailCode(this.client.email).subscribe(
+          (resEmail) => {
+            console.log('res email', resEmail);
+          },
+          (err) => {
+            console.log('err email', err);
+          }
+        );
+        title = 'Success, confirm your email';
+        color = 'success';
+        message = 'Check your email to confirm your account';
+        this.navCtrl.navigateRoot('/auth/login');
+
         loading.dismiss();
       },
       (err) => {
         console.log('err', err);
         title = 'Error';
+        message = ErrorUtil.getParsedError(err);
         color = 'danger';
         loading.dismiss();
       },
@@ -89,5 +90,13 @@ export class NewCustomerPage implements OnInit {
 
   isPasswordValid() {
     return this.client.confirmPassword === this.client.password;
+  }
+
+  async readTerms() {
+    const modal = await this.modalCtrl.create({
+      component: ReadTermsComponent,
+    });
+
+    modal.present();
   }
 }

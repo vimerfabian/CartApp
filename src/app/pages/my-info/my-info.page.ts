@@ -6,6 +6,7 @@ import {
   ToastController,
 } from '@ionic/angular';
 import { HttpStatusEnum } from 'src/app/common/enums/http-status.enum';
+import { ErrorUtil } from 'src/app/common/utils/message.util';
 import { AuthService } from 'src/app/services/auth.service';
 import { ClientService } from 'src/app/services/client.service';
 
@@ -39,7 +40,12 @@ export class MyInfoPage implements OnInit {
     let message = '';
     try {
       const res: any = await this.clientService.save(this.user).toPromise();
-
+      const updatedUser = await this.clientService
+        .get(this.user?.idClient)
+        .toPromise();
+      if (updatedUser) {
+        this.authService.setCurrentSession(updatedUser);
+      }
       title = 'Success';
       message = 'My Info Updated';
       color = 'success';
@@ -47,7 +53,7 @@ export class MyInfoPage implements OnInit {
       console.log('res', res);
     } catch (err) {
       color = 'danger';
-      message = 'Error';
+      message = ErrorUtil.getParsedError(err);
       console.log('err', err);
     }
     loading.dismiss();

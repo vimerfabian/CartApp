@@ -16,14 +16,16 @@ export class OrdersPage implements OnInit {
     private navCtrl: NavController
   ) {}
 
-  ngOnInit() {
-    this.updateList();
-  }
+  ngOnInit() {}
   async updateList() {
     const user = this.authService.getCurrentSession();
     const list = await this.orderService.getList(user?.idClient).toPromise();
     console.log('list', list);
     this.list = list;
+  }
+
+  ionViewWillEnter() {
+    this.updateList();
   }
 
   seeDetail(item) {

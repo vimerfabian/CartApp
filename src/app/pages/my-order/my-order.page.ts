@@ -46,7 +46,7 @@ export class MyOrderPage implements OnInit {
     } else {
       product.quantity += n;
     }
-    this.cartService.addProduct(product);
+    this.cartService.addProduct(product, true);
   }
 
   goToCheckout() {

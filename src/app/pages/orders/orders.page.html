@@ -18,7 +18,7 @@
       (click)="seeDetail(item)"
       *ngFor="let item of list;let i = index;"
     >
-      [<app-order-status [status]="item.status"></app-order-status>]
+      [<app-order-status [status]="item.tracking"></app-order-status>]
       <ion-label> {{item?.date | date}} </ion-label>
       <ion-label style="text-align: right" slot="end">
         Total: <strong>${{item?.total || 0 | number}}</strong>

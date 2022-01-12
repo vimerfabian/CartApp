@@ -6,8 +6,9 @@ import {
   ToastController,
 } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
+import { ErrorUtil } from '../common/utils/message.util';
 import { CartService } from './cart.service';
-
+import jwt_decode from 'jwt-decode';
 @Injectable({
   providedIn: 'root',
 })
@@ -22,14 +23,22 @@ export class AuthService {
 
   async login(username: string, password: string) {
     this.cart.resetCart();
+    // this.http.get(environment.apiUrl + '/Client/getclient').subscribe(
+    //   (res) => {
+    //     console.log('res', res);
+    //   },
+    //   (err) => {
+    //     console.log('err', err);
+    //   }
+    // );
     const url = environment.apiUrl + '/Client/login';
     const query = `?user=${username}&password=${password}`;
-    const body = {}; //{ user: username, password };
+    const body = { user: username, password };
     const loading = await this.loadingCtrl.create({
       message: 'Loading...',
     });
     await loading.present();
-    this.http.post(url + query, body).subscribe(
+    this.http.post(url, body).subscribe(
       async (res: any) => {
         console.log('res login', res);
         loading.dismiss();
@@ -70,7 +79,13 @@ export class AuthService {
           document.location.reload();
         }
       },
-      (err) => {
+      async (err) => {
+        const toast = await this.toastCtrl.create({
+          header: ErrorUtil.getParsedError(err),
+          color: 'danger',
+          duration: 3000,
+        });
+        toast.present();
         console.log('err login', err);
         loading.dismiss();
       }
@@ -80,8 +95,9 @@ export class AuthService {
   logout() {
     this.cart.resetCart();
     this.setCurrentSession(null);
-    this.navCtrl.navigateRoot('/auth/login', { replaceUrl: true });
-    document.location.reload();
+    this.navCtrl.navigateRoot('/auth/login', { replaceUrl: true }).then((r) => {
+      document.location.reload();
+    });
   }
 
   exitFromLogin() {
@@ -99,7 +115,14 @@ export class AuthService {
   }
 
   getCurrentSession() {
-    return JSON.parse(localStorage.getItem('session'));
+    const session: any = JSON.parse(localStorage.getItem('session'));
+    console.log('session', session);
+    return session?.client;
+  }
+
+  getCurrentToken() {
+    const session: any = JSON.parse(localStorage.getItem('session'));
+    return session?.token;
   }
 
   setCurrentSession(session: any) {
