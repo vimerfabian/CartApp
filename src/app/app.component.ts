@@ -5,6 +5,7 @@ import { IMenu } from './models/menu.interface';
 import { AuthService } from './services/auth.service';
 import { Storage } from '@ionic/storage';
 import { DeviceService } from './services/device.service';
+import { Platform } from '@ionic/angular';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -18,10 +19,12 @@ export class AppComponent implements OnInit {
     public menuService: ComponentsService,
     public authService: AuthService,
     private storage: Storage,
-    private deviceService: DeviceService
+    private deviceService: DeviceService,
+    private platform: Platform
   ) {}
 
   ngOnInit() {
+    this.deviceService.getPlatform();
     this.storage.create();
     this.user = this.authService.getCurrentSession();
     console.log('user', this.user);

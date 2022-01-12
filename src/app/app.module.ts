@@ -17,6 +17,7 @@ import { PayPal } from '@ionic-native/paypal/ngx';
 import { NgxPayPalModule } from 'ngx-paypal';
 import { Uid } from '@ionic-native/uid/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import { Device } from '@awesome-cordova-plugins/device/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -43,6 +44,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
     PayPal,
     Uid,
     AndroidPermissions,
+    Device,
   ],
   bootstrap: [AppComponent],
 })

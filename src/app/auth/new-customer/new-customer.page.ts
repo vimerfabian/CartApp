@@ -31,6 +31,7 @@ export class NewCustomerPage implements OnInit {
 
   async ngOnInit() {
     this.client.mac = await this.deviceService.getMac();
+    console.log('client.mac', this.client.mac);
   }
 
   async save() {

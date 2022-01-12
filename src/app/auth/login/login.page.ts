@@ -19,6 +19,7 @@ export class LoginPage implements OnInit {
   async ngOnInit() {
     this.authService.exitFromLogin();
     this.user.mac = await this.deviceService.getMac();
+    console.log('client.mac', this.user.mac);
   }
 
   login() {
