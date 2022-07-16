@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+
 import { Uid } from '@ionic-native/uid/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { Platform } from '@ionic/angular';
@@ -11,7 +12,7 @@ import { SessionService } from './session.service';
 })
 export class DeviceService {
   constructor(
-    private uid: Uid,
+     private uid: Uid,
     private androidPermissions: AndroidPermissions,
     private device: Device,
     private platform: Platform,
@@ -87,6 +88,7 @@ export class DeviceService {
       return;
     }
 
+    // return this.uid.IMEI;
     return this.uid.IMEI;
   }
 }

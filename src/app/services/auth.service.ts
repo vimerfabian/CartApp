@@ -86,7 +86,7 @@ export class AuthService {
           duration: 3000,
         });
         toast.present();
-        console.log('err login', err);
+        console.log('err login', JSON.stringify(err));
         loading.dismiss();
       }
     );

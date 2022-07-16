@@ -8,13 +8,17 @@ import { RouterModule } from '@angular/router';
 import { TotalFooterComponent } from './total-footer/total-footer.component';
 import { CountDownComponent } from './count-down/count-down.component';
 import { OrderStatusComponent } from './order-status/order-status.component';
+import { TemplateParseResult } from '@angular/compiler';
+import { ReadTermsComponent } from './read-terms/read-terms.component';
 
+//anadi ReadTermsComponent en declarations
 @NgModule({
   declarations: [
     CartStatusComponent,
     TotalFooterComponent,
     CountDownComponent,
     OrderStatusComponent,
+    ReadTermsComponent
   ],
   imports: [CommonModule, IonicModule, FormsModule, RouterModule],
   exports: [
@@ -22,6 +26,9 @@ import { OrderStatusComponent } from './order-status/order-status.component';
     TotalFooterComponent,
     CountDownComponent,
     OrderStatusComponent,
+    
+    
+    
   ],
   entryComponents: [CountDownComponent],
 })

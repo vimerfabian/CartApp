@@ -22,8 +22,8 @@ export class OrderDetailPage implements OnInit {
   }
 
   ngOnInit() {}
-
-  addClaim(iem) {
+// habia un parametro llamado iem. lo removi
+  addClaim() {
     this.navCtrl.navigateForward('/pages/claims/add-claim', {
       state: this.order,
     });

@@ -56,13 +56,13 @@
     <strong> Modifiers </strong>
     <br />
 
-    <div *ngFor="let toppingTypeName of toppingsOrdered | keyvalue">
+    <div *ngFor="let toppingTypeName of toppingsOrdered | keyvalue ">
       <ion-item-divider style="font-weight: bold"
         >{{toppingTypeName.key}}</ion-item-divider
       >
-
+<!-- add the variable toppingTypeName in '$any()' method   -->
       <ion-chip
-        *ngFor="let modifier of toppingTypeName.value;let idx_topping = index;"
+        *ngFor="let modifier of $any(toppingTypeName).value;let idx_topping = index;" 
         (click)="selectTopping(modifier)"
         [color]="modifier.selected ? 'primary' : 'medium'"
         >{{modifier.toppingName}}</ion-chip

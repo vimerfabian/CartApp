@@ -117,6 +117,8 @@ export class CheckoutPage implements OnInit {
     this.payPalConfig = {
       currency: 'USD',
       clientId: environment.paypalClientId,
+      
+      
       createOrderOnClient: (data) =>
         // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
         <ICreateOrderRequest>{

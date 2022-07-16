@@ -37,8 +37,10 @@
         </label>
         <br />
         <br />
+        <!-- replace product?.eventName for event?.product -->
         <ion-chip *ngFor="let event of event?.offers"
-          >{{product?.eventName}}</ion-chip
+        
+          >{{event?.product}}</ion-chip
         >
         <br />
         <div>

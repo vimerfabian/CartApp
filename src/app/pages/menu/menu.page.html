@@ -21,10 +21,10 @@
           </ion-button>
         </ion-item>
 
-        <div *ngFor="let subCategory of category.subCategories">
-          <ion-item (click)="subCategory.show = !subCategory.show">
-            <ion-text color="gold"> {{subCategory.subCategory.name}}</ion-text>
-            <ion-button color="light" fill="clear" slot="end">
+        <div class="ion-padding" *ngFor="let subCategory of category.subCategories">
+          <ion-item  (click)="subCategory.show = !subCategory.show">
+            <ion-text  color="gold"> {{subCategory.subCategory.name}}</ion-text>
+            <ion-button  color="light" fill="clear" slot="end">
               <ion-icon
                 color="dark"
                 slot="icon-only"
@@ -33,7 +33,7 @@
             </ion-button>
           </ion-item>
           <ion-list [hidden]="!subCategory?.show">
-            <ion-item *ngFor="let product of subCategory.products">
+            <ion-item class="ion-padding-start" *ngFor="let product of subCategory.products">
               <ion-thumbnail (click)="product.seeImage = !product?.seeImage">
                 <img
                   [src]="product?.image ? 'data:image/jpeg;base64,' + product.image : 'assets/food.png'"
