@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="cartapp.app.common" version="1.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>cartapp</name>
+<widget id="tierracolombianarestaurant.app.common" version="1.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Tierra Colombiana Restaurant</name>
     <description>Restaurant Application.</description>
     <author email="vimerfabian@gmail.com" href="https://github.com/elmiovimer">Vimer Fabian</author>
     <content src="index.html" />
@@ -46,7 +46,7 @@
     <platform name="ios">
         <preference name="WKWebViewOnly" value="true" />
         <feature name="CDVWKWebViewEngine">`
-                                                                                                                                                                                                                                                                    <param name="ios-package" value="CDVWKWebViewEngine" />
+                                                                                                                                                                                                                                                                                                                                <param name="ios-package" value="CDVWKWebViewEngine" />
 </feature>
         <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
         <allow-intent href="itms:*" />
@@ -107,5 +107,5 @@
     <plugin name="cordova-plugin-device" spec="2.0.2" />
     <plugin name="cordova-plugin-splashscreen" spec="5.0.2" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
-    <allow-navigation href="http://localhost:8100" sessionid="6e53e5a6" />
+    <allow-navigation href="*" />
 </widget>
