@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { LoadingController, ToastController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -7,13 +8,21 @@ import { environment } from 'src/environments/environment';
 })
 export class ClientService {
   private url: string;
-  constructor(private httpClient: HttpClient) {
+  constructor(
+    private httpClient: HttpClient,
+    private toastCtrl: ToastController,
+    private loadingCtrl: LoadingController,
+    ) {
     this.url = environment.apiUrl + '/Client';
   }
+
+ 
 
   save(client) {
     const path = '/saveclient';
     return this.httpClient.post(this.url + path, client);
+
+    
   }
 
   get(id: number) {

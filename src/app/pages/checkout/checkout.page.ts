@@ -69,8 +69,8 @@ export class CheckoutPage implements OnInit {
       this.checkout.idOrderType,
       this.checkout.idAddress
     );
-    this.total = this.cartService.totalPrice.value;
-    console.log('cart', this.cart, 'total', this.total);
+    this.total = Number(this.cartService.totalPrice.getValue());
+    console.log('cart', this.cart, 'total test', this.total);
     //console.log('paypal', paypal);
     console.log('order', this.order);
     //this.initPaypal();
@@ -92,7 +92,7 @@ export class CheckoutPage implements OnInit {
           category: 'DIGITAL_GOODS',
           unit_amount: {
             currency_code: 'USD',
-            value: `${Number(x?.total || 0)}`,
+            value: `${Number(x?.total || 0).toFixed(2)}`,
           },
         };
         return item;
@@ -106,7 +106,7 @@ export class CheckoutPage implements OnInit {
           category: 'DIGITAL_GOODS',
           unit_amount: {
             currency_code: 'USD',
-            value: `${Number(x?.price || 0)}`,
+            value: `${Number(x?.price || 0).toFixed(2)}`,
           },
         };
         items.push(item);

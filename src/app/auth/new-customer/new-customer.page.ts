@@ -34,6 +34,7 @@ export class NewCustomerPage implements OnInit {
     console.log('client.mac', this.client.mac);
   }
 
+ 
   async save() {
     console.log('client', this.client);
     if (!this.isPasswordValid()) {
@@ -53,7 +54,7 @@ export class NewCustomerPage implements OnInit {
     let color = 'danger';
     let message = 'Error';
     this.clientService.save(this.client).subscribe(
-      (res: any) => {
+      async (res: any) => {
         console.log('res', res);
         this.auth.sendEmailCode(this.client.email).subscribe(
           (resEmail) => {
@@ -70,12 +71,20 @@ export class NewCustomerPage implements OnInit {
 
         loading.dismiss();
       },
-      (err) => {
-        console.log('err', err);
+      async (err) => {
+        console.log('err', err.error.Error);
+        const toast = await this.toastCtrl.create({
+          header: ErrorUtil.getParsedError(err),
+          color: 'danger',
+          duration: 3000,
+        })
+        toast.present();
         title = 'Error';
         message = ErrorUtil.getParsedError(err);
         color = 'danger';
         loading.dismiss();
+
+        
       },
       async () => {
         const toast = await this.toastCtrl.create({

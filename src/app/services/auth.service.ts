@@ -44,12 +44,12 @@ export class AuthService {
         loading.dismiss();
         let title = '';
         let color = '';
-        if (res && res?.status !== 4) {
+        if (res && res?.client.status !== 4) {
           title = 'Login Success!';
           color = 'success';
           this.setCurrentSession(res);
         } else {
-          if (res?.status === 4) {
+          if (res?.client.status === 4) {
             title = 'Verify your email';
             color = 'warning';
             try {
@@ -74,7 +74,7 @@ export class AuthService {
           duration: 3000,
         });
         toast.present();
-        if (res && res?.status !== 4) {
+        if (res && res?.client.status !== 4) {
           this.navCtrl.navigateRoot('/pages/offers', { replaceUrl: true });
           document.location.reload();
         }

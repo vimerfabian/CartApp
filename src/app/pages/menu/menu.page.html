@@ -15,7 +15,7 @@
     <div>
       <div *ngFor="let category of list | async;let category_idx = index;">
         <ion-item>
-          <h4><ion-text color="gold">{{category.category.name}}</ion-text></h4>
+          <h4><ion-text color="black">{{category.category.name}}</ion-text></h4>
           <ion-button color="light" fill="clear" slot="end">
             <ion-icon slot="icon-only" name="arrow-down-circle"></ion-icon>
           </ion-button>
@@ -23,7 +23,7 @@
 
         <div class="ion-padding" *ngFor="let subCategory of category.subCategories">
           <ion-item  (click)="subCategory.show = !subCategory.show">
-            <ion-text  color="gold"> {{subCategory.subCategory.name}}</ion-text>
+            <ion-text  color="black"> {{subCategory.subCategory.name}}</ion-text>
             <ion-button  color="light" fill="clear" slot="end">
               <ion-icon
                 color="dark"
@@ -39,9 +39,14 @@
                   [src]="product?.image ? 'data:image/jpeg;base64,' + product.image : 'assets/food.png'"
                 />
               </ion-thumbnail>
-              <ion-label color="gold"
-                >{{product.name}} - ${{product?.price || 0 | number}}</ion-label
-              >
+              <div class="product">
+                <ion-text class="productName"  color="black">
+                  {{product.name}} 
+                </ion-text>
+                <ion-text class="price" color="black">
+                  ${{product?.price || 0 | number}}
+                </ion-text>
+              </div>
               <ion-button (click)="selectProduct(product)" fill="clear">
                 <ion-icon
                   color="primary"

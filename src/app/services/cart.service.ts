@@ -131,6 +131,7 @@ export class CartService {
 
   async getCart(): Promise<any[]> {
     let cart = await from(this.storage.get(CART_STORAGE)).toPromise();
+    console.log('cart', cart)
     if (!cart) {
       cart = [];
     }
@@ -196,12 +197,12 @@ export class CartService {
       .reduce((a, b) => {
         const total = Number(b.price) * Number(b.quantity);
         const taxes = total * (Number(b.taxes || 0) / 100);
-        return Number(a) + (total + taxes);
+        return (Number(a) + (total + taxes)).toFixed(2);
       }, 0);
     const offersPrice = offers.reduce((a, b) => {
       const total = Number(b.price);
       const taxes = 0; //total * (Number(b.taxes || 0) / 100);
-      return Number(a) + (total + taxes);
+      return (Number(a) + (total + taxes)).toFixed(2);
     }, 0);
     return cartPrice + offersPrice;
   }
@@ -211,11 +212,11 @@ export class CartService {
       .filter((x) => !x.idOffer)
       .reduce((a, b) => {
         const total = Number(b.price) * Number(b.quantity);
-        return Number(a) + total;
+        return (Number(a) + total).toFixed(2);
       }, 0);
     const offerPrice = offers.reduce((a, b) => {
       const total = Number(b.price);
-      return Number(a) + total;
+      return (Number(a) + total).toFixed(2);
     }, 0);
     return cartPrice + offerPrice;
   }
@@ -226,7 +227,7 @@ export class CartService {
       .reduce((a, b) => {
         const total =
           Number(b.price) * Number(b.quantity) * (Number(b.taxes || 0) / 100);
-        return Number(a) + total;
+        return (Number(a) + total).toFixed(2);
       }, 0);
   }
 
