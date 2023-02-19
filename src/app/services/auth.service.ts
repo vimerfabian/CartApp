@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 import { ErrorUtil } from '../common/utils/message.util';
 import { CartService } from './cart.service';
 import jwt_decode from 'jwt-decode';
+import { ClientStatusEnum } from '../common/enums/client-status.enum';
 @Injectable({
   providedIn: 'root',
 })
@@ -44,37 +45,65 @@ export class AuthService {
         loading.dismiss();
         let title = '';
         let color = '';
-        if (res && res?.client.status !== 4) {
-          title = 'Login Success!';
-          color = 'success';
-          this.setCurrentSession(res);
-        } else {
-          if (res?.client.status === 4) {
-            title = 'Verify your email';
-            color = 'warning';
-            try {
-              console.log('username', username);
-              this.sendEmailCode(username).subscribe(
-                (resEmail) => {
-                  console.log('res email', resEmail);
-                },
-                (err) => {
-                  console.log('err email', err);
-                }
-              );
-            } catch (err) {}
-          } else {
-            title = res?.description || 'Error, invalid credentials!';
-            color = 'danger';
+        if (res) {
+          switch(res?.client.status){
+            case ClientStatusEnum.ACTIVO:
+            case ClientStatusEnum.PASSWORD_CHANGE_REQUIRED:
+            {
+              title = 'Login Success!';
+              color = 'success';
+              this.setCurrentSession(res);
+            }
+            break;
+            case ClientStatusEnum.NO_VALIDADO:
+            {
+              title = 'Please verify your email inbox';
+              color = 'warning';
+              try {
+                console.log('username', username);
+                this.sendEmailCode(username).subscribe(
+                  (resEmail) => {
+                    console.log('res email', resEmail);
+                  },
+                  (err) => {
+                    console.log('err email', err);
+                  }
+                );
+              } catch (err) {}
+            }
+            break;
+            case ClientStatusEnum.INACTIVO:
+              {
+                title = res?.description || 'Your account has been set as inactive. please contact the restaurant!';
+                color = 'warning';
+
+              }
+              break;
+            case ClientStatusEnum.ELMINIADO:
+              {
+                title = res?.description || 'Your account has been deactivated. please contact the restaurant!';
+                color = 'danger';
+
+              }
+              break;
+            default:
+            {
+              title = res?.description || 'Error, invalid credentials!';
+              color = 'danger';
+            }
+            break;
+
+
           }
-        }
+          
+        } 
         const toast = await this.toastCtrl.create({
           header: title,
           color,
           duration: 3000,
         });
         toast.present();
-        if (res && res?.client.status !== 4) {
+        if (title == 'Login Success!') {
           this.navCtrl.navigateRoot('/pages/offers', { replaceUrl: true });
           document.location.reload();
         }
