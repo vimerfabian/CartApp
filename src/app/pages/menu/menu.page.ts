@@ -12,6 +12,7 @@ import { MenuService } from 'src/app/services/menu.service';
   styleUrls: ['./menu.page.scss'],
 })
 export class MenuPage implements OnInit {
+  isLoading = true;
   show: false;
   list: Observable<any>;
   cartCount = 0;
@@ -44,6 +45,11 @@ export class MenuPage implements OnInit {
         });
       })
     );*/
+
+    //Elemento de carga
+    this.list.subscribe((data) => {
+      this.isLoading = false;
+    });
   }
 
   selectProduct(item) {

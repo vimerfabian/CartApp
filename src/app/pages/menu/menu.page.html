@@ -11,62 +11,79 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <div>
-      <div *ngFor="let category of list | async;let category_idx = index;">
-        <ion-item>
-          <h4><ion-text color="black">{{category.category.name}}</ion-text></h4>
-          <ion-button color="light" fill="clear" slot="end">
-            <ion-icon slot="icon-only" name="arrow-down-circle"></ion-icon>
-          </ion-button>
-        </ion-item>
+  <div class="center-spinner" *ngIf="isLoading; else content">
+    <!-- Elemento de carga -->
+    <ion-spinner name="circular"></ion-spinner>
+  </div>
 
-        <div class="ion-padding" *ngFor="let subCategory of category.subCategories">
-          <ion-item  (click)="subCategory.show = !subCategory.show">
-            <ion-text  color="black"> {{subCategory.subCategory.name}}</ion-text>
-            <ion-button  color="light" fill="clear" slot="end">
-              <ion-icon
-                color="dark"
-                slot="icon-only"
-                [name]="!subCategory.show ? 'arrow-down-circle' : 'arrow-up-circle'"
-              ></ion-icon>
+  <ng-template #content>
+    <ion-list>
+      <div>
+        <div *ngFor="let category of list | async;let category_idx = index;">
+          <ion-item>
+            <h4>
+              <ion-text color="black">{{category.category.name}}</ion-text>
+            </h4>
+            <ion-button color="light" fill="clear" slot="end">
+              <ion-icon slot="icon-only" name="arrow-down-circle"></ion-icon>
             </ion-button>
           </ion-item>
-          <ion-list [hidden]="!subCategory?.show">
-            <ion-item class="ion-padding-start" *ngFor="let product of subCategory.products">
-              <ion-thumbnail (click)="product.seeImage = !product?.seeImage">
-                <img
-                  [src]="product?.image ? 'data:image/jpeg;base64,' + product.image : 'assets/food.png'"
-                />
-              </ion-thumbnail>
-              <div class="product">
-                <ion-text class="productName"  color="black">
-                  {{product.name}} 
-                </ion-text>
-                <ion-text class="price" color="black">
-                  ${{product?.price || 0 | number}}
-                </ion-text>
-              </div>
-              <ion-button (click)="selectProduct(product)" fill="clear">
+
+          <div
+            class="ion-padding"
+            *ngFor="let subCategory of category.subCategories"
+          >
+            <ion-item (click)="subCategory.show = !subCategory.show">
+              <ion-text color="black">
+                {{subCategory.subCategory.name}}</ion-text
+              >
+              <ion-button color="light" fill="clear" slot="end">
                 <ion-icon
-                  color="primary"
-                  name="add-circle"
+                  color="dark"
                   slot="icon-only"
+                  [name]="!subCategory.show ? 'arrow-down-circle' : 'arrow-up-circle'"
                 ></ion-icon>
               </ion-button>
-              <br />
-              <div
-                (click)="product.seeImage = !product?.seeImage"
-                *ngIf="product?.seeImage === true"
-              >
-                <img
-                  [src]="product?.image ? 'data:image/jpeg;base64,' + product.image : 'assets/food.png'"
-                />
-              </div>
             </ion-item>
-          </ion-list>
+            <ion-list [hidden]="!subCategory?.show">
+              <ion-item
+                class="ion-padding-start"
+                *ngFor="let product of subCategory.products"
+              >
+                <ion-thumbnail (click)="product.seeImage = !product?.seeImage">
+                  <img
+                    [src]="product?.image ? 'data:image/jpeg;base64,' + product.image : 'assets/food.png'"
+                  />
+                </ion-thumbnail>
+                <div class="product">
+                  <ion-text class="productName" color="black">
+                    {{product.name}}
+                  </ion-text>
+                  <ion-text class="price" color="black">
+                    ${{product?.price || 0 | number}}
+                  </ion-text>
+                </div>
+                <ion-button (click)="selectProduct(product)" fill="clear">
+                  <ion-icon
+                    color="primary"
+                    name="add-circle"
+                    slot="icon-only"
+                  ></ion-icon>
+                </ion-button>
+                <br />
+                <div
+                  (click)="product.seeImage = !product?.seeImage"
+                  *ngIf="product?.seeImage === true"
+                >
+                  <img
+                    [src]="product?.image ? 'data:image/jpeg;base64,' + product.image : 'assets/food.png'"
+                  />
+                </div>
+              </ion-item>
+            </ion-list>
+          </div>
         </div>
       </div>
-    </div>
-  </ion-list>
+    </ion-list>
+  </ng-template>
 </ion-content>
