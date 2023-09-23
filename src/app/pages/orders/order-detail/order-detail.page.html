@@ -49,7 +49,10 @@
               <ion-text>Tax: {{item.taxes}}</ion-text>
             </ion-col>
             <ion-col>
-              <ion-text>Total: {{item.total}}</ion-text>
+              <ion-text
+                >Total: {{ (item.quantity * item.price) +
+                (item.taxes/100)}}</ion-text
+              >
             </ion-col>
           </ion-row>
         </ion-grid>
