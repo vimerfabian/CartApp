@@ -8,8 +8,9 @@ import {
 import { environment } from 'src/environments/environment';
 import { ErrorUtil } from '../common/utils/message.util';
 import { CartService } from './cart.service';
-import jwt_decode from 'jwt-decode';
+import jwt_decode, { JwtPayload } from 'jwt-decode';
 import { ClientStatusEnum } from '../common/enums/client-status.enum';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -46,64 +47,63 @@ export class AuthService {
         let title = '';
         let color = '';
         if (res) {
-          switch(res?.client.status){
+          switch (res?.client.status) {
             case ClientStatusEnum.ACTIVO:
             case ClientStatusEnum.PASSWORD_CHANGE_REQUIRED:
-            {
-              title = 'Login Success!';
-              color = 'success';
-              this.setCurrentSession(res);
-            }
-            break;
+              {
+                title = 'Login Success!';
+                color = 'success';
+                this.setCurrentSession(res);
+              }
+              break;
             case ClientStatusEnum.NO_VALIDADO:
-            {
-              title = 'Please verify your email inbox';
-              color = 'warning';
-              try {
-                console.log('username', username);
-                this.sendEmailCode(username).subscribe(
-                  (resEmail) => {
-                    console.log('res email', resEmail);
-                  },
-                  (err) => {
-                    console.log('err email', err);
-                  }
-                );
-              } catch (err) {}
-            }
-            break;
+              {
+                title = 'Please verify your email inbox';
+                color = 'warning';
+                try {
+                  console.log('username', username);
+                  this.sendEmailCode(username).subscribe(
+                    (resEmail) => {
+                      console.log('res email', resEmail);
+                    },
+                    (err) => {
+                      console.log('err email', err);
+                    }
+                  );
+                } catch (err) {}
+              }
+              break;
             case ClientStatusEnum.INACTIVO:
               {
-                title = res?.description || 'Your account has been set as inactive. please contact the restaurant!';
+                title =
+                  res?.description ||
+                  'Your account has been set as inactive. please contact the restaurant!';
                 color = 'warning';
-
               }
               break;
             case ClientStatusEnum.ELMINIADO:
               {
-                title = res?.description || 'Your account has been deactivated. please contact the restaurant!';
+                title =
+                  res?.description ||
+                  'Your account has been deactivated. please contact the restaurant!';
                 color = 'danger';
-
               }
               break;
             default:
-            {
-              title = res?.description || 'Error, invalid credentials!';
-              color = 'danger';
-            }
-            break;
-
-
+              {
+                title = res?.description || 'Error, invalid credentials!';
+                color = 'danger';
+              }
+              break;
           }
-          
-        } 
+        }
         const toast = await this.toastCtrl.create({
           header: title,
           color,
           duration: 3000,
         });
         toast.present();
-        if (title == 'Login Success!') {
+        if (title === 'Login Success!') {
           this.navCtrl.navigateRoot('/pages/offers', { replaceUrl: true });
           document.location.reload();
         }
@@ -124,6 +124,7 @@ export class AuthService {
   logout() {
     this.cart.resetCart();
     this.setCurrentSession(null);
+    localStorage.setItem('decodedToken', null);
     this.navCtrl.navigateRoot('/auth/login', { replaceUrl: true }).then((r) => {
       document.location.reload();
     });
@@ -143,6 +144,29 @@ export class AuthService {
     return false;
   }
 
+  checkToken() {
+    const sessionHourString = localStorage.getItem('decodedToken');
+
+    if (sessionHourString) {
+      const sessionHour = new Date(sessionHourString);
+
+      const now = new Date();
+
+      const timeDifference = now.getTime() - sessionHour.getTime();
+
+      if (timeDifference >= 3600000) {
+        this.logout();
+        console.log('Ha pasado más de una hora desde la sesión.');
+      } else {
+        console.log(
+          'Todavía no ha pasado una hora desde la sesión.  ' + timeDifference
+        );
+      }
+    } else {
+      console.log('No se encontró una hora de sesión en localStorage.');
+    }
+  }
+
   getCurrentSession() {
     const session: any = JSON.parse(localStorage.getItem('session'));
     console.log('session', session);
@@ -156,6 +180,11 @@ export class AuthService {
 
   setCurrentSession(session: any) {
     localStorage.setItem('session', JSON.stringify(session));
+
+    const decodedToken: JwtPayload = jwt_decode(session?.token);
+    const fechaExpiracion = new Date(decodedToken.exp * 1000);
+
+    localStorage.setItem('decodedToken', '' + fechaExpiracion);
   }
 
   sendEmailCode(email: string, type: number = 1) {

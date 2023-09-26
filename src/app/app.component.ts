@@ -21,6 +21,13 @@ export class AppComponent implements OnInit {
   public labels = ['Opcion Rapida 1'];
   user: any = null;
 
+  intervalInMilliseconds = 1 * 60 * 1000; // 5 minutos
+  // Configura el intervalo para ejecutar la función
+  intervalId = setInterval(
+    this.authService.checkToken,
+    this.intervalInMilliseconds
+  );
+
   constructor(
     public menuService: ComponentsService,
     public authService: AuthService,
@@ -31,6 +38,7 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.authService.checkToken();
     this.themeDetection.applySavedTheme();
     this.deviceService.getPlatform();
     this.storage.create();
