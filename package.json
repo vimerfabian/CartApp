@@ -23,6 +23,7 @@
     "@angular/router": "~12.0.1",
     "@awesome-cordova-plugins/core": "^5.37.3",
     "@awesome-cordova-plugins/device": "^5.37.3",
+    "@capacitor/core": "^5.4.1",
     "@ionic-native/android-permissions": "^5.36.0",
     "@ionic-native/core": "^5.34.0",
     "@ionic-native/ionic-webview": "^5.36.0",
