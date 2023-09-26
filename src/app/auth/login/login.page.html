@@ -61,4 +61,12 @@
       </ion-col>
     </ion-row>
   </form>
+  <ion-item lines="none">
+    <ion-label>Dark Theme</ion-label>
+    <ion-toggle
+      slot="end"
+      (ionChange)="toggleTheme($event)"
+      [checked]="isDarkTheme()"
+    ></ion-toggle>
+  </ion-item>
 </ion-content>

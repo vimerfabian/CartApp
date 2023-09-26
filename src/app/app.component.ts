@@ -9,6 +9,8 @@ import { DeviceService } from './services/device.service';
 import { Platform } from '@ionic/angular';
 import { Capacitor } from '@capacitor/core';
 
+import { ThemeDetectionService } from './theme-detection.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -24,10 +26,12 @@ export class AppComponent implements OnInit {
     public authService: AuthService,
     private deviceService: DeviceService,
     private storage: Storage,
-    private platform: Platform
+    private platform: Platform,
+    private themeDetection: ThemeDetectionService
   ) {}
 
   ngOnInit() {
+    this.themeDetection.applySavedTheme();
     this.deviceService.getPlatform();
     this.storage.create();
     this.user = this.authService.getCurrentSession();
@@ -42,11 +46,11 @@ export class AppComponent implements OnInit {
     this.authService.logout();
   }
 
-  toggleTheme(event) {
-    if (event.detail.checked) {
-      document.body.setAttribute('color-theme', 'dark');
-    } else {
-      document.body.setAttribute('color-theme', 'light');
-    }
+  public toggleTheme(event) {
+    this.themeDetection.toggleTheme(event);
+  }
+
+  public isDarkTheme() {
+    return this.themeDetection.isDarkTheme();
   }
 }

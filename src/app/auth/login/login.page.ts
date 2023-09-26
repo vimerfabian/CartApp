@@ -3,6 +3,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Storage } from '@ionic/storage';
 import { DeviceService } from 'src/app/services/device.service';
 
+import { ThemeDetectionService } from '../../theme-detection.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -13,7 +15,8 @@ export class LoginPage implements OnInit {
   constructor(
     private authService: AuthService,
     private storage: Storage,
-    private deviceService: DeviceService
+    private deviceService: DeviceService,
+    private themeDetection: ThemeDetectionService
   ) {}
 
   async ngOnInit() {
@@ -24,5 +27,13 @@ export class LoginPage implements OnInit {
 
   login() {
     this.authService.login(this.user.username, this.user.password);
+  }
+
+  public toggleTheme(event) {
+    this.themeDetection.toggleTheme(event);
+  }
+
+  public isDarkTheme() {
+    return this.themeDetection.isDarkTheme();
   }
 }

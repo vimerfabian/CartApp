@@ -4,17 +4,38 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ThemeDetectionService {
-  isDarkTheme: boolean;
+  constructor() {}
 
-  constructor() {
-    // Utiliza el plugin para detectar el tema
-    ThemeDetection.isDarkModeEnabled().then((darkModeEnabled) => {
-      this.isDarkTheme = darkModeEnabled;
-    });
+  public getDefaultTheme() {
+    if (
+      window.matchMedia &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches
+    ) {
+      return 'dark';
+    } else {
+      return 'light';
+    }
   }
 
-  // Método para obtener el estado del tema
-  getIsDarkTheme(): boolean {
-    return this.isDarkTheme;
+  public toggleTheme(event) {
+    const theme = event.detail.checked ? 'dark' : 'light';
+    document.body.setAttribute('color-theme', theme);
+    localStorage.setItem('theme', theme);
+  }
+
+  public applySavedTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      document.body.setAttribute('color-theme', savedTheme);
+    } else {
+      const defaultTheme = this.getDefaultTheme();
+      document.body.setAttribute('color-theme', defaultTheme);
+      localStorage.setItem('theme', defaultTheme);
+    }
+  }
+
+  public isDarkTheme() {
+    const currentTheme = document.body.getAttribute('color-theme');
+    return currentTheme === 'dark';
   }
 }
