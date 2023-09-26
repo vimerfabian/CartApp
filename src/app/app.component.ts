@@ -41,4 +41,12 @@ export class AppComponent implements OnInit {
   logout() {
     this.authService.logout();
   }
+
+  toggleTheme(event) {
+    if (event.detail.checked) {
+      document.body.setAttribute('color-theme', 'dark');
+    } else {
+      document.body.setAttribute('color-theme', 'light');
+    }
+  }
 }

@@ -39,6 +39,13 @@
 
         <ion-list class="menu" id="labels-list">
           <ion-list-header>Others</ion-list-header>
+          <ion-item color="menu" lines="none">
+            <ion-label style="color: white">Change Theme</ion-label>
+            <ion-toggle
+              slot="end"
+              (ionChange)="toggleTheme($event)"
+            ></ion-toggle>
+          </ion-item>
           <ion-item color="menu" (click)="logout()" lines="none">
             <ion-icon color="gold" slot="start" name="exit"></ion-icon>
             <ion-label style="color: white">Logout</ion-label>
