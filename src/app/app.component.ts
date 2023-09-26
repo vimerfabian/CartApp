@@ -1,10 +1,13 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ComponentsService } from './services/component.service';
 import { IMenu } from './models/menu.interface';
 import { AuthService } from './services/auth.service';
 import { Storage } from '@ionic/storage';
 import { DeviceService } from './services/device.service';
+
+import { Platform } from '@ionic/angular';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +23,8 @@ export class AppComponent implements OnInit {
     public menuService: ComponentsService,
     public authService: AuthService,
     private deviceService: DeviceService,
-    private storage: Storage
+    private storage: Storage,
+    private platform: Platform
   ) {}
 
   ngOnInit() {
