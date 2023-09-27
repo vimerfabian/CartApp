@@ -124,7 +124,6 @@ export class AuthService {
   logout() {
     this.cart.resetCart();
     this.setCurrentSession(null);
-    localStorage.setItem('decodedToken', null);
     this.navCtrl.navigateRoot('/auth/login', { replaceUrl: true }).then((r) => {
       document.location.reload();
     });
@@ -179,12 +178,16 @@ export class AuthService {
   }
 
   setCurrentSession(session: any) {
+    if (session != null) {
+      const decodedToken: JwtPayload = jwt_decode(session?.token);
+      const fechaExpiracion = new Date(decodedToken.exp * 1000);
+
+      localStorage.setItem('decodedToken', '' + fechaExpiracion);
+    } else {
+      localStorage.setItem('decodedToken', null);
+    }
+
     localStorage.setItem('session', JSON.stringify(session));
-
-    const decodedToken: JwtPayload = jwt_decode(session?.token);
-    const fechaExpiracion = new Date(decodedToken.exp * 1000);
-
-    localStorage.setItem('decodedToken', '' + fechaExpiracion);
   }
 
   sendEmailCode(email: string, type: number = 1) {
