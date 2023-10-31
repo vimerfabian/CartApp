@@ -22,8 +22,13 @@
     [<app-order-status [status]="order.tracking"></app-order-status>]
   </div>
   <ion-list>
-    <ion-list-header>Products</ion-list-header>
-    <h4 style="text-align: left; margin: 20px">TO: {{order?.orderTypeName}}</h4>
+    <ion-list-header
+      >Products
+      <span style="text-align: left; margin-left: 35%"
+        >TO: {{order?.orderTypeName}}</span
+      ></ion-list-header
+    >
+
     <ion-card *ngFor="let item of order?.items">
       <ion-card-header>
         <ion-label
