@@ -157,9 +157,7 @@ export class AuthService {
         this.logout();
         console.log('Ha pasado más de una hora desde la sesión.');
       } else {
-        console.log(
-          'Todavía no ha pasado una hora desde la sesión.  ' + timeDifference
-        );
+        //console.log('Todavía no ha pasado una hora desde la sesión.  ' + timeDifference);
       }
     } else {
       console.log('No se encontró una hora de sesión en localStorage.');
