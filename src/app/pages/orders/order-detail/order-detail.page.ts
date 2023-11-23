@@ -30,6 +30,16 @@ export class OrderDetailPage implements OnInit {
     this.order = order;
   }
 
+  getOrderTime() {
+    const fecha: Date = new Date(this.order.time);
+
+    const hora: number = fecha.getHours();
+    const minutos: number = fecha.getMinutes();
+    //const segundos: number = fecha.getSeconds();
+
+    return `${hora}:${minutos}`;
+  }
+
   ngOnInit() {}
   // habia un parametro llamado iem. lo removi
   addClaim() {
@@ -41,7 +51,6 @@ export class OrderDetailPage implements OnInit {
   getClaims(): void {
     this.claimService.getClaimsByOrder(this.order.idOrder).subscribe(
       (data) => {
-        console.log('Datos obtenidos:', data);
         this.claims = data;
         console.log('Claims', this.claims);
       },

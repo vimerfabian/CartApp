@@ -29,6 +29,10 @@
       ></ion-list-header
     >
 
+    <span style="text-align: right; margin-left: 5%"
+      >Delivery time: {{getOrderTime()}}</span
+    >
+
     <ion-card *ngFor="let item of order?.items">
       <ion-card-header>
         <ion-label

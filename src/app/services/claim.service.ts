@@ -19,7 +19,6 @@ export class ClaimService {
 
   getClaimsByOrder(orderId: number): Observable<any[]> {
     const path = `/getbyorder?id=${orderId}`;
-
     return this.httpClient.get<any[]>(this.url + path);
   }
 }
