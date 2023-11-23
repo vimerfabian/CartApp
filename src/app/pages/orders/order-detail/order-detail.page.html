@@ -63,6 +63,11 @@
         </ion-grid>
       </ion-card-content>
     </ion-card>
+
+    <ion-card-header> Claims </ion-card-header>
+    <ion-card *ngFor="let claim of claims">
+      <ion-card-content> {{ claim.comment }} </ion-card-content>
+    </ion-card>
   </ion-list>
 </ion-content>
 

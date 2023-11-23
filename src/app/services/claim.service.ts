@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -14,5 +15,11 @@ export class ClaimService {
   save(client) {
     const path = '/saveclaim';
     return this.httpClient.post(this.url + path, client);
+  }
+
+  getClaimsByOrder(orderId: number): Observable<any[]> {
+    const path = `/getbyorder?id=${orderId}`;
+
+    return this.httpClient.get<any[]>(this.url + path);
   }
 }

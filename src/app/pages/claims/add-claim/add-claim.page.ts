@@ -40,6 +40,7 @@ export class AddClaimPage implements OnInit {
     this.claim.date = new Date();
     const user = this.authService.getCurrentSession();
     this.claim.idClient = user?.idClient;
+    this.claim.status = 1;
     const loading = await this.loadingCtrl.create({
       message: 'Loading...',
     });
