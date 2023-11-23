@@ -34,6 +34,7 @@ export class OffersPage implements OnInit {
     private plt: Platform,
     private localNotifications: LocalNotifications
   ) {
+    /*
     this.plt.ready().then(() => {
       this.localNotifications.on('click').subscribe((res) => {
         console.log('click: ', res);
@@ -46,6 +47,7 @@ export class OffersPage implements OnInit {
         this.showAlert(res.title, res.text, msg);
       });
     });
+    */
   }
 
   async ngOnInit() {
