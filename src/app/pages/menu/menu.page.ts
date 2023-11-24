@@ -30,7 +30,9 @@ export class MenuPage implements OnInit {
     this.cartService.totalPrice.subscribe((x) => {
       this.totalPrice = x;
     });
-    this.list = this.menuService.getCategoryList(); /*.pipe(
+    this.list = this.menuService.getCategoryList();
+    this.menuService.getCategoryList1();
+    /*.pipe(
       map((item: any[] | any) => {
         console.log('cl', item);
         //eslint-disable-next-line @typescript-eslint/no-unused-expressions

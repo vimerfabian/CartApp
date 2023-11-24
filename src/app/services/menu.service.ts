@@ -22,6 +22,19 @@ export class MenuService {
     return this.httpClient.get<any[]>(this.categoryUrl + '/getcategorylist');
   }
 
+  getCategoryList1() {
+    return this.httpClient
+      .get<any[]>(this.categoryUrl + '/getcategorylist')
+      .subscribe(
+        (data) => {
+          console.log('Menu', data);
+        },
+        (error) => {
+          console.error('Error obteniendo claims', error);
+        }
+      );
+  }
+
   getProduct(id: number) {
     return this.httpClient.get<any[]>(
       this.productUrl + `/getproductbyid?id=${id}`
