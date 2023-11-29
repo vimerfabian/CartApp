@@ -16,6 +16,7 @@ import {
 })
 export class OffersPage implements OnInit {
   list: any[];
+  scheduled = [];
   test: any;
   weekday = [
     'Sunday',
@@ -34,7 +35,8 @@ export class OffersPage implements OnInit {
     private plt: Platform,
     private localNotifications: LocalNotifications
   ) {
-    /*
+    //this.localNotifications.hasPermission();
+    this.localNotifications.requestPermission();
     this.plt.ready().then(() => {
       this.localNotifications.on('click').subscribe((res) => {
         console.log('click: ', res);
@@ -47,7 +49,6 @@ export class OffersPage implements OnInit {
         this.showAlert(res.title, res.text, msg);
       });
     });
-    */
   }
 
   async ngOnInit() {
@@ -104,7 +105,31 @@ export class OffersPage implements OnInit {
       text: 'Jhon`s Notification',
       data: { mydata: 'My hidden message this is' },
       trigger: { in: 5, unit: ELocalNotificationTriggerUnit.SECOND },
-      foreground: true,
+      //foreground: true,
+    });
+  }
+
+  recurringNotification() {
+    this.localNotifications.schedule({
+      id: 22,
+      title: 'Reccurring',
+      text: 'Jhon`s Recurring Notification',
+      trigger: { every: ELocalNotificationTriggerUnit.MINUTE },
+    });
+  }
+
+  repeatingDaily() {
+    this.localNotifications.schedule({
+      id: 42,
+      title: 'Reppeating',
+      text: 'Jhon`s Reapite Notification',
+      trigger: { every: { hour: 20, minute: 0 } },
+    });
+  }
+
+  getAll() {
+    this.localNotifications.getAll().then((res) => {
+      this.scheduled = res;
     });
   }
 

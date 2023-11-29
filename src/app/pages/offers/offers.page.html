@@ -11,17 +11,23 @@
 </ion-header>
 
 <ion-content>
+  <ion-button expand="block" (click)="scheduleNotification()" expand="full">Schedule Notification</ion-button>
+  <ion-button expand="block" (click)="recurringNotification()" expand="full">Schedule Notification</ion-button>
+  <ion-button expand="block" (click)="repeatingDaily()" expand="full">Schedule Notification</ion-button>
+  <ion-button expand="block" (click)="getAll()" expand="full">Schedule Notification</ion-button>
+
+
+
+
   <ion-list>
+
     <h1 *ngIf="list?.length < 1" style="text-align: center">
       <ion-text color="gold">no offers for today</ion-text>
     </h1>
     <ion-card *ngFor="let offer of list;let i = index">
       <ion-item>
-        <ion-img
-          class="text-center"
-          style="max-width: 100%; max-height: 500px"
-          [src]="offer?.image ? 'data:image/jpeg;base64,' + offer.image : 'assets/food.png'"
-        >
+        <ion-img class="text-center" style="max-width: 100%; max-height: 500px"
+          [src]="offer?.image ? 'data:image/jpeg;base64,' + offer.image : 'assets/food.png'">
         </ion-img>
       </ion-item>
       <ion-card-title>
@@ -29,9 +35,8 @@
           <h3 style="font-weight: bold">
             <ion-text color="gold"> {{offer?.name || ''}} </ion-text>
           </h3>
-          <ion-label color="gold" style="text-align: right; font-weight: bold"
-            >${{offer.price || 0 | number}}</ion-label
-          >
+          <ion-label color="gold" style="text-align: right; font-weight: bold">${{offer.price || 0 |
+            number}}</ion-label>
         </ion-item>
       </ion-card-title>
       <ion-card-content>
@@ -50,9 +55,7 @@
             {{product.name}}({{product.quantity || 0}})
           </ion-text>
         </ion-chip>
-        <ion-button (click)="selectOffer(offer)" expand="full"
-          >Select Offer</ion-button
-        >
+        <ion-button (click)="selectOffer(offer)" expand="full">Select Offer</ion-button>
       </ion-card-content>
     </ion-card>
   </ion-list>

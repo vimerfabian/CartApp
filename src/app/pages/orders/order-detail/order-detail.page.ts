@@ -31,7 +31,7 @@ export class OrderDetailPage implements OnInit {
   }
 
   getOrderTime() {
-    const fecha: Date = new Date(this.order.time);
+    const fecha: Date = new Date(this.order.date);
 
     const hora: number = fecha.getHours();
     const minutos: number = fecha.getMinutes();
