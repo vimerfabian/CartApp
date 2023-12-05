@@ -54,6 +54,9 @@ export class AuthService {
                 title = 'Login Success!';
                 color = 'success';
                 this.setCurrentSession(res);
+
+                localStorage.setItem('username', username);
+                localStorage.setItem('passwor', password);
               }
               break;
             case ClientStatusEnum.NO_VALIDADO:
@@ -154,7 +157,10 @@ export class AuthService {
       const timeDifference = now.getTime() - sessionHour.getTime();
 
       if (timeDifference >= 3600000) {
-        this.logout();
+        const u = localStorage.getItem('username');
+        const p = localStorage.getItem('passwor');
+        this.login(u, p);
+        //this.logout();
         console.log('Ha pasado más de una hora desde la sesión.');
       } else {
         //console.log('Todavía no ha pasado una hora desde la sesión.  ' + timeDifference);
