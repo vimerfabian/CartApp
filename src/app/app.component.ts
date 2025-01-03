@@ -6,6 +6,7 @@ import { AuthService } from './services/auth.service';
 import { Storage } from '@ionic/storage';
 import { DeviceService } from './services/device.service';
 import { Platform } from '@ionic/angular';
+import { OrderNotificationService } from './services/order-notification.service'; 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -20,7 +21,8 @@ export class AppComponent implements OnInit {
     public authService: AuthService,
     private storage: Storage,
     private deviceService: DeviceService,
-    private platform: Platform
+    private platform: Platform,
+    private orderNotificationService: OrderNotificationService
   ) {}
 
   ngOnInit() {
@@ -32,6 +34,8 @@ export class AppComponent implements OnInit {
     try {
       this.deviceService.getMac();
     } catch (err) {}
+
+    this.orderNotificationService.startBackgroundTask();
   }
 
   logout() {

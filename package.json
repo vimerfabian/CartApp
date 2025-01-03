@@ -21,9 +21,11 @@
     "@angular/platform-browser": "~12.0.1",
     "@angular/platform-browser-dynamic": "~12.0.1",
     "@angular/router": "~12.0.1",
-    "@awesome-cordova-plugins/core": "^5.37.3",
-    "@awesome-cordova-plugins/device": "^5.37.3",
+    "@awesome-cordova-plugins/core": "^6.13.0",
+    "@awesome-cordova-plugins/device": "^5.43.0",
+    "@awesome-cordova-plugins/local-notifications": "^6.13.0",
     "@ionic-native/android-permissions": "^5.36.0",
+    "@ionic-native/background-mode": "^5.36.0",
     "@ionic-native/core": "^5.34.0",
     "@ionic-native/ionic-webview": "^5.36.0",
     "@ionic-native/paypal": "^5.34.0",
@@ -91,7 +93,8 @@
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-stripe": {},
       "cordova-plugin-android-permissions": {},
-      "cordova-plugin-ionic-webview": {}
+      "cordova-plugin-ionic-webview": {},
+      "de.appplant.cordova.plugin.local-notification": {}
     },
     "platforms": [
       "browser",

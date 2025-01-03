@@ -18,6 +18,9 @@ import { NgxPayPalModule } from 'ngx-paypal';
 import { Uid } from '@ionic-native/uid/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { Device } from '@awesome-cordova-plugins/device/ngx';
+import { LocalNotifications } from '@awesome-cordova-plugins/local-notifications/ngx';
+import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -45,6 +48,8 @@ import { Device } from '@awesome-cordova-plugins/device/ngx';
     Uid,
     AndroidPermissions,
     Device,
+    LocalNotifications,
+    BackgroundMode,
   ],
   bootstrap: [AppComponent],
 })
